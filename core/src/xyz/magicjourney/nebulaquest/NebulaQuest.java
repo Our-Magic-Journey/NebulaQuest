@@ -27,7 +27,7 @@ public class NebulaQuest extends Game {
 
 		this.mainMenu = new MainMenu(batch, assets);
 		this.loadingScreen = new LoadingScreen(batch, assets);
-
+	
 		this.assetsLoader.onLoad().subscribe(() -> setScreen(mainMenu));
 		this.setScreen(loadingScreen);
 		this.assetsLoader.loadAllAssets();

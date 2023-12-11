@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 
 import xyz.magicjourney.nebulaquest.drawable.Shape;
 import xyz.magicjourney.nebulaquest.logger.AssetsLoadingLogger;
@@ -45,9 +44,9 @@ public class LoadingScreen extends AbstractScreen {
 
   protected void loadAssets() {
     this.backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
-    this.titleFont = this.loadFont("fonts/MOOD MKII.ttf", 50);
-    this.textFont = this.loadFont("fonts/MiniMOOD.ttf", 20);
-    this.smallTextFont = this.loadFont("fonts/MiniMOOD.ttf", 15);
+    this.titleFont = this.loadFont("fonts/MOOD MKII.ttf", 60);
+    this.textFont = this.loadFont("fonts/MiniMOOD.ttf", 25);
+    this.smallTextFont = this.loadFont("fonts/MiniMOOD.ttf", 20);
   }
 
   protected BitmapFont loadFont(String path, int size) {
@@ -61,35 +60,39 @@ public class LoadingScreen extends AbstractScreen {
 
   protected void create() {
     layout = new Table();
+    layout.pad(10, 50, 10, 50);
     layout.setBackground(new TextureRegionDrawable(backgroundTexture));
     layout.setFillParent(true);
     
     title = new Label("Nebula Quest", new LabelStyle(titleFont, new Color(0xff7b00ff)));
-    title.setPosition(0, viewport.getWorldHeight() - title.getHeight() * 2);
-    title.setWidth(viewport.getWorldWidth());
-    title.setAlignment(Align.center);
+    layout.add(title).expandY().center();
 
-    loadingProgress = new Label("File 0/0", new LabelStyle(textFont, new Color(0xffffffff)));
-    loadingProgress.setPosition(50, 100);
 
-    loadingDetails = new Label("Loading", new LabelStyle(smallTextFont, new Color(0xffffffff)));
-    loadingDetails.setPosition(50, 70);
-
-    float progressBarSize = viewport.getWorldWidth() - 200;
     ProgressBarStyle progressBarStyle = new ProgressBarStyle();
-    progressBarStyle.background = Shape.rect((int)progressBarSize, 50, new Color(0xffffffff));
+    progressBarStyle.background = Shape.rect((int)viewport.getWorldWidth(), 50, new Color(0xffffffff));
     progressBarStyle.knob = Shape.rect(0, 50, new Color(0xff7b00ff)); 
-    progressBarStyle.knobBefore = Shape.rect((int)progressBarSize, 50, new Color(0xff7b00ff)); 
+    progressBarStyle.knobBefore = Shape.rect((int)viewport.getWorldWidth(), 50, new Color(0xff7b00ff)); 
+
+    Table loadingLayout = new Table();
+    layout.row();
+    layout.add(loadingLayout).expand().fill();
 
     progressBar = new ProgressBar(0, 100, 1, false, progressBarStyle);
-    progressBar.setSize(progressBarSize, 100);
-    progressBar.setPosition(100, 300);
+    loadingLayout.add(progressBar).expand().fillX();
+
+    Table detailsLayout = new Table();
+    loadingLayout.row();
+    loadingLayout.add(detailsLayout).bottom().left();
+
+    loadingProgress = new Label("File 0/0", new LabelStyle(textFont, new Color(0xffffffff)));
+    detailsLayout.add(loadingProgress).expandX().left();
+
+    loadingDetails = new Label("Loading", new LabelStyle(smallTextFont, new Color(0xffffffff)));
+    detailsLayout.row();
+    detailsLayout.add(loadingDetails).expandX().left();
+
 
     stage.addActor(layout);
-    layout.addActor(title);    
-    layout.addActor(loadingProgress);
-    layout.addActor(loadingDetails);
-    layout.addActor(progressBar);
   }
 
   @Override
