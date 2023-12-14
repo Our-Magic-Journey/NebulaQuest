@@ -60,6 +60,21 @@ tasks.create('release', Zip) {
     destinationDirectory.set(file('../release'))
 }
 
+tasks.create('releaseInstaller', Zip) {
+    dependsOn jpackageImage
+
+    from './build/install/desktop'
+
+    if (osName.contains("windows")) {
+        archiveFileName.set("nebula-quest-windows-installer.zip");
+    }
+    else {
+        archiveFileName.set("nebula-quest-linux-installer.zip");
+    }
+
+    destinationDirectory.set(file('../release'))
+}
+
 jpackageImage.dependsOn dist
 dist.dependsOn classes
 eclipse.project.name = appName + "-desktop"
