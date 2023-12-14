@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import xyz.magicjourney.nebulaquest.listener.Listener;
+import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 
 public class CreditsScreen extends AbstractScreen {
@@ -23,8 +24,8 @@ public class CreditsScreen extends AbstractScreen {
   protected HashSet<Label> labels;
 
 
-  public CreditsScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager) {
-    super(batch, assets, screenManager);
+  public CreditsScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
+    super(batch, assets, screenManager, musicManager);
 
     this.labels = new HashSet<>();
   }

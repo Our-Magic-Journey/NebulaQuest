@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
+import xyz.magicjourney.nebulaquest.music.MusicManager;
 import xyz.magicjourney.nebulaquest.screen.CreditsScreen;
 import xyz.magicjourney.nebulaquest.screen.LoadingScreen;
 import xyz.magicjourney.nebulaquest.screen.MainMenu;
@@ -18,6 +19,7 @@ public class NebulaQuest extends Game {
 	private AssetManager assets;
   protected AssetsLoader assetsLoader;
 	protected ScreenManager screenManager;
+	protected MusicManager musicManager;
 
 
 	@Override
@@ -25,13 +27,14 @@ public class NebulaQuest extends Game {
 		this.batch = new SpriteBatch();
 		this.assets = new AssetManager();
 		this.assetsLoader = new AssetsLoader(assets);
-		this.screenManager = new ScreenManager(this, batch, assets);
+		this.musicManager = new MusicManager();
+		this.screenManager = new ScreenManager(this, batch, assets, musicManager);
 
 		this.screenManager.register("main-menu", MainMenu::new);
 		this.screenManager.register("loading", LoadingScreen::new);
-			this.screenManager.register("credits", CreditsScreen::new);
+		this.screenManager.register("credits", CreditsScreen::new);
 
-		this.assetsLoader.onLoad().subscribe(() -> screenManager.select("main-menu"));
+		this.assetsLoader.onLoad().subscribe(this::onLoad);
 		this.screenManager.select("loading");
 		this.assetsLoader.loadAllAssets();
 	}
@@ -68,5 +71,13 @@ public class NebulaQuest extends Game {
 		this.assetsLoader.onLoad().subscribe(() -> setScreen(this.getScreen()));
 		this.assetsLoader.loadAllAssets();
 		this.screenManager.select("loading");;
+	}
+
+	protected void onLoad() {
+		musicManager.register(assets.get("./music/styl1.music.ogg"));
+		musicManager.register(assets.get("./music/styl2.music.ogg"));
+		musicManager.register(assets.get("./music/styl3.music.ogg"));
+		musicManager.setMenuMusic(assets.get("./music/menu.music.ogg"));
+		screenManager.select("main-menu");
 	}
 }

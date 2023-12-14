@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,16 +14,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import xyz.magicjourney.nebulaquest.listener.Listener;
+import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 public class MainMenu extends AbstractScreen {
+  protected Music music;
   protected Table layout;
   protected Table buttons;
   protected Skin skin;
   protected Label title;
   protected LinkedHashMap<String, TextButton> options;
 
-  public MainMenu(SpriteBatch batch, AssetManager assets, ScreenManager screenManager) {
-    super(batch, assets, screenManager);
+  public MainMenu(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
+    super(batch, assets, screenManager, musicManager);
     options = new LinkedHashMap<>();
   }
   
@@ -30,11 +33,12 @@ public class MainMenu extends AbstractScreen {
   public void show() {
     super.show();
     options.clear();
+    musicManager.playMenuMusic();
 
-    create();
+    layout();
   }
   
-  protected void create() {
+  protected void layout() {
     skin = assets.get("./skin/ui.skin.json");
     layout = new Table(skin);
     buttons = new Table(skin);
@@ -55,9 +59,15 @@ public class MainMenu extends AbstractScreen {
     layout.add(buttons).expand().fill().bottom();
     options.forEach((key, button) -> buttons.add(button).row());
 
+    options.get("New").addListener(new Listener((event, actor) -> musicManager.playGameMusic()));
+    options.get("Continue").addListener(new Listener((event, actor) -> musicManager.playGameMusic()));
     options.get("Credits").addListener(new Listener((event, actor) -> screenManager.select("credits")));
     options.get("Exit").addListener(new Listener((event, actor) -> Gdx.app.exit()));
 
     stage.addActor(layout);
+  }
+
+  @Override
+  public void hide() {
   }
 }

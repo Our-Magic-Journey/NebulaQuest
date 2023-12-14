@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import xyz.magicjourney.nebulaquest.music.MusicManager;
+
 /**
  *  Pre-configured game screen with scene to draw and fixed aspect ratio.
  */
@@ -15,12 +17,14 @@ public abstract class AbstractScreen implements Screen {
   protected FitViewport viewport;
   protected AssetManager assets;
   protected ScreenManager screenManager;
+  protected MusicManager musicManager;
 
-  public AbstractScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager) {
+  public AbstractScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     this.viewport = new FitViewport(960, 560);
     this.stage = new Stage(this.viewport, batch);  
     this.assets = assets;
     this.screenManager = screenManager;
+    this.musicManager = musicManager;
   }
 
   @Override

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import xyz.magicjourney.nebulaquest.logger.AssetsLoadingLogger;
+import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 public class LoadingScreen extends AbstractScreen {
   protected Texture backgroundTexture;
@@ -35,8 +36,8 @@ public class LoadingScreen extends AbstractScreen {
   protected ProgressBar progressBar;
 
 
-  public LoadingScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager) {
-    super(batch, assets, screenManager);
+  public LoadingScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
+    super(batch, assets, screenManager, musicManager);
 
     this.logger = new AssetsLoadingLogger();
     this.assets.setLogger(logger);
