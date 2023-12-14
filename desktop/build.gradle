@@ -71,7 +71,13 @@ tasks.create('zipRelease', Zip) {
 
     from './build/jpackage/desktop'
 
-    archiveFileName.set("nebula-quest.zip");
+    if (osName == "linux") {
+        archiveFileName.set("nebula-quest-linux.zip");
+    }
+    else {
+        archiveFileName.set("nebula-quest-windows.zip");
+    }
+
     destinationDirectory.set(file('../release'))
 }
 

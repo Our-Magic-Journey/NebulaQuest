@@ -23,7 +23,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nebula-quest-linux.zip
-          path: release/nebula-quest.zip
+          path: release/nebula-quest-linux.zip
   
   windows:
     runs-on: windows-latest
@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: nebula-quest-windows.zip
-          path: release/nebula-quest.zip
+          path: release/nebula-quest-windows.zip
 
   release:
     needs: [linux, windows]
