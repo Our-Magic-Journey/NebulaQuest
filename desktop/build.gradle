@@ -48,18 +48,20 @@ tasks.register('dist', Jar) {
 tasks.register('copyAssets') {
     dependsOn jpackageImage
 
-    if (osName == "linux") {
-        project.mkdir "./build/jpackage/desktop/bin/assets"
-        copy {
-            from '../assets'
-            into './build/jpackage/desktop/bin/assets'
-        }
-    }
-    else {
+    if (osName.contains("windows")) {
         project.mkdir "./build/jpackage/desktop/assets"
+        
         copy {
             from '../assets'
             into './build/jpackage/desktop/assets'
+        }
+    }
+    else {
+        project.mkdir "./build/jpackage/desktop/bin/assets"
+        
+        copy {
+            from '../assets'
+            into './build/jpackage/desktop/bin/assets'
         }
     }
 
@@ -67,15 +69,15 @@ tasks.register('copyAssets') {
 }
 
 tasks.create('zipRelease', Zip) {
-    dependsOn jpackageImage
+    dependsOn copyAssets
 
     from './build/jpackage/desktop'
 
-    if (osName == "linux") {
-        archiveFileName.set("nebula-quest-linux.zip");
+    if (osName.contains("windows")) {
+        archiveFileName.set("nebula-quest-windows.zip");
     }
     else {
-        archiveFileName.set("nebula-quest-windows.zip");
+        archiveFileName.set("nebula-quest-linux.zip");
     }
 
     destinationDirectory.set(file('../release'))
