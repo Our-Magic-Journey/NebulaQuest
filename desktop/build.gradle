@@ -70,7 +70,8 @@ tasks.create('zipRelease', Zip) {
     dependsOn jpackageImage
 
     from './build/jpackage/desktop'
-    archiveFileName.set("nebula-quest-${osName}.zip")
+
+    archiveFileName.set("nebula-quest.zip");
     destinationDirectory.set(file('../release'))
 }
 
