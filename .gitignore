@@ -1,5 +1,8 @@
 .vscode
 
+# release
+/release
+
 # Temporary Files
 *~
 .*.swp

@@ -82,14 +82,19 @@ public class AssetsLoader {
     ArrayList<String> paths = new ArrayList<>();
 
     for (FileHandle file : folder.list()) {
+      System.out.print("file: " + file.path());
+
       if (!this.isAsset(file.path())) {
+        System.out.print(" ignored!\n");
         continue;
       }
 
       if (file.isDirectory()) {
+        System.out.print(" is directory!\n");
         paths.addAll(getAllFiles(resolver.resolve(file.path())));
       }
       else {
+        System.out.print(" loaded!\n");
         paths.add(exitAssetFolder(file.path()));
       }
     }
