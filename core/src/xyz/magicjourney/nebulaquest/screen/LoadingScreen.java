@@ -1,7 +1,6 @@
 package xyz.magicjourney.nebulaquest.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import xyz.magicjourney.nebulaquest.logger.AssetsLoadingLogger;
+import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 public class LoadingScreen extends AbstractScreen {
@@ -27,7 +26,6 @@ public class LoadingScreen extends AbstractScreen {
   protected BitmapFont titleFont;
   protected BitmapFont textFont;
   protected BitmapFont smallTextFont;
-  protected AssetsLoadingLogger logger;
   
   protected Table layout;
   protected Label title;
@@ -36,11 +34,8 @@ public class LoadingScreen extends AbstractScreen {
   protected ProgressBar progressBar;
 
 
-  public LoadingScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
+  public LoadingScreen(SpriteBatch batch, AssetsLoader assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
-
-    this.logger = new AssetsLoadingLogger();
-    this.assets.setLogger(logger);
 
     this.loadAssets();
     this.create();
@@ -97,9 +92,9 @@ public class LoadingScreen extends AbstractScreen {
   protected void update(float delta) {
     super.update(delta);
 
-    loadingDetails.setText("Loaded: " + this.logger.getLastLoaded());
-    loadingProgress.setText(assets.getLoadedAssets() + "/" + (assets.getQueuedAssets() + assets.getLoadedAssets()));
-    progressBar.setValue(assets.getProgress() * 100);
+    loadingDetails.setText("Loaded: " + this.assets.getLastLoadedAssetName());
+    loadingProgress.setText(this.assets.getLoadingProgressAsText());
+    progressBar.setValue(this.assets.getLoadingProgress());
   }
 
   @Override

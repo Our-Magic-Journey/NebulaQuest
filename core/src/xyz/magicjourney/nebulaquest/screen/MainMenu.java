@@ -3,7 +3,6 @@ package xyz.magicjourney.nebulaquest.screen;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.listener.Listener;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
@@ -24,7 +24,7 @@ public class MainMenu extends AbstractScreen {
   protected Label title;
   protected LinkedHashMap<String, TextButton> options;
 
-  public MainMenu(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
+  public MainMenu(SpriteBatch batch, AssetsLoader assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
     options = new LinkedHashMap<>();
   }
@@ -39,7 +39,7 @@ public class MainMenu extends AbstractScreen {
   }
   
   protected void layout() {
-    skin = assets.get("./skin/ui.skin.json");
+    skin = assets.get("skin/ui.skin.json");
     layout = new Table(skin);
     buttons = new Table(skin);
 
@@ -50,7 +50,7 @@ public class MainMenu extends AbstractScreen {
     options.put("Credits", new TextButton("Credits", skin));
     options.put("Exit", new TextButton("Exit", skin));
     
-    layout.setBackground(new TextureRegionDrawable(assets.get("./images/background.png", Texture.class)));
+    layout.setBackground(new TextureRegionDrawable(assets.get("images/background.png", Texture.class)));
     layout.setFillParent(true);
 
     layout.add(title).expand().center();

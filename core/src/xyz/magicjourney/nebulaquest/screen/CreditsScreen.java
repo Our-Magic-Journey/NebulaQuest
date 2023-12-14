@@ -2,7 +2,6 @@ package xyz.magicjourney.nebulaquest.screen;
 
 import java.util.HashSet;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -11,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.listener.Listener;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
@@ -24,7 +24,7 @@ public class CreditsScreen extends AbstractScreen {
   protected HashSet<Label> labels;
 
 
-  public CreditsScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
+  public CreditsScreen(SpriteBatch batch, AssetsLoader assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
 
     this.labels = new HashSet<>();
@@ -39,7 +39,7 @@ public class CreditsScreen extends AbstractScreen {
   }
   
   protected void create() {
-    skin = assets.get("./skin/ui.skin.json");
+    skin = assets.get("skin/ui.skin.json");
     layout = new Table(skin);
     authors = new Table(skin);
 
@@ -51,7 +51,7 @@ public class CreditsScreen extends AbstractScreen {
     labels.add(new Label("Michał Zamorski", skin));
     labels.add(new Label("Sebastian Zienkiewicz", skin));
     
-    layout.setBackground(new TextureRegionDrawable(assets.get("./images/background.png", Texture.class)));
+    layout.setBackground(new TextureRegionDrawable(assets.get("images/background.png", Texture.class)));
     layout.setFillParent(true);
 
     layout.add(title).expand().center();

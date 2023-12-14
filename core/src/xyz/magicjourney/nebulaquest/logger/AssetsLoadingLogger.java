@@ -14,15 +14,14 @@ public class AssetsLoadingLogger extends StringLogger {
 
     /*
       regex: \.\/[^ ,\s]+
-      matches anything that starts with ./ 
+      matches anything that starts with 'Loading:'' 
       and doesn't contain white spaces or ','.
 
       [^] - negated set
-      \s - whitespace
       + - match one or more of the preceding token
 
      */
-    this.regex = Pattern.compile("\\.\\/[^,\\s]+");
+    this.regex = Pattern.compile("Loading: [^,]+");
   }
 
   public AssetsLoadingLogger() {
@@ -39,7 +38,7 @@ public class AssetsLoadingLogger extends StringLogger {
     Matcher matcher = regex.matcher(this.text);
 
     if (matcher.find()) {
-      lastLoaded = matcher.group(0);
+      lastLoaded = matcher.group(0).replace("Loading: ", "");
     }
   }
 }

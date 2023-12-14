@@ -3,7 +3,6 @@ package xyz.magicjourney.nebulaquest;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -16,8 +15,7 @@ import xyz.magicjourney.nebulaquest.screen.ScreenManager;
 
 public class NebulaQuest extends Game {
 	private SpriteBatch batch;
-	private AssetManager assets;
-  protected AssetsLoader assetsLoader;
+	private AssetsLoader assets;
 	protected ScreenManager screenManager;
 	protected MusicManager musicManager;
 
@@ -25,8 +23,7 @@ public class NebulaQuest extends Game {
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
-		this.assets = new AssetManager();
-		this.assetsLoader = new AssetsLoader(assets);
+		this.assets = new AssetsLoader();
 		this.musicManager = new MusicManager();
 		this.screenManager = new ScreenManager(this, batch, assets, musicManager);
 
@@ -34,16 +31,16 @@ public class NebulaQuest extends Game {
 		this.screenManager.register("loading", LoadingScreen::new);
 		this.screenManager.register("credits", CreditsScreen::new);
 
-		this.assetsLoader.onLoad().subscribe(this::onLoad);
+		this.assets.onLoad().subscribe(this::onLoad);
 		this.screenManager.select("loading");
-		this.assetsLoader.loadAllAssets();
+		this.assets.loadAllAssets();
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 1);
 
-		assetsLoader.update();
+		this.assets.update();
 
 		super.render();
 	}
@@ -68,16 +65,16 @@ public class NebulaQuest extends Game {
 	}
 
 	public void reloadAssets() {
-		this.assetsLoader.onLoad().subscribe(() -> setScreen(this.getScreen()));
-		this.assetsLoader.loadAllAssets();
+		this.assets.onLoad().subscribe(() -> setScreen(this.getScreen()));
+		this.assets.loadAllAssets();
 		this.screenManager.select("loading");;
 	}
 
 	protected void onLoad() {
-		musicManager.register(assets.get("./music/styl1.music.ogg"));
-		musicManager.register(assets.get("./music/styl2.music.ogg"));
-		musicManager.register(assets.get("./music/styl3.music.ogg"));
-		musicManager.setMenuMusic(assets.get("./music/menu.music.ogg"));
+		musicManager.register(assets.get("music/styl1.music.ogg"));
+		musicManager.register(assets.get("music/styl2.music.ogg"));
+		musicManager.register(assets.get("music/styl3.music.ogg"));
+		musicManager.setMenuMusic(assets.get("music/menu.music.ogg"));
 		screenManager.select("main-menu");
 	}
 }
