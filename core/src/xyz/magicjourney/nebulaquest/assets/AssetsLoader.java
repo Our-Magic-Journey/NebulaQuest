@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.ray3k.stripe.FreeTypeSkinLoader;
 
 import xyz.magicjourney.nebulaquest.event.Event;
 import xyz.magicjourney.nebulaquest.event.EventGetter;
@@ -33,9 +35,11 @@ public class AssetsLoader {
     this.loaders.add(new Loader(new String[] { ".music.mp3", ".music.ogg", ".music.wav" }, Music.class));
     this.loaders.add(new Loader(new String[] { ".mp3", ".ogg", ".wav" }, Sound.class));
     this.loaders.add(new Loader(new String[] { ".ttf" }, FreeTypeFontGenerator.class));
+    this.loaders.add(new Loader(new String[] { ".skin.json" }, Skin.class));
 
     // add ttf support to the AssetManager
     assets.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+    assets.setLoader(Skin.class, new FreeTypeSkinLoader(assetManager.getFileHandleResolver()));
     assets.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
   }
 

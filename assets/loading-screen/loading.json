@@ -1,0 +1,30 @@
+{
+com.ray3k.tenpatch.TenPatchDrawable: {
+	knob10: {
+		region: knob
+		horizontalStretchAreas: [ 8, 50 ]
+		verticalStretchAreas: [ 8, 15 ]
+		tiling: false
+		minWidth: 59
+		minHeight: 32
+		rightWidth: 8
+		leftWidth: 8
+		bottomHeight: 9
+		topHeight: 17
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+		crushMode: 0
+	}
+}
+ProgressBarStyle: {
+	default-horizontal: {
+		background: background
+		knobBefore: knob10
+	}
+}
+}

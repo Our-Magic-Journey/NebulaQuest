@@ -6,20 +6,23 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import xyz.magicjourney.nebulaquest.drawable.Shape;
 import xyz.magicjourney.nebulaquest.logger.AssetsLoadingLogger;
 
 public class LoadingScreen extends AbstractScreen {
   protected Texture backgroundTexture;
+  protected Texture progressBackground;
+  protected TextureAtlas progress;
+
   protected BitmapFont titleFont;
   protected BitmapFont textFont;
   protected BitmapFont smallTextFont;
@@ -32,8 +35,8 @@ public class LoadingScreen extends AbstractScreen {
   protected ProgressBar progressBar;
 
 
-  public LoadingScreen(SpriteBatch batch, AssetManager assets) {
-    super(batch, assets);
+  public LoadingScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager) {
+    super(batch, assets, screenManager);
 
     this.logger = new AssetsLoadingLogger();
     this.assets.setLogger(logger);
@@ -44,9 +47,10 @@ public class LoadingScreen extends AbstractScreen {
 
   protected void loadAssets() {
     this.backgroundTexture = new Texture(Gdx.files.internal("images/background.png"));
-    this.titleFont = this.loadFont("fonts/MOOD MKII.ttf", 60);
-    this.textFont = this.loadFont("fonts/MiniMOOD.ttf", 25);
-    this.smallTextFont = this.loadFont("fonts/MiniMOOD.ttf", 20);
+    this.progress = new TextureAtlas("loading-screen/loading.atlas");
+    this.titleFont = this.loadFont("skin/MOOD_MKII.ttf", 40);
+    this.textFont = this.loadFont("skin/MiniMOOD.ttf", 25);
+    this.smallTextFont = this.loadFont("skin/MiniMOOD.ttf", 20);
   }
 
   protected BitmapFont loadFont(String path, int size) {
@@ -64,20 +68,14 @@ public class LoadingScreen extends AbstractScreen {
     layout.setBackground(new TextureRegionDrawable(backgroundTexture));
     layout.setFillParent(true);
     
-    title = new Label("Nebula Quest", new LabelStyle(titleFont, new Color(0xff7b00ff)));
+    title = new Label("Nebula Quest", new LabelStyle(titleFont, new Color(0x5fcde4ff)));
     layout.add(title).expandY().center();
-
-
-    ProgressBarStyle progressBarStyle = new ProgressBarStyle();
-    progressBarStyle.background = Shape.rect((int)viewport.getWorldWidth(), 50, new Color(0xffffffff));
-    progressBarStyle.knob = Shape.rect(0, 50, new Color(0xff7b00ff)); 
-    progressBarStyle.knobBefore = Shape.rect((int)viewport.getWorldWidth(), 50, new Color(0xff7b00ff)); 
 
     Table loadingLayout = new Table();
     layout.row();
     layout.add(loadingLayout).expand().fill();
 
-    progressBar = new ProgressBar(0, 100, 1, false, progressBarStyle);
+    progressBar = new ProgressBar(0, 100, 1, false, new Skin(Gdx.files.internal("loading-screen/loading.json")));
     loadingLayout.add(progressBar).expand().fillX();
 
     Table detailsLayout = new Table();
@@ -91,7 +89,6 @@ public class LoadingScreen extends AbstractScreen {
     detailsLayout.row();
     detailsLayout.add(loadingDetails).expandX().left();
 
-
     stage.addActor(layout);
   }
 
@@ -100,7 +97,6 @@ public class LoadingScreen extends AbstractScreen {
     super.update(delta);
 
     loadingDetails.setText("Loaded: " + this.logger.getLastLoaded());
-    System.out.println(this.logger.getLastLoaded());
     loadingProgress.setText(assets.getLoadedAssets() + "/" + (assets.getQueuedAssets() + assets.getLoadedAssets()));
     progressBar.setValue(assets.getProgress() * 100);
   }

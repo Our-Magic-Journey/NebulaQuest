@@ -1,0 +1,119 @@
+
+ui.skin.png
+size: 128, 128
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+arrow-down
+  rotate: false
+  xy: 31, 21
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+arrow-icon
+  rotate: false
+  xy: 36, 10
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+arrow-icon-down
+  rotate: false
+  xy: 42, 21
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+arrow-icon-over
+  rotate: false
+  xy: 53, 22
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+arrow-over
+  rotate: false
+  xy: 43, 33
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+arrow-up
+  rotate: false
+  xy: 25, 10
+  size: 9, 9
+  orig: 9, 9
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 1, 100
+  size: 61, 26
+  split: 17, 18, 14, 10
+  pad: 0, 0, 0, 0
+  orig: 61, 26
+  offset: 0, 0
+  index: -1
+button-disabled
+  rotate: false
+  xy: 1, 44
+  size: 61, 26
+  split: 16, 16, 13, 10
+  pad: 0, 0, 0, 0
+  orig: 61, 26
+  offset: 0, 0
+  index: -1
+button-down
+  rotate: false
+  xy: 1, 72
+  size: 61, 26
+  split: 17, 17, 14, 11
+  pad: 0, 0, 0, 0
+  orig: 61, 26
+  offset: 0, 0
+  index: -1
+button-over
+  rotate: false
+  xy: 64, 100
+  size: 61, 26
+  split: 17, 17, 14, 11
+  pad: 0, 0, 0, 0
+  orig: 61, 26
+  offset: 0, 0
+  index: -1
+check-box-off
+  rotate: false
+  xy: 1, 9
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+check-box-on
+  rotate: false
+  xy: 31, 32
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+check-box-over
+  rotate: false
+  xy: 13, 9
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 1, 21
+  size: 28, 21
+  orig: 28, 21
+  offset: 0, 0
+  index: -1
+panel
+  rotate: false
+  xy: 64, 1
+  size: 59, 97
+  orig: 59, 97
+  offset: 0, 0
+  index: -1

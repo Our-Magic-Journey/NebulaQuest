@@ -3,11 +3,7 @@ package xyz.magicjourney.nebulaquest.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -18,11 +14,13 @@ public abstract class AbstractScreen implements Screen {
   protected Stage stage;
   protected FitViewport viewport;
   protected AssetManager assets;
+  protected ScreenManager screenManager;
 
-  public AbstractScreen(SpriteBatch batch, AssetManager assets) {
-    this.viewport = new FitViewport(1920,1080);
+  public AbstractScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager) {
+    this.viewport = new FitViewport(960, 560);
     this.stage = new Stage(this.viewport, batch);  
     this.assets = assets;
+    this.screenManager = screenManager;
   }
 
   @Override
@@ -60,20 +58,5 @@ public abstract class AbstractScreen implements Screen {
   @Override
   public void dispose() {
     this.stage.dispose();
-  }
-
-  protected BitmapFont loadFont(String path, int size, Color color) {
-    FreeTypeFontParameter parameters = new FreeTypeFontParameter();
-
-    parameters.size = size;
-    parameters.color = color;
-
-    return this.loadFont(path, parameters);
-  }
-
-  protected BitmapFont loadFont(String path, FreeTypeFontParameter parameters) {
-    FreeTypeFontGenerator generator = assets.get(path, FreeTypeFontGenerator.class);
-
-    return generator.generateFont(parameters);
   }
 }

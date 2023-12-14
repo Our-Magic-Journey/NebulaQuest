@@ -8,28 +8,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
+import xyz.magicjourney.nebulaquest.screen.CreditsScreen;
 import xyz.magicjourney.nebulaquest.screen.LoadingScreen;
 import xyz.magicjourney.nebulaquest.screen.MainMenu;
+import xyz.magicjourney.nebulaquest.screen.ScreenManager;
 
 public class NebulaQuest extends Game {
 	private SpriteBatch batch;
 	private AssetManager assets;
   protected AssetsLoader assetsLoader;
+	protected ScreenManager screenManager;
 
-	protected MainMenu mainMenu;
-	protected LoadingScreen loadingScreen;
 
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();
 		this.assets = new AssetManager();
 		this.assetsLoader = new AssetsLoader(assets);
+		this.screenManager = new ScreenManager(this, batch, assets);
 
-		this.mainMenu = new MainMenu(batch, assets);
-		this.loadingScreen = new LoadingScreen(batch, assets);
-	
-		this.assetsLoader.onLoad().subscribe(() -> setScreen(mainMenu));
-		this.setScreen(loadingScreen);
+		this.screenManager.register("main-menu", MainMenu::new);
+		this.screenManager.register("loading", LoadingScreen::new);
+			this.screenManager.register("credits", CreditsScreen::new);
+
+		this.assetsLoader.onLoad().subscribe(() -> screenManager.select("main-menu"));
+		this.screenManager.select("loading");
 		this.assetsLoader.loadAllAssets();
 	}
 
@@ -64,6 +67,6 @@ public class NebulaQuest extends Game {
 	public void reloadAssets() {
 		this.assetsLoader.onLoad().subscribe(() -> setScreen(this.getScreen()));
 		this.assetsLoader.loadAllAssets();
-		this.setScreen(loadingScreen);
+		this.screenManager.select("loading");;
 	}
 }
