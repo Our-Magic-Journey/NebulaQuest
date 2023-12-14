@@ -1,4 +1,4 @@
-sourceCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_16
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../assets"]
 
@@ -48,11 +48,19 @@ tasks.register('dist', Jar) {
 tasks.register('copyAssets') {
     dependsOn jpackageImage
 
-    project.mkdir "./build/jpackage/desktop/bin/assets"
-
-    copy {
-        from '../assets'
-        into './build/jpackage/desktop/bin/assets'
+    if (osName == "linux") {
+        project.mkdir "./build/jpackage/desktop/bin/assets"
+        copy {
+            from '../assets'
+            into './build/jpackage/desktop/bin/assets'
+        }
+    }
+    else {
+        project.mkdir "./build/jpackage/desktop/assets"
+        copy {
+            from '../assets'
+            into './build/jpackage/desktop/assets'
+        }
     }
 
     project.mkdir "../release"
@@ -67,8 +75,8 @@ tasks.create('zipRelease', Zip) {
 }
 
 tasks.create('release') {
-    dependsOn tasks.copyAssets
-    dependsOn tasks.zipRelease
+    dependsOn copyAssets
+    dependsOn zipRelease
 }
 
 jpackageImage.dependsOn dist
