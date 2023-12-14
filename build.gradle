@@ -6,7 +6,9 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
     }
-    dependencies {}
+    dependencies {
+        classpath "org.beryx:badass-runtime-plugin:1.13.0"
+    }
 }
 
 allprojects {
@@ -36,6 +38,7 @@ allprojects {
 }
 
 project(":desktop") {
+    apply plugin: "org.beryx.runtime"
     apply plugin: "java-library"
 
     dependencies {
