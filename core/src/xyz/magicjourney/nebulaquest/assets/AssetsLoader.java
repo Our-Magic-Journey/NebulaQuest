@@ -33,17 +33,12 @@ public class AssetsLoader {
     this.resolver = new InternalFileHandleResolver();
     this.onLoad = new Event();
     
-    this.buildMode = this.isRunningInBuildMode();
     this.loaders = new ArrayList<>();
 
     this.loadAssetManagerPlugins();
     this.loadLoaders();
   }
  
-  protected boolean isRunningInBuildMode() {
-    return Gdx.files.internal("./assets").exists();
-  }
-
   protected void loadAssetManagerPlugins() {
     this.assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
     this.assetManager.setLoader(Skin.class, new FreeTypeSkinLoader(assetManager.getFileHandleResolver()));
@@ -60,7 +55,7 @@ public class AssetsLoader {
 
   public void loadAllAssets() {
     for (String file : this.getAllFiles()) {
-      this.loadFile(file);
+      this.loadFile(file.trim());
     }
   }
 
@@ -75,15 +70,16 @@ public class AssetsLoader {
     FileHandle handle = Gdx.files.internal("assets.txt");
     String text = "";
 
+
     try {
-      text = handle.readString();
+      text = handle.readString();      
     }
     catch (GdxRuntimeException e) {
       System.out.println("Cannot load asset list!");
       e.printStackTrace();
     }
 
-    return  text.split("\n");
+    return text.split("\n");
   }
 
   private void loadFile(String file) {

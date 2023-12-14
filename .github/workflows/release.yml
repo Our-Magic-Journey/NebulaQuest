@@ -37,13 +37,13 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
         with:
-          arguments: releaseInstaller
+          arguments: release
           gradle-version: '7.0'
       - name: Upload zip artifact
         uses: actions/upload-artifact@v2
         with:
           name: nebula-quest-windows.zip
-          path: release/nebula-quest-windows-installer.zip
+          path: release/nebula-quest-windows.zip
 
   release:
     needs: [linux, windows]
@@ -82,6 +82,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: nebula-quest-windows.zip/nebula-quest-windows-installer.zip
-          asset_name: nebula-quest-windows-installer.zip
+          asset_path: nebula-quest-windows.zip/nebula-quest-windows.zip
+          asset_name: nebula-quest-windows.zip
           asset_content_type: application/zip
