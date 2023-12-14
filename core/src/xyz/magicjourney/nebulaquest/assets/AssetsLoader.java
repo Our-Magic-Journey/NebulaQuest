@@ -1,7 +1,6 @@
 package xyz.magicjourney.nebulaquest.assets;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -21,25 +20,21 @@ import com.ray3k.stripe.FreeTypeSkinLoader;
 
 import xyz.magicjourney.nebulaquest.event.Event;
 import xyz.magicjourney.nebulaquest.event.EventGetter;
-import xyz.magicjourney.nebulaquest.logger.AssetsLoadingLogger;
 
 public class AssetsLoader {
   protected AssetManager assetManager;
   protected ArrayList<Loader> loaders;
   protected FileHandleResolver resolver;
-  protected AssetsLoadingLogger logger;
   protected Event onLoad;
   protected boolean buildMode;
 
-  public AssetsLoader() {
-    this.assetManager = new AssetManager();
+  public AssetsLoader(AssetManager assetManager) {
+    this.assetManager = assetManager;
     this.resolver = new InternalFileHandleResolver();
     this.onLoad = new Event();
     
     this.buildMode = this.isRunningInBuildMode();
-    this.logger = new AssetsLoadingLogger();
     this.loaders = new ArrayList<>();
-    this.assetManager.setLogger(logger);
 
     this.loadAssetManagerPlugins();
     this.loadLoaders();
@@ -64,9 +59,7 @@ public class AssetsLoader {
   }
 
   public void loadAllAssets() {
-    List<String> files = this.getAllFiles(resolver.resolve("."));
-
-    for (String file : files) {
+    for (String file : this.getAllFiles()) {
       this.loadFile(file);
     }
   }
@@ -78,28 +71,19 @@ public class AssetsLoader {
     }
   }
 
-  private ArrayList<String> getAllFiles(FileHandle folder) {
-    ArrayList<String> paths = new ArrayList<>();
+  private String[] getAllFiles() {
+    FileHandle handle = Gdx.files.internal("assets.txt");
+    String text = "";
 
-    for (FileHandle file : folder.list()) {
-      System.out.print("file: " + file.path());
-
-      if (!this.isAsset(file.path())) {
-        System.out.print(" ignored!\n");
-        continue;
-      }
-
-      if (file.isDirectory()) {
-        System.out.print(" is directory!\n");
-        paths.addAll(getAllFiles(resolver.resolve(file.path())));
-      }
-      else {
-        System.out.print(" loaded!\n");
-        paths.add(exitAssetFolder(file.path()));
-      }
+    try {
+      text = handle.readString();
+    }
+    catch (GdxRuntimeException e) {
+      System.out.println("Cannot load asset list!");
+      e.printStackTrace();
     }
 
-    return paths;
+    return  text.split("\n");
   }
 
   private void loadFile(String file) {
@@ -114,57 +98,7 @@ public class AssetsLoader {
     System.out.println("There is no file loader for: " + file);
   }
 
-  protected boolean isAsset(String path) {
-    return !buildMode || path.contains("./assets");
-  }
-
-  protected String exitAssetFolder(String path) {
-    if (buildMode) {
-      return path.replace("./assets/", "");
-    }
-
-    return path;
-  }
-
   public EventGetter onLoad() {
     return onLoad;
-  }
-
-  /** @param fileName the asset file name
-   * @return the asset
-   * @throws GdxRuntimeException if the asset is not loaded */
-	public synchronized <T> T get (String fileName) {
-		return assetManager.get(this.matchAsset(fileName));
-	}
-
-	/** @param fileName the asset file name
-	 * @param type the asset type
-	 * @return the asset
-	 * @throws GdxRuntimeException if the asset is not loaded */
-	public synchronized <T> T get (String fileName, Class<T> type) {
-		return assetManager.get(this.matchAsset(fileName), type, true);
-	}
-
-  protected String matchAsset(String path) {
-    if (!buildMode) {
-      return "./" + path;
-    }
-
-    return path;
-  }
-
-  public float getLoadingProgress() {
-    return this.assetManager.getProgress() * 100;
-  }
-
-  public String getLoadingProgressAsText() {
-    int max = assetManager.getQueuedAssets() + assetManager.getLoadedAssets();
-    int value = assetManager.getLoadedAssets();
-
-    return String.format("%d/%d", value, max);
-  }
-
-  public String getLastLoadedAssetName() {
-    return this.logger.getLastLoaded();
   }
 }

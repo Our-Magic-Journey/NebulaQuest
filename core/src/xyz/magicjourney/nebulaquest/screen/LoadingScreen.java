@@ -1,6 +1,7 @@
 package xyz.magicjourney.nebulaquest.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
+import xyz.magicjourney.nebulaquest.logger.AssetsLoadingLogger;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 public class LoadingScreen extends AbstractScreen {
@@ -32,10 +33,14 @@ public class LoadingScreen extends AbstractScreen {
   protected Label loadingDetails;
   protected Label loadingProgress;
   protected ProgressBar progressBar;
+  protected AssetsLoadingLogger logger;
 
 
-  public LoadingScreen(SpriteBatch batch, AssetsLoader assets, ScreenManager screenManager, MusicManager musicManager) {
+  public LoadingScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
+
+    this.logger = new AssetsLoadingLogger();
+    this.assets.setLogger(logger);
 
     this.loadAssets();
     this.create();
@@ -92,9 +97,24 @@ public class LoadingScreen extends AbstractScreen {
   protected void update(float delta) {
     super.update(delta);
 
-    loadingDetails.setText("Loaded: " + this.assets.getLastLoadedAssetName());
-    loadingProgress.setText(this.assets.getLoadingProgressAsText());
-    progressBar.setValue(this.assets.getLoadingProgress());
+    loadingDetails.setText("Loaded: " + this.getLastLoadedAssetName());
+    loadingProgress.setText(this.getLoadingProgressAsText());
+    progressBar.setValue(this.getLoadingProgress());
+  }
+
+  private float getLoadingProgress() {
+    return this.assets.getProgress() * 100;
+  }
+
+  private String getLoadingProgressAsText() {
+    int max = assets.getQueuedAssets() + assets.getLoadedAssets();
+    int value = assets.getLoadedAssets();
+
+    return String.format("%d/%d", value, max);
+  }
+
+  private String getLastLoadedAssetName() {
+    return this.logger.getLastLoaded();
   }
 
   @Override

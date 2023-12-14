@@ -2,6 +2,7 @@ package xyz.magicjourney.nebulaquest.screen;
 
 import java.util.HashSet;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.listener.Listener;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
@@ -24,7 +24,7 @@ public class CreditsScreen extends AbstractScreen {
   protected HashSet<Label> labels;
 
 
-  public CreditsScreen(SpriteBatch batch, AssetsLoader assets, ScreenManager screenManager, MusicManager musicManager) {
+  public CreditsScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
 
     this.labels = new HashSet<>();

@@ -45,31 +45,8 @@ tasks.register('dist', Jar) {
     destinationDirectory = file("$buildDir/lib")
 }
 
-tasks.register('copyAssets') {
+tasks.create('release', Zip) {
     dependsOn jpackageImage
-
-    if (osName.contains("windows")) {
-        project.mkdir "./build/jpackage/desktop/assets"
-        
-        copy {
-            from '../assets'
-            into './build/jpackage/desktop/assets'
-        }
-    }
-    else {
-        project.mkdir "./build/jpackage/desktop/bin/assets"
-        
-        copy {
-            from '../assets'
-            into './build/jpackage/desktop/bin/assets'
-        }
-    }
-
-    project.mkdir "../release"
-}
-
-tasks.create('zipRelease', Zip) {
-    dependsOn copyAssets
 
     from './build/jpackage/desktop'
 
@@ -83,14 +60,8 @@ tasks.create('zipRelease', Zip) {
     destinationDirectory.set(file('../release'))
 }
 
-tasks.create('release') {
-    dependsOn copyAssets
-    dependsOn zipRelease
-}
-
 jpackageImage.dependsOn dist
 dist.dependsOn classes
-
 eclipse.project.name = appName + "-desktop"
 
 runtime {
@@ -106,7 +77,6 @@ runtime {
     distDir = file(buildDir)
 
     jpackage {
-        //jpackageHome = '/usr/lib/jvm/open-jdk'
         mainJar = dist.archiveFileName.get()
         if (osName.contains('windows')) {
             imageOptions = ["--icon", file("../icons/logo.ico")]

@@ -2,21 +2,21 @@ package xyz.magicjourney.nebulaquest.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 public abstract class AbstractScreen implements Screen {
   protected Stage stage;
   protected FitViewport viewport;
-  protected AssetsLoader assets;
+  protected AssetManager assets;
   protected ScreenManager screenManager;
   protected MusicManager musicManager;
 
-  public AbstractScreen(SpriteBatch batch, AssetsLoader assets, ScreenManager screenManager, MusicManager musicManager) {
+  public AbstractScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     this.viewport = new FitViewport(960, 560);
     this.stage = new Stage(this.viewport, batch);  
     this.assets = assets;

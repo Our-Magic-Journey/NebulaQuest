@@ -1,0 +1,11 @@
+animations/Dice.animation.json
+animations/Dice.animation.json
+images/background.png
+images/dice.png
+images/tatooine.png
+music/menu.music.ogg
+music/styl1.music.ogg
+music/styl2.music.ogg
+music/styl3.music.ogg
+skin/ui.skin.json
+Credits.yml

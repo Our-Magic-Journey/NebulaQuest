@@ -2,19 +2,19 @@ package xyz.magicjourney.nebulaquest.screen;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import xyz.magicjourney.nebulaquest.NebulaQuest;
-import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 
 public class ScreenManager {
   public HashMap<String, AbstractScreen> screens;
   protected SpriteBatch batch;
-  protected AssetsLoader assets;
+  protected AssetManager assets;
   protected NebulaQuest game;
   protected MusicManager musicManager;
 
-  public ScreenManager(NebulaQuest game, SpriteBatch batch, AssetsLoader assets, MusicManager musicManager) {
+  public ScreenManager(NebulaQuest game, SpriteBatch batch, AssetManager assets, MusicManager musicManager) {
     this.game = game;
     this.batch = batch;
     this.assets = assets;
