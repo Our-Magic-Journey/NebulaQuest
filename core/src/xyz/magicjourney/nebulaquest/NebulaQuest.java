@@ -31,7 +31,7 @@ public class NebulaQuest extends Game {
 		this.screenManager.register("loading", LoadingScreen::new);
 		this.screenManager.register("credits", CreditsScreen::new);
 
-		//this.assets.onLoad().subscribe(this::onLoad);
+		this.assets.onLoad().subscribe(this::onLoad);
 		this.screenManager.select("loading");
 		this.assets.loadAllAssets();
 	}
