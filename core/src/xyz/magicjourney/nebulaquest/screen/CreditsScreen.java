@@ -1,7 +1,6 @@
 package xyz.magicjourney.nebulaquest.screen;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
