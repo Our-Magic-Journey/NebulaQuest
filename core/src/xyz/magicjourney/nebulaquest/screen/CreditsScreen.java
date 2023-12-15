@@ -1,5 +1,6 @@
 package xyz.magicjourney.nebulaquest.screen;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -21,13 +22,13 @@ public class CreditsScreen extends AbstractScreen {
   protected Skin skin;
   protected Label title;
   protected TextButton back;
-  protected HashSet<Label> labels;
+  protected ArrayList<Label> labels;
 
 
   public CreditsScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
 
-    this.labels = new HashSet<>();
+    this.labels = new ArrayList<>();
   }
 
     @Override
@@ -45,9 +46,9 @@ public class CreditsScreen extends AbstractScreen {
 
     title = new Label("Nebula Quest", skin, "title");
     back = new TextButton("Back", skin);
-    labels.add(new Label("Authors", skin, "medium-blue"));
     labels.add(new Label("Dominik Purgal", skin));
     labels.add(new Label("Dominik Prabucki", skin));
+    labels.add(new Label("Authors", skin, "medium-blue"));
     labels.add(new Label("Michał Zamorski", skin));
     labels.add(new Label("Sebastian Zienkiewicz", skin));
     
