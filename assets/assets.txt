@@ -9,3 +9,7 @@ music/styl2.music.ogg
 music/styl3.music.ogg
 skin/ui.skin.json
 Credits.yml
+images/big-field.png
+images/small-field.png
+images/map-done.png
+images/board-background.png
