@@ -59,8 +59,8 @@ public class MainMenu extends AbstractScreen {
     layout.add(buttons).expand().fill().bottom();
     options.forEach((key, button) -> buttons.add(button).row());
 
-    options.get("New").addListener(new Listener((event, actor) -> musicManager.playGameMusic()));
-    options.get("Continue").addListener(new Listener((event, actor) -> musicManager.playGameMusic()));
+    options.get("New").addListener(new Listener((event, actor) -> screenManager.select("game")));
+    options.get("Continue").addListener(new Listener((event, actor) -> screenManager.select("game")));
     options.get("Credits").addListener(new Listener((event, actor) -> screenManager.select("credits")));
     options.get("Exit").addListener(new Listener((event, actor) -> Gdx.app.exit()));
 

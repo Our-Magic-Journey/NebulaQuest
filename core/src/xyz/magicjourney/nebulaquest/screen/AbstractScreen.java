@@ -17,7 +17,7 @@ public abstract class AbstractScreen implements Screen {
   protected MusicManager musicManager;
 
   public AbstractScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
-    this.viewport = new FitViewport(960, 560);
+    this.viewport = new FitViewport(960, 540);
     this.stage = new Stage(this.viewport, batch);  
     this.assets = assets;
     this.screenManager = screenManager;

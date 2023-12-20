@@ -11,6 +11,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -51,6 +52,7 @@ public class AssetsLoader {
     this.loaders.add(new Loader(new String[] { ".mp3", ".ogg", ".wav" }, Sound.class));
     this.loaders.add(new Loader(new String[] { ".ttf" }, FreeTypeFontGenerator.class));
     this.loaders.add(new Loader(new String[] { ".skin.json" }, Skin.class));
+    this.loaders.add(new Loader(new String[] { ".atlas" }, TextureAtlas.class));
   }
 
   public void loadAllAssets() {

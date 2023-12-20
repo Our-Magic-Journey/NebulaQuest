@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import xyz.magicjourney.nebulaquest.assets.AssetsLoader;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 import xyz.magicjourney.nebulaquest.screen.CreditsScreen;
+import xyz.magicjourney.nebulaquest.screen.GameScreen;
 import xyz.magicjourney.nebulaquest.screen.LoadingScreen;
 import xyz.magicjourney.nebulaquest.screen.MainMenu;
 import xyz.magicjourney.nebulaquest.screen.ScreenManager;
@@ -33,6 +34,7 @@ public class NebulaQuest extends Game {
 		this.screenManager.register("main-menu", MainMenu::new);
 		this.screenManager.register("loading", LoadingScreen::new);
 		this.screenManager.register("credits", CreditsScreen::new);
+		this.screenManager.register("game", GameScreen::new);
 
 		this.assetsLoader.onLoad().subscribe(this::onLoad);
 		this.screenManager.select("loading");
