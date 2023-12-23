@@ -10,6 +10,10 @@ public class Listener extends ChangeListener {
     this.callback = callback;
   }
 
+  public Listener(ZeroArgumentsCallback callback) {
+    this.callback = (event, item) -> callback.changed();
+  }
+
   @Override
   public void changed(ChangeEvent event, Actor actor) {
     this.callback.changed(event, actor);
