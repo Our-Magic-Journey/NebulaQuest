@@ -4,9 +4,12 @@ images/background.png
 images/dice.png
 images/tatooine.png
 music/menu.music.ogg
-music/styl1.music.ogg
-music/styl2.music.ogg
-music/styl3.music.ogg
+music/music1.music.ogg
+music/music2.music.ogg
+music/music3.music.ogg
+music/music4.music.ogg
+music/music5.music.ogg
+music/summary.music.ogg
 skin/ui.skin.json
 Credits.yml
 images/big-field.png
@@ -21,6 +24,7 @@ images/planet-field-down.png
 images/planet-field-color.png
 images/map-done.png
 images/board-background.png
+images/player.png
 animations/planet/tatuine.atlas
 animations/planet/centre.atlas
 animations/planet/pluto.atlas

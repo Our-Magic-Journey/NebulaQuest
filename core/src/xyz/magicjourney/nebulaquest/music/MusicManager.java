@@ -13,7 +13,7 @@ public class MusicManager {
   public MusicManager() {
     this.tracks = new Queue<>();
     this.menu = Optional.empty();
-    this.volume = 0f;
+    this.volume = 0.5f;
   }
 
   public void setMenuMusic(Music menu) {

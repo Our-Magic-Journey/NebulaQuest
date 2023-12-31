@@ -9,9 +9,13 @@ import xyz.magicjourney.nebulaquest.player.Player;
 
 public abstract class Entity {
   protected Event changeEvent;
+  protected String name;
+  protected String description;
 
-  public Entity() {
+  public Entity(String name, String description) {
     this.changeEvent = new Event();
+    this.name = name;
+    this.description = description;
   }
 
   public abstract void onEnter(Player player);
@@ -20,5 +24,13 @@ public abstract class Entity {
 
   public EventGetter onChange() {
     return changeEvent;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+  
+  public String getDescription() {
+    return this.description;
   }
 }

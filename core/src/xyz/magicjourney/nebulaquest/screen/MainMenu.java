@@ -44,11 +44,11 @@ public class MainMenu extends AbstractScreen {
     buttons = new Table(skin);
 
     title = new Label("Nebula Quest", skin, "title");
-    options.put("New", new TextButton("New", skin));
-    options.put("Continue", new TextButton("Continue", skin));
-    options.put("Options", new TextButton("Options", skin));
-    options.put("Credits", new TextButton("Credits", skin));
-    options.put("Exit", new TextButton("Exit", skin));
+    options.put("New", new TextButton("New", skin, "text"));
+    options.put("Continue", new TextButton("Continue", skin, "text"));
+    options.put("Options", new TextButton("Options", skin, "text"));
+    options.put("Credits", new TextButton("Credits", skin, "text"));
+    options.put("Exit", new TextButton("Exit", skin, "text"));
     
     layout.setBackground(new TextureRegionDrawable(assets.get("images/background.png", Texture.class)));
     layout.setFillParent(true);

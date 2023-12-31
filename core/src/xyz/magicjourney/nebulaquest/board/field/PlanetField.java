@@ -81,4 +81,11 @@ public class PlanetField extends Field {
     this.time += delta;
     this.planetTexure.setRegion(animation.getKeyFrame(time)); 
   }
+
+  @Override
+  public PlanetField clone(AssetManager assets) {
+    PlanetField field = new PlanetField(entity, assets);
+    
+    return field;
+  }
 }

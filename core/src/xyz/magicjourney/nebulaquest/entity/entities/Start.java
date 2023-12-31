@@ -9,7 +9,7 @@ import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Start extends Entity {
   public Start() {
-    super();
+    super("Start", "This is where your space adventure has begun. After passing through this field, you will receive 200 credits each time.");
   }
 
   @Override
