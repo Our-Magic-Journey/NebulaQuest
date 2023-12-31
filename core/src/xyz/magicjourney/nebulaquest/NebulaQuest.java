@@ -22,7 +22,6 @@ public class NebulaQuest extends Game {
 	protected ScreenManager screenManager;
 	protected MusicManager musicManager;
 
-
 	@Override
 	public void create () {
 		this.batch = new SpriteBatch();

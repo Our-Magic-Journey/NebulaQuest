@@ -24,7 +24,9 @@ images/planet-field-down.png
 images/planet-field-color.png
 images/map-done.png
 images/board-background.png
-images/player.png
+images/player0.png
+images/player1.png
+images/player2.png
 animations/planet/tatuine.atlas
 animations/planet/centre.atlas
 animations/planet/pluto.atlas
