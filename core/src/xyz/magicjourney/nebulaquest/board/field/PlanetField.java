@@ -20,7 +20,7 @@ public class PlanetField extends Field {
   Planet entity;
   Array<AtlasRegion> textures;
   Animation<AtlasRegion> animation;
-  TextureRegionDrawable planetTexure;
+  TextureRegionDrawable planetTexture;
   Image planet;
   Image color;
   float time;
@@ -64,8 +64,8 @@ public class PlanetField extends Field {
 
     this.textures = assets.get("animations/planet/" + name + ".atlas", TextureAtlas.class).findRegions("rotation");
     this.animation = new Animation<>(0.2f, this.textures, PlayMode.LOOP);
-    this.planetTexure = new TextureRegionDrawable(this.animation.getKeyFrame(0));
-    this.planet = new Image(this.planetTexure);
+    this.planetTexture = new TextureRegionDrawable(this.animation.getKeyFrame(0));
+    this.planet = new Image(this.planetTexture);
     this.planet.setPosition(1, 9);
   }
 
@@ -79,7 +79,7 @@ public class PlanetField extends Field {
     super.act(delta);
 
     this.time += delta;
-    this.planetTexure.setRegion(animation.getKeyFrame(time)); 
+    this.planetTexture.setRegion(animation.getKeyFrame(time)); 
   }
 
   @Override
