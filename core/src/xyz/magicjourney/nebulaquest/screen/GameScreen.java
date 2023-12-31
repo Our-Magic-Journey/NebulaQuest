@@ -5,25 +5,40 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import xyz.magicjourney.nebulaquest.board.Board;
+import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.PlanetReqion;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
+import xyz.magicjourney.nebulaquest.ui.panel.MenuPanel;
+import xyz.magicjourney.nebulaquest.ui.panel.OptionPanel;
+import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 
 public class GameScreen extends AbstractScreen {
   ArrayList<PlanetReqion> regions;
   ArrayList<Entity> entities;
   Board board;
+  InteractivePanel interactivePanel;
+  OptionPanel optionsPanel;
+  TourPanel tourPanel;
+  MenuPanel menuPanel;
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
 
     this.regions = new ArrayList<>();
+    this.entities = new ArrayList<>();
+    this.populateRegions();
+    this.populateBoard();
+  }
+
+  protected void populateRegions() {
     this.regions.add(new PlanetReqion(0xfbe300ff));
     this.regions.add(new PlanetReqion(0xfba500ff));
     this.regions.add(new PlanetReqion(0xfb4a00ff));
@@ -32,8 +47,9 @@ public class GameScreen extends AbstractScreen {
     this.regions.add(new PlanetReqion(0xf041c4ff));
     this.regions.add(new PlanetReqion(0x218525ff));
     this.regions.add(new PlanetReqion(0x52eacfff));
+  }
 
-    this.entities = new ArrayList<>();
+  protected void populateBoard() {
     this.entities.add(new Start());
     this.entities.add(new Planet("ne59", 100, regions.get(0)));
     this.entities.add(new Planet("pluto", 150, regions.get(0)));
@@ -88,11 +104,49 @@ public class GameScreen extends AbstractScreen {
   }
 
   public void create() {
-    Board board = new Board(this.entities, assets);
+    this.board = new Board(this.entities, assets);
+  
+    this.interactivePanel = new InteractivePanel(assets);
+    this.interactivePanel.setPosition(542, 72);
 
-    Table table = new Table();
-    table.setFillParent(true);
-    stage.addActor(table);
-    table.add(board).left().expand();
+    this.optionsPanel = new OptionPanel(assets);
+    this.optionsPanel.setPosition(751, 189);
+
+    this.tourPanel = new TourPanel(assets);
+    this.tourPanel.setPosition(751, 72);
+
+    this.menuPanel = new MenuPanel(assets);
+    this.menuPanel.setPosition(542, 2);
+
+    this.menuPanel.onMenuClick().subscribe(() -> this.screenManager.select("main-menu"));
+    this.menuPanel.onSelect().subscribe(this::handlePanelSelect);
+    this.menuPanel.onUnselect().subscribe(this::handlePanelUnselect);
+
+    this.board.onFieldSelect().subscribe(this::handleFieldSelect);
+    this.board.onFieldUnselect().subscribe(this::handlePanelUnselect);
+
+    this.stage.addActor(board);
+    this.stage.addActor(interactivePanel);
+    this.stage.addActor(optionsPanel);
+    this.stage.addActor(tourPanel);
+    this.stage.addActor(menuPanel);
+  }
+
+  protected void handlePanelSelect(TextButton button) {
+    String panelName = button.getText().toString();
+
+    this.board.unselectField();
+    this.optionsPanel.select(panelName);
+    this.interactivePanel.select(panelName);
+  }
+  
+  protected void handleFieldSelect(Field field) {
+    this.menuPanel.unselect();
+    this.interactivePanel.selectCardView(field);
+  }
+
+  protected void handlePanelUnselect() {
+    this.optionsPanel.unselect();
+    this.interactivePanel.unselect();
   }
 }

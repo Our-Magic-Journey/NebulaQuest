@@ -9,7 +9,7 @@ import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Start extends Entity {
   public Start() {
-    super();
+    super("Start", "Start field description");
   }
 
   @Override

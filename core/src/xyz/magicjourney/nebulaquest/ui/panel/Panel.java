@@ -23,6 +23,7 @@ public class Panel extends Group {
     this.setHeight(height);
     this.content.setFillParent(true);
     this.content.setBackground(texture);
+    this.content.pad(6, 6, 6, 6);
     this.addActor(this.content);
   }
 }

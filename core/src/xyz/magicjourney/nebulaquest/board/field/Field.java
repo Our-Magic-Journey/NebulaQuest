@@ -30,5 +30,11 @@ public class Field extends Button {
     this.style.up = new TextureRegionDrawable(assets.get(texture + ".png", Texture.class));
     this.style.over = new TextureRegionDrawable(assets.get(texture + "-over.png", Texture.class));
     this.style.down = new TextureRegionDrawable(assets.get(texture + "-down.png", Texture.class));
+
+    this.style.checked = new TextureRegionDrawable(assets.get(texture + "-down.png", Texture.class));
+  }
+
+  public Entity getEntity() {
+    return this.entity;
   }
 }

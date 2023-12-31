@@ -11,6 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.entity.Entity;
+import xyz.magicjourney.nebulaquest.event.EventGetter;
+import xyz.magicjourney.nebulaquest.event.ParameterizedEventGetter;
+import xyz.magicjourney.nebulaquest.ui.select.SelectGroup;
 
 public class Board extends Group {
   public final int WIDTH = 540;
@@ -22,7 +25,7 @@ public class Board extends Group {
   protected Table leftRow;
   protected Table bottomRow;
   protected Image background;
-  protected ArrayList<Field> fields;
+  protected SelectGroup<Field> fields;
 
   public Board(ArrayList<Entity> entities, AssetManager assets) {
     this.setWidth(540);
@@ -31,7 +34,7 @@ public class Board extends Group {
     this.background = new Image(new TextureRegionDrawable(assets.get("images/board-background.png",  Texture.class)));
     this.addActor(background);
 
-    this.fields = new ArrayList<>();
+    this.fields = new SelectGroup<>();
     this.fields.add(entities.get(0).toField(assets));
     this.fields.get(0).setPosition(WIDTH - 68, 4);
     this.addActor(this.fields.get(0));
@@ -83,5 +86,17 @@ public class Board extends Group {
       field.rotateBy(90);
       field.moveBy(0, -field.getWidth() - margin);
     }
+  }
+
+  public void unselectField() {
+    this.fields.uncheckAll();
+  }
+
+  public ParameterizedEventGetter<Field> onFieldSelect() {
+    return this.fields.onSelect();
+  }
+
+  public EventGetter onFieldUnselect() {
+    return this.fields.onUnselect();
   }
 }

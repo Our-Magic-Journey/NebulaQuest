@@ -9,7 +9,7 @@ import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Teleport extends Entity implements Buyable {
   public Teleport() {
-    super();
+    super("Teleport", "Teleport field description");
   }
 
   @Override

@@ -9,20 +9,14 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Planet extends Entity implements Buyable {
-  protected String name;
   protected int value;
   protected PlanetReqion reqion;
 
   public Planet(String name, int value, PlanetReqion reqion) {
-    super();
+    super(name, "Planet field");
 
-    this.name = name;
     this.value = value;
     this.reqion = reqion;
-  }
-
-  public String getName() {
-    return this.name;
   }
 
   public int getValue() {
