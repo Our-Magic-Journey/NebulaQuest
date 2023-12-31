@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 import xyz.magicjourney.nebulaquest.board.Board;
 import xyz.magicjourney.nebulaquest.board.field.Field;
+import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
@@ -28,10 +29,11 @@ public class GameScreen extends AbstractScreen {
   OptionPanel optionsPanel;
   TourPanel tourPanel;
   MenuPanel menuPanel;
+  Dice dice;
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
-
+    
     this.regions = new ArrayList<>();
     this.entities = new ArrayList<>();
     this.populateRegions();
@@ -105,7 +107,8 @@ public class GameScreen extends AbstractScreen {
 
   public void create() {
     this.board = new Board(this.entities, assets);
-  
+    this.dice = new Dice(assets);
+
     this.interactivePanel = new InteractivePanel(assets);
     this.interactivePanel.setPosition(542, 72);
 
@@ -124,12 +127,16 @@ public class GameScreen extends AbstractScreen {
 
     this.board.onFieldSelect().subscribe(this::handleFieldSelect);
     this.board.onFieldUnselect().subscribe(this::handlePanelUnselect);
+    
+    this.tourPanel.onRoll().subscribe(() -> dice.roll((r) -> System.out.println(r)));
 
+    this.dice.setPosition(0, 0);
     this.stage.addActor(board);
     this.stage.addActor(interactivePanel);
     this.stage.addActor(optionsPanel);
     this.stage.addActor(tourPanel);
     this.stage.addActor(menuPanel);
+    this.stage.addActor(dice);
   }
 
   protected void handlePanelSelect(TextButton button) {

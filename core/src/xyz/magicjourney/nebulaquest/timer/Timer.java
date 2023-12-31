@@ -4,17 +4,17 @@ import xyz.magicjourney.nebulaquest.event.Event;
 import xyz.magicjourney.nebulaquest.event.EventGetter;
 
 public class Timer {
-  private long timeLeft;
-  private long waitTime;
+  private float timeLeft;
+  private float waitTime;
   private boolean paused;
   private boolean autoRepeat;
   private Event timeoutEvent;
 
-  public Timer(long waitTime) {
+  public Timer(float waitTime) {
     this(waitTime, false);
   }
 
-  public Timer(long waitTime, boolean autoRepeat) {
+  public Timer(float waitTime, boolean autoRepeat) {
     this.waitTime = waitTime;
     this.timeLeft = waitTime;
     this.autoRepeat = autoRepeat;
@@ -43,7 +43,7 @@ public class Timer {
     paused = false;
   }
 
-  public void act(long deltaTime) {
+  public void act(float deltaTime) {
     if (paused) {
       return;
     }
