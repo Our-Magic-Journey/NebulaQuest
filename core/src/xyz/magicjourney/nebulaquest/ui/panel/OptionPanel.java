@@ -14,6 +14,6 @@ public class OptionPanel extends ViewPanel {
     this.views.put("Bank", new BankOptionView(assets));
     this.views.put("Players", new PlayersOptionView(assets));
 
-    this.select("bank");
+    this.select("Bank");
   }
 }

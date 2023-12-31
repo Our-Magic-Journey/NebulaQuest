@@ -12,14 +12,6 @@ public class PlayerOptionView extends AbstractView {
     super(assets);
 
     this.label = new Label("Player View", skin, "small");
-    this.content.add(label);
-  }
-
-  @Override
-  public void show() {
-  }
-
-  @Override
-  public void hide() {
+    this.add(label);
   }
 }

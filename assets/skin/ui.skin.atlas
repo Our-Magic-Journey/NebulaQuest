@@ -110,3 +110,10 @@ panel
   orig: 57, 96
   offset: 0, 0
   index: -1
+panel-margin
+  rotate: false
+  xy: 60, 71
+  size: 5, 4
+  orig: 5, 4
+  offset: 0, 0
+  index: -1

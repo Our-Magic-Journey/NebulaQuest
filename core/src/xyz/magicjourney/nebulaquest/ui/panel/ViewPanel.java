@@ -24,17 +24,13 @@ public class ViewPanel extends Panel {
     this.selected = Optional.ofNullable(this.views.get(view));
     
     if (this.selected.isPresent()) {
-      this.content.add(this.selected.get());
-      this.selected.get().show();
+      this.content.add(this.selected.get()).fillX().expand().top();
       this.content.pack();
     }
   }
 
   public void unselect() {
-    if (this.selected.isPresent()) {
-      this.selected.get().hide();
-      this.selected.get().remove();
-      this.content.pack();
-    }
+    this.content.clear();
+    this.content.pack();
   }
 }

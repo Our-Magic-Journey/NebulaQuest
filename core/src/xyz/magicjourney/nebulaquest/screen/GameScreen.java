@@ -13,7 +13,7 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
-import xyz.magicjourney.nebulaquest.entity.entities.planet.PlanetReqion;
+import xyz.magicjourney.nebulaquest.entity.entities.planet.PlanetRegion;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.MenuPanel;
@@ -21,7 +21,7 @@ import xyz.magicjourney.nebulaquest.ui.panel.OptionPanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 
 public class GameScreen extends AbstractScreen {
-  ArrayList<PlanetReqion> regions;
+  ArrayList<PlanetRegion> regions;
   ArrayList<Entity> entities;
   Board board;
   InteractivePanel interactivePanel;
@@ -39,14 +39,14 @@ public class GameScreen extends AbstractScreen {
   }
 
   protected void populateRegions() {
-    this.regions.add(new PlanetReqion(0xfbe300ff));
-    this.regions.add(new PlanetReqion(0xfba500ff));
-    this.regions.add(new PlanetReqion(0xfb4a00ff));
-    this.regions.add(new PlanetReqion(0x52c2cfff));
-    this.regions.add(new PlanetReqion(0x991277ff));
-    this.regions.add(new PlanetReqion(0xf041c4ff));
-    this.regions.add(new PlanetReqion(0x218525ff));
-    this.regions.add(new PlanetReqion(0x52eacfff));
+    this.regions.add(new PlanetRegion(0xfbe300ff, "A"));
+    this.regions.add(new PlanetRegion(0xfba500ff, "B"));
+    this.regions.add(new PlanetRegion(0xfb4a00ff, "C"));
+    this.regions.add(new PlanetRegion(0x52c2cfff, "D"));
+    this.regions.add(new PlanetRegion(0x991277ff, "E"));
+    this.regions.add(new PlanetRegion(0xf041c4ff, "F"));
+    this.regions.add(new PlanetRegion(0x218525ff, "G"));
+    this.regions.add(new PlanetRegion(0x52eacfff, "H"));
   }
 
   protected void populateBoard() {

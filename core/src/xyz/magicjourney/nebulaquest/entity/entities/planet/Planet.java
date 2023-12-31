@@ -1,5 +1,7 @@
 package xyz.magicjourney.nebulaquest.entity.entities.planet;
 
+import java.util.Optional;
+
 import com.badlogic.gdx.assets.AssetManager;
 
 import xyz.magicjourney.nebulaquest.board.field.Field;
@@ -10,15 +12,15 @@ import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Planet extends Entity implements Buyable {
   protected int value;
-  protected PlanetReqion reqion;
+  protected PlanetRegion region;
 
-  public Planet(String name, int value, PlanetReqion reqion) {
-    super(name, "Planet field");
-
+  public Planet(String name, int value, PlanetRegion region) {
+    super(name, "This is a planet field. If unclaimed, you have  the opportunity to acquire it as your property. If another explorer has already claimed the planet, be prepared to pay a fee for your stay.");
     this.value = value;
-    this.reqion = reqion;
+    this.region = region;
   }
-
+  
+  @Override
   public int getValue() {
     return this.value;
   }
@@ -32,8 +34,8 @@ public class Planet extends Entity implements Buyable {
   }
 
   @Override
-  public Player getOwner() {
-    return null;
+  public Optional<Player> getOwner() {
+    return Optional.empty();
   }
 
   @Override
@@ -41,8 +43,8 @@ public class Planet extends Entity implements Buyable {
     return true;
   }
 
-  public PlanetReqion getRegion() {
-    return this.reqion;
+  public PlanetRegion getRegion() {
+    return this.region;
   }
 
   @Override

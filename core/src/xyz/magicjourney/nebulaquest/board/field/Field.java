@@ -14,7 +14,7 @@ public class Field extends Button {
   public Field(Entity entity, AssetManager assets) {
     this(entity, assets, 32, 64);
   }
-  
+
   public Field(Entity entity, AssetManager assets, int width, int height) {
     this.style = new ButtonStyle();
     this.entity = entity;
@@ -23,6 +23,8 @@ public class Field extends Button {
     this.setHeight(height);
     this.setStyle(this.style);
     this.setTexture("images/small-field", assets);
+    
+    // Rotate children with parent
     this.setTransform(true);
   }
 
@@ -36,5 +38,17 @@ public class Field extends Button {
 
   public Entity getEntity() {
     return this.entity;
+  }
+
+  public Field clone(AssetManager assets) {
+    Field field = new Field(entity, assets);
+    
+    return field;
+  }
+
+  public void makeStatic() {
+    this.style.over = null;
+    this.style.down = null;
+    this.style.checked = null;
   }
 }

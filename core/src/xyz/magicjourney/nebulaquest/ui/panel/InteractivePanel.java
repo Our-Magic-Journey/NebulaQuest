@@ -18,13 +18,14 @@ public class InteractivePanel extends ViewPanel {
     this.views.put("Players", new PlayersInteractiveView(assets));
     this.views.put("Card", new CardView(assets));
 
-    this.select("bank");
+    this.content.pad(4, 4, 4, 4);
+    this.select("Bank");
   }
 
   public void selectCardView(Field field) {
     this.select("Card");
     
     CardView view = (CardView) this.views.get("Card");
-    view.setEntity(field.getEntity());
+    view.setField(field);
   }
 }
