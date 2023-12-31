@@ -3,27 +3,17 @@ package xyz.magicjourney.nebulaquest.board.field;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 
+import xyz.magicjourney.nebulaquest.animation.AnimatedImage;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
-
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class PlanetField extends Field {
   Planet entity;
-  Array<AtlasRegion> textures;
-  Animation<AtlasRegion> animation;
-  TextureRegionDrawable planetTexure;
-  Image planet;
+  AnimatedImage planet;
   Image color;
-  float time;
   Label price;
   Label name;
   
@@ -61,25 +51,14 @@ public class PlanetField extends Field {
 
   protected void loadAnimation(AssetManager assets) {
     String name = this.entity.getName();
-
-    this.textures = assets.get("animations/planet/" + name + ".atlas", TextureAtlas.class).findRegions("rotation");
-    this.animation = new Animation<>(0.2f, this.textures, PlayMode.LOOP);
-    this.planetTexure = new TextureRegionDrawable(this.animation.getKeyFrame(0));
-    this.planet = new Image(this.planetTexure);
+    
+    this.planet = new AnimatedImage("animations/planet/" + name + ".atlas", "rotation", 0.2f, true, assets);
     this.planet.setPosition(1, 9);
   }
 
   @Override
   public void setColor(Color color) {
     this.color.setColor(color);
-  }
-
-  @Override
-  public void act(float delta) {
-    super.act(delta);
-
-    this.time += delta;
-    this.planetTexure.setRegion(animation.getKeyFrame(time)); 
   }
 
   @Override

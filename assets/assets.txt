@@ -31,3 +31,4 @@ animations/planet/pluto.atlas
 animations/planet/nabu.atlas
 animations/planet/ne59.atlas
 animations/planet/paradise.atlas
+animations/dice/dice.atlas
