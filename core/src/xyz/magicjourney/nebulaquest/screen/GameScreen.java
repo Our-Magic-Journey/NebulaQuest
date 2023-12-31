@@ -16,28 +16,41 @@ import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.PlanetRegion;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
+import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.MenuPanel;
 import xyz.magicjourney.nebulaquest.ui.panel.OptionPanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 
 public class GameScreen extends AbstractScreen {
-  ArrayList<PlanetRegion> regions;
-  ArrayList<Entity> entities;
-  Board board;
-  InteractivePanel interactivePanel;
-  OptionPanel optionsPanel;
-  TourPanel tourPanel;
-  MenuPanel menuPanel;
-  Dice dice;
+  protected Player activePlayer;
+  protected ArrayList<Player> players;
+  protected ArrayList<PlanetRegion> regions;
+  protected ArrayList<Entity> entities;
+  protected Board board;
+  protected InteractivePanel interactivePanel;
+  protected OptionPanel optionsPanel;
+  protected TourPanel tourPanel;
+  protected MenuPanel menuPanel;
+  protected Dice dice;
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
     
+    this.players = new ArrayList<>();
     this.regions = new ArrayList<>();
     this.entities = new ArrayList<>();
+    this.populatePlayers();
     this.populateRegions();
     this.populateBoard();
+
+    this.activePlayer = this.players.get(0);
+  }
+
+  public void populatePlayers() {
+    this.players.add(new Player("Player 1"));
+    this.players.add(new Player("Player 2"));
+    this.players.add(new Player("Player 3"));
   }
 
   protected void populateRegions() {
@@ -115,7 +128,7 @@ public class GameScreen extends AbstractScreen {
     this.optionsPanel = new OptionPanel(assets);
     this.optionsPanel.setPosition(751, 189);
 
-    this.tourPanel = new TourPanel(assets);
+    this.tourPanel = new TourPanel(assets, this.players);
     this.tourPanel.setPosition(751, 72);
 
     this.menuPanel = new MenuPanel(assets);
@@ -128,7 +141,11 @@ public class GameScreen extends AbstractScreen {
     this.board.onFieldSelect().subscribe(this::handleFieldSelect);
     this.board.onFieldUnselect().subscribe(this::handlePanelUnselect);
     
-    this.tourPanel.onRoll().subscribe(() -> dice.roll((r) -> System.out.println(r)));
+    this.tourPanel.onRoll().subscribe(() -> dice.roll((r) -> {
+      System.out.println(r);
+      this.tourPanel.setTurnEndMode();
+    }));
+    this.tourPanel.onTurnStarted().subscribe((player) -> this.activePlayer = player);
 
     this.dice.setPosition(0, 0);
     this.stage.addActor(board);
