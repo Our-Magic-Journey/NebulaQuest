@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import xyz.magicjourney.nebulaquest.board.Pawn;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 
 public class Field extends Button {
   protected ButtonStyle style;
   protected Entity entity;
+  protected int correctPawnRotation;
 
   public Field(Entity entity, AssetManager assets) {
     this(entity, assets, 32, 64);
@@ -18,6 +20,7 @@ public class Field extends Button {
   public Field(Entity entity, AssetManager assets, int width, int height) {
     this.style = new ButtonStyle();
     this.entity = entity;
+    this.correctPawnRotation = 0;
 
     this.setWidth(width);
     this.setHeight(height);
@@ -36,6 +39,10 @@ public class Field extends Button {
     this.style.checked = new TextureRegionDrawable(assets.get(texture + "-down.png", Texture.class));
   }
 
+  public void correctPawnRotationBy(int correctPawnRotation) {
+    this.correctPawnRotation = correctPawnRotation;
+  }
+
   public Entity getEntity() {
     return this.entity;
   }
@@ -50,5 +57,11 @@ public class Field extends Button {
     this.style.over = null;
     this.style.down = null;
     this.style.checked = null;
+  }
+
+  public void addPawn(Pawn pawn) {
+    this.addActor(pawn);
+    pawn.setPosition((this.getWidth() - pawn.getWidth())/2, (this.getHeight() - pawn.getHeight())/2);
+    pawn.setRotation(correctPawnRotation);
   }
 }

@@ -119,7 +119,7 @@ public class GameScreen extends AbstractScreen {
   }
 
   public void create() {
-    this.board = new Board(this.entities, assets);
+    this.board = new Board(this.entities, this.players, this.assets);
     this.dice = new Dice(assets);
 
     this.interactivePanel = new InteractivePanel(assets);
@@ -174,7 +174,11 @@ public class GameScreen extends AbstractScreen {
   protected void handleDiceRoll(Runnable unlock) {
     dice.roll((roll) -> {
       if (roll != 12) {
+        this.board.movePlayer(activePlayer, roll, true);
         this.tourPanel.setTurnEndMode();
+      }
+      else {
+        this.board.movePlayer(activePlayer, roll, false);
       }
 
       unlock.run();
