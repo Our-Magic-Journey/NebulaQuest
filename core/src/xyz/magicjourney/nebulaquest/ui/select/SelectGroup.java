@@ -44,6 +44,10 @@ public class SelectGroup<T extends Button> extends ButtonGroup<T> {
     return this.getButtons().get(index);
   }
 
+  public int length() {
+    return this.getButtons().size;
+  }
+
   public ParameterizedEventGetter<T> onSelect() {
     return this.selectEvent;
   }
