@@ -134,7 +134,7 @@ public class Board extends Group {
     Pawn pawn = players.get(player);
     int finalPos = (pawn.getField() + moveBy) % this.fields.length();
 
-    for (int i = pawn.getField(); i <= finalPos; i++) {
+    for (int i = pawn.getField() + 1; i <= finalPos; i++) {
       this.fields.get(i).getEntity().onPass(player);
     }
 
