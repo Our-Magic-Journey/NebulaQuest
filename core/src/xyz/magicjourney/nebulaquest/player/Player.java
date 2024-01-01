@@ -1,21 +1,26 @@
 package xyz.magicjourney.nebulaquest.player;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import xyz.magicjourney.nebulaquest.entity.Buyable;
+import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEvent;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEventGetter;
 
-public class Player {
+public class Player implements Describable {
   private static int nextID = 0;
   
   protected ParameterizedEvent<Player> changedEvent;
-
+  
   protected int id;
   protected String name;
   protected int money;
+  protected ArrayList<Buyable> properties;
 
   public Player(String name) {
     this.name = name;
@@ -30,6 +35,10 @@ public class Player {
 
   public String getName() {
     return this.name;
+  }
+
+  public String getDescription() {
+    return "An ordinary trader, like many others in the Galaxy";
   }
 
   public int getMoney() {
