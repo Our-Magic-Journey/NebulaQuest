@@ -46,6 +46,8 @@ public class TourPanel extends Panel {
     playerDescription.add(playerImage).expand().center();
     playerDescription.add(money).expand().center();
     
+    this.players.first().onChange().subscribe(this::update);
+
     this.content.add(playerDescription).expand().fill();
     this.content.row();
     this.buttonCell = this.content.add(roll).fillX().height(20);
@@ -76,12 +78,20 @@ public class TourPanel extends Panel {
     this.buttonCell.setActor(endTurn);
   }
 
+  protected void update(Player player) {
+    this.money.setText(player.getMoney() + "$");
+  }
+
   protected void handleTurnEnd(Runnable unblock) {
+    this.players.first().onChange().unsubscribe(this::update);
     this.players.addLast(this.players.removeFirst());
-    this.money.setText(this.players.first().getMoney() + "$");
+    this.players.first().onChange().subscribe(this::update);
+
     this.playerImage.setDrawable(this.players.first().getShip(assets));
     this.playerTurnMsg.setText("It is the turn of " + this.players.first().getName() + "!");
     this.playerTurnMsg.show(this.getStage());
+
+    this.update(this.players.first());
 
     this.playerTurnMsg.onAccepted().subscribe(() -> {
       this.turnStartedEvent.emit(this.players.first());
