@@ -119,7 +119,7 @@ public class GameScreen extends AbstractScreen {
   }
 
   public void create() {
-    this.board = new Board(this.entities, assets);
+    this.board = new Board(this.entities, this.players, this.assets);
     this.dice = new Dice(assets);
 
     this.interactivePanel = new InteractivePanel(assets);
@@ -141,10 +141,7 @@ public class GameScreen extends AbstractScreen {
     this.board.onFieldSelect().subscribe(this::handleFieldSelect);
     this.board.onFieldUnselect().subscribe(this::handlePanelUnselect);
     
-    this.tourPanel.onRoll().subscribe(() -> dice.roll((r) -> {
-      System.out.println(r);
-      this.tourPanel.setTurnEndMode();
-    }));
+    this.tourPanel.onRoll().subscribe(this::handleDiceRoll);
     this.tourPanel.onTurnStarted().subscribe((player) -> this.activePlayer = player);
 
     this.dice.setPosition(0, 0);
@@ -172,5 +169,19 @@ public class GameScreen extends AbstractScreen {
   protected void handlePanelUnselect() {
     this.optionsPanel.unselect();
     this.interactivePanel.unselect();
+  }
+
+  protected void handleDiceRoll(Runnable unlock) {
+    dice.roll((roll) -> {
+      if (roll != 12) {
+        this.board.movePlayer(activePlayer, roll, true);
+        this.tourPanel.setTurnEndMode();
+      }
+      else {
+        this.board.movePlayer(activePlayer, roll, false);
+      }
+
+      unlock.run();
+    });
   }
 }

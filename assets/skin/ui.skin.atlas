@@ -6,45 +6,36 @@ filter: Nearest, Nearest
 repeat: none
 arrow-down
   rotate: false
-  xy: 115, 104
+  xy: 73, 104
   size: 9, 9
   orig: 9, 9
   offset: 0, 0
   index: -1
 arrow-over
   rotate: false
-  xy: 60, 88
+  xy: 86, 117
   size: 9, 9
   orig: 9, 9
   offset: 0, 0
   index: -1
 arrow-up
   rotate: false
-  xy: 60, 77
+  xy: 39, 19
   size: 9, 9
   orig: 9, 9
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 64, 114
+  xy: 1, 17
   size: 11, 11
   split: 3, 3, 3, 3
   orig: 11, 11
   offset: 0, 0
   index: -1
-button-disabled
-  rotate: false
-  xy: 1, 99
-  size: 61, 26
-  split: 16, 16, 13, 10
-  pad: 0, 0, 0, 0
-  orig: 61, 26
-  offset: 0, 0
-  index: -1
 button-down
   rotate: false
-  xy: 64, 101
+  xy: 60, 115
   size: 11, 11
   split: 3, 3, 3, 3
   orig: 11, 11
@@ -52,7 +43,7 @@ button-down
   index: -1
 button-orange
   rotate: false
-  xy: 77, 114
+  xy: 1, 4
   size: 11, 11
   split: 3, 3, 3, 3
   orig: 11, 11
@@ -60,7 +51,7 @@ button-orange
   index: -1
 button-orange-down
   rotate: false
-  xy: 77, 101
+  xy: 14, 17
   size: 11, 11
   split: 3, 3, 3, 3
   orig: 11, 11
@@ -68,7 +59,7 @@ button-orange-down
   index: -1
 button-orange-over
   rotate: false
-  xy: 90, 114
+  xy: 60, 102
   size: 11, 11
   split: 3, 3, 3, 3
   orig: 11, 11
@@ -76,7 +67,7 @@ button-orange-over
   index: -1
 button-over
   rotate: false
-  xy: 90, 101
+  xy: 73, 115
   size: 11, 11
   split: 3, 3, 3, 3
   orig: 11, 11
@@ -84,42 +75,42 @@ button-over
   index: -1
 check-box-off
   rotate: false
-  xy: 103, 115
+  xy: 14, 5
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 check-box-on
   rotate: false
-  xy: 103, 103
+  xy: 27, 18
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 check-box-over
   rotate: false
-  xy: 115, 115
+  xy: 60, 90
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 panel
   rotate: false
-  xy: 1, 1
+  xy: 1, 30
   size: 57, 96
   orig: 57, 96
   offset: 0, 0
   index: -1
 white-pixel
   rotate: false
-  xy: 126, 112
+  xy: 1, 1
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 panel-margin
   rotate: false
-  xy: 60, 71
+  xy: 60, 84
   size: 5, 4
   orig: 5, 4
   offset: 0, 0
