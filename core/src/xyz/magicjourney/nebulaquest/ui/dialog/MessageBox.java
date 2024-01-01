@@ -16,6 +16,7 @@ public class MessageBox extends Window {
   protected Label message;
   protected TextButton okBtn;
   protected Event acceptedEvent;
+  protected boolean singleEventEmit;
 
   public MessageBox(String text, AssetManager assets) {
     super("",  assets.get("skin/ui.skin.json", Skin.class));
@@ -24,7 +25,8 @@ public class MessageBox extends Window {
     this.acceptedEvent = new Event();
     this.message = new Label(text, this.skin, "small");
     this.okBtn = new TextButton("Ok", this.skin, "orange");
-    
+    this.singleEventEmit = false;
+
     this.setWidth(300);
     this.setHeight(100);
 
@@ -34,6 +36,14 @@ public class MessageBox extends Window {
     this.add(okBtn).minWidth(100).expandX().center().pad(10);
 
     this.okBtn.addListener(new Listener(this::handleOkButtonClick));
+  }
+
+  public boolean getEventEmitMode() {
+    return this.singleEventEmit;
+  }
+
+  public void setEventEmitMode(boolean singleEmit) {
+    this.singleEventEmit = singleEmit;
   }
 
   public EventGetter onAccepted() {
@@ -54,6 +64,10 @@ public class MessageBox extends Window {
   protected void handleOkButtonClick() {
     this.remove();
     this.acceptedEvent.emit();
+    
+    if (this.singleEventEmit) {
+      this.acceptedEvent.unsubscribeAll();
+    }
   }
 
   public void setText(String text) {

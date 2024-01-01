@@ -28,11 +28,7 @@ public class Dice extends Group {
     this.setWidth(400);
     this.setHeight(200);
 
-    this.viabilityTimer.onTimeout().subscribe(() -> {
-      this.table.clear();
-      this.table.pack();
-      this.isRolling = false;
-    });
+
   }
 
   @Override
@@ -51,13 +47,20 @@ public class Dice extends Group {
 
     this.table.add(animation);
     this.animation.loadAnimation("roll" + result);
+    this.viabilityTimer.clear();
     this.animation.restart();
     this.isRolling = true;
-
+    
     this.animation.onEnd().subscribe(() -> {
-      callback.accept(result);
       this.animation.clear();
       this.viabilityTimer.reset();
+    });
+
+    this.viabilityTimer.onTimeout().subscribe(() -> {
+      this.table.clear();
+      this.table.pack();
+      this.isRolling = false;
+      callback.accept(result);
     });
   }
 }

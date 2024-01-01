@@ -10,10 +10,12 @@ public class Player {
   
   protected int id;
   protected String name;
+  protected int money;
 
   public Player(String name) {
     this.name = name;
     this.id = generateId();
+    this.money = 1000;
   }
 
   private int generateId() {
@@ -22,6 +24,10 @@ public class Player {
 
   public String getName() {
     return this.name;
+  }
+
+  public int getMoney() {
+    return this.money;
   }
 
   public TextureRegionDrawable getShip(AssetManager assets) {
