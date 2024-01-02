@@ -38,9 +38,15 @@ public class AuctionInteractiveView extends DescriptionInteractiveView {
   public void select(Player player, Entity field) {
     this.display(field);
 
+    if (this.player != null) {
+      this.player.onChange().unsubscribe(this::update);
+    }
+    
+    this.player = player;
+    this.player.onChange().subscribe(this::update);
+
     if (field instanceof Buyable property) {
       this.property = property;
-      this.player = player;
 
       this.skipButton.setDisabled(false);
 
@@ -56,9 +62,26 @@ public class AuctionInteractiveView extends DescriptionInteractiveView {
     }
   }
 
+  protected void update(Player player) {
+    this.buyButton.setDisabled(true);
+
+    if (!this.property.canByBought()) {
+      return;
+    }
+
+    if (player.getMoney() < this.property.getValue()) {
+      return;
+    }
+
+    this.buyButton.setDisabled(false);
+  }
+
   protected void handleBuyClick(Runnable unblock) {
     this.tourPanel.unblockTurnButton();
     this.skipButton.setDisabled(true);
+    this.player.buyProperty(this.property);
+
+    this.parent.select("Description");
   }
 
   protected void handleSkipClick(Runnable unblock) {

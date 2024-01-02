@@ -40,6 +40,11 @@ public class Planet extends Entity implements Buyable {
     return this.owner;
   }
 
+  @Override
+  public void setOwner(Player player) {
+    this.owner = Optional.of(player);
+  }
+
   public PlanetRegion getRegion() {
     return this.region;
   }

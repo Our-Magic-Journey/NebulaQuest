@@ -29,6 +29,11 @@ public class Teleport extends Entity implements Buyable {
   public Optional<Player> getOwner() {
     return this.owner;
   }
+
+  @Override
+  public void setOwner(Player player) {
+    this.owner = Optional.of(player);
+  }
   
   @Override
   public void onEnter(Player player) {

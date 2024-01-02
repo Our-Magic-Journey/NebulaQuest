@@ -12,6 +12,8 @@ public interface Buyable extends Describable, Interactiveable {
     return this.getOwner().isPresent() && this.getOwner().get() == player;
   }
 
+  void setOwner(Player player);
+
   default boolean mustPayFee(Player player) {
     return this.getOwner().isPresent() && !this.isOwner(player);
   }
@@ -24,10 +26,10 @@ public interface Buyable extends Describable, Interactiveable {
   default String getInteractiveablePanelName(Player player) {
     if (this.getOwner().isPresent()) {
       if (this.getOwner().get() == player) {
-        return "PayFee";
+        return "Description";
       }
       
-      return "Description";
+      return "PayFee";
     }
     
     return  "Auction";

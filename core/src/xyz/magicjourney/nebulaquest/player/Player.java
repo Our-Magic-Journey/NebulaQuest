@@ -53,6 +53,18 @@ public class Player implements Describable {
     this.changedEvent.emit(this);
   }
 
+  public boolean buyProperty(Buyable property) {
+    if (this.getMoney() >= property.getValue() && property.canByBought()) {
+      this.money -= property.getValue();
+      this.properties.add(property);
+      property.setOwner(this);
+
+      return true;
+    }
+
+    return false;
+  }
+
   public TextureRegionDrawable getShip(AssetManager assets) {
     return new TextureRegionDrawable(new TextureRegion(assets.get("images/player" + id + ".png", Texture.class)));
   }
