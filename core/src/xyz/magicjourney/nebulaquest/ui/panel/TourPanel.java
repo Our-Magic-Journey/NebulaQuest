@@ -82,6 +82,14 @@ public class TourPanel extends Panel {
     this.money.setText(player.getMoney() + "$");
   }
 
+  public void blockTurnButton() {
+    this.endTurn.setDisabled(true);
+  }
+
+  public void unblockTurnButton() {
+    this.endTurn.setDisabled(false);
+  }
+
   protected void handleTurnEnd(Runnable unblock) {
     this.players.first().onChange().unsubscribe(this::update);
     this.players.addLast(this.players.removeFirst());

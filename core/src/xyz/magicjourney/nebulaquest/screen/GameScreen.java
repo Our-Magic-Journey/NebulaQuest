@@ -11,6 +11,7 @@ import xyz.magicjourney.nebulaquest.board.Board;
 import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Entity;
+import xyz.magicjourney.nebulaquest.entity.Interactiveable;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
@@ -24,6 +25,7 @@ import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 
 public class GameScreen extends AbstractScreen {
   protected Player activePlayer;
+  protected Entity activeEntity;
   protected ArrayList<Player> players;
   protected ArrayList<PlanetRegion> regions;
   protected ArrayList<Entity> entities;
@@ -45,6 +47,7 @@ public class GameScreen extends AbstractScreen {
     this.populateBoard();
 
     this.activePlayer = this.players.get(0);
+    this.activeEntity = this.entities.get(0);
   }
 
   public void populatePlayers() {
@@ -119,17 +122,17 @@ public class GameScreen extends AbstractScreen {
   }
 
   public void create() {
-    this.board = new Board(this.entities, this.players, this.assets);
+    this.board = new Board(this.entities, this.players, this.assets, this::handleFieldEnter);
     this.dice = new Dice(assets);
 
-    this.interactivePanel = new InteractivePanel(assets);
+    this.tourPanel = new TourPanel(assets, this.players);
+    this.tourPanel.setPosition(751, 72);
+
+    this.interactivePanel = new InteractivePanel(assets, this.tourPanel, this.activePlayer, this.entities.get(0));
     this.interactivePanel.setPosition(542, 72);
 
     this.optionsPanel = new OptionPanel(assets);
     this.optionsPanel.setPosition(751, 189);
-
-    this.tourPanel = new TourPanel(assets, this.players);
-    this.tourPanel.setPosition(751, 72);
 
     this.menuPanel = new MenuPanel(assets);
     this.menuPanel.setPosition(542, 2);
@@ -142,7 +145,7 @@ public class GameScreen extends AbstractScreen {
     this.board.onFieldUnselect().subscribe(this::handlePanelUnselect);
     
     this.tourPanel.onRoll().subscribe(this::handleDiceRoll);
-    this.tourPanel.onTurnStarted().subscribe((player) -> this.activePlayer = player);
+    this.tourPanel.onTurnStarted().subscribe(this::handleTurnStarted);
 
     this.dice.setPosition(0, 0);
     this.stage.addActor(board);
@@ -153,19 +156,26 @@ public class GameScreen extends AbstractScreen {
     this.stage.addActor(dice);
   }
 
+  protected void handleTurnStarted(Player player) {
+    this.activePlayer = player;
+
+    // We first set activeEntity to null ensure that handleFieldSelect method
+    // will display entity, regardless of entity being Interactiveable or not.
+    this.activeEntity = null;
+    // this will fire the board's onFieldSelect event that wil run the handleFieldSelect method
+    this.board.selectFieldUnderPlayer(player);
+    // now we can safely change the active entity.
+    this.activeEntity = this.board.getFieldUnderPlayer(player);
+  }
+
   protected void handlePanelSelect(TextButton button) {
     String panelName = button.getText().toString();
 
     this.board.unselectField();
     this.optionsPanel.select(panelName);
-    this.interactivePanel.select(panelName);
+    this.interactivePanel.select(panelName, this.activePlayer, this.activeEntity);
   }
   
-  protected void handleFieldSelect(Field field) {
-    this.menuPanel.unselect();
-    this.interactivePanel.selectCardView(field);
-  }
-
   protected void handlePanelUnselect() {
     this.optionsPanel.unselect();
     this.interactivePanel.unselect();
@@ -183,5 +193,37 @@ public class GameScreen extends AbstractScreen {
 
       unlock.run();
     });
+  }
+
+  protected void handleFieldSelect(Field field) {
+    this.menuPanel.unselect();
+
+    if (field.getEntity() == this.activeEntity) {
+      this.displayEntityInInteractivePanel(field.getEntity());
+    }
+    else {
+      this.interactivePanel.selectDescription(field.getEntity());
+    }
+  }
+
+  protected void handleFieldEnter(Entity entity) {
+    this.activeEntity = entity;
+    
+    if (entity instanceof Interactiveable interactive) {
+      if (interactive.isDecisionRequired(this.activePlayer)) {
+        this.tourPanel.blockTurnButton();
+      }
+    }
+
+    this.displayEntityInInteractivePanel(entity);
+  }
+
+  protected void displayEntityInInteractivePanel(Entity entity) {
+    if (entity instanceof Interactiveable interactive) {
+      this.interactivePanel.select(interactive.getInteractiveablePanelName(this.activePlayer), this.activePlayer, entity);
+    }
+    else {
+      this.interactivePanel.select("Description", this.activePlayer, entity);
+    } 
   }
 }
