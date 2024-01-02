@@ -45,7 +45,7 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
     super.createLayout(entity, true);
 
     this.addSpacer();
-    this.add(this.payButton).height(20).pad(2, 4, 0, 4).fillX().row();;
+    this.add(this.payButton).height(20).pad(2, 4, 0, 4).fillX().row();
     this.add(this.bankruptButton).height(20).pad(4, 4, 0, 4).fillX().row();
   }
 
