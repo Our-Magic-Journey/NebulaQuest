@@ -2,6 +2,7 @@ package xyz.magicjourney.nebulaquest.board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,11 +30,13 @@ public class Board extends Group {
   protected Image background;
   protected SelectGroup<Field> fields;
   protected HashMap<Player, Pawn> players;
+  protected Consumer<Entity> handleFieldEnter;
 
-  public Board(ArrayList<Entity> entities, ArrayList<Player> players, AssetManager assets) {
+  public Board(ArrayList<Entity> entities, ArrayList<Player> players, AssetManager assets, Consumer<Entity> handleFieldEnter) {
     this.setWidth(540);
     this.setHeight(540);
 
+    this.handleFieldEnter = handleFieldEnter;
     this.background = new Image(new TextureRegionDrawable(assets.get("images/board-background.png",  Texture.class)));
     this.addActor(background);
 
@@ -118,15 +121,22 @@ public class Board extends Group {
     return this.fields.onUnselect();
   }
 
-  public void setPlayerPosition(Player player, int field, boolean isFinalMove) {    
-    field = field % this.fields.length();
-
+  public void setPlayerPosition(Player player, int fieldNumber, boolean isFinalMove) {    
+    fieldNumber = fieldNumber % this.fields.length();
+    
     this.players.get(player).remove();
-    this.players.get(player).setField(field);
-    this.fields.get(field).addPawn(this.players.get(player));
+    this.players.get(player).setField(fieldNumber);
+    
+    Field field = this.fields.get(fieldNumber);
+    field.addPawn(this.players.get(player));
 
-    if (isFinalMove) {
-      this.fields.get(field).getEntity().onEnter(player);
+    if (isFinalMove) {     
+      this.fields.uncheckAll();
+      
+      field.setChecked(true);
+      field.getEntity().onEnter(player);
+      
+      this.handleFieldEnter.accept(field.getEntity());
     }
   }
 
@@ -139,5 +149,20 @@ public class Board extends Group {
     }
 
     this.setPlayerPosition(player, finalPos, isFinalMove);
+  }
+  
+  protected Field getFieldInstanceUnderPlayer(Player player) {
+    Pawn pawn = players.get(player);
+
+    return this.fields.get(pawn.getField());
+  }
+
+  public Entity getFieldUnderPlayer(Player player) {
+    return this.getFieldInstanceUnderPlayer(player).getEntity();
+  }
+
+  public void selectFieldUnderPlayer(Player player) {
+    this.unselectField();
+    this.getFieldInstanceUnderPlayer(player).setChecked(true);
   }
 }

@@ -35,7 +35,7 @@ public class NebulaQuest extends Game {
 		this.screenManager.register("credits", CreditsScreen::new);
 		this.screenManager.register("game", GameScreen::new);
 
-		this.assetsLoader.onLoad().subscribe(this::onLoad);
+		this.assetsLoader.onLoad().subscribe(this.onLoad);
 		this.screenManager.select("loading");
 		this.assetsLoader.loadAllAssets();
 	}
@@ -74,7 +74,7 @@ public class NebulaQuest extends Game {
 		this.screenManager.select("loading");;
 	}
 
-	protected void onLoad() {
+	protected Runnable onLoad = () -> {
 		this.musicManager.register(this.assetManager.get("music/music4.music.ogg"));
 		this.musicManager.register(this.assetManager.get("music/music1.music.ogg"));
 		this.musicManager.register(this.assetManager.get("music/music2.music.ogg"));
@@ -82,5 +82,5 @@ public class NebulaQuest extends Game {
 		this.musicManager.register(this.assetManager.get("music/music5.music.ogg"));
 		this.musicManager.setMenuMusic(this.assetManager.get("music/menu.music.ogg"));
 		this.screenManager.select("main-menu");
-	}
+	};
 }

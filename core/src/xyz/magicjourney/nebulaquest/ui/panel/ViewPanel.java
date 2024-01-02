@@ -7,9 +7,9 @@ import com.badlogic.gdx.assets.AssetManager;
 
 import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractView;
 
-public class ViewPanel extends Panel {
-  protected HashMap<String, AbstractView> views;
-  protected Optional<AbstractView> selected;
+public class ViewPanel<T extends AbstractView> extends Panel {
+  protected HashMap<String, T> views;
+  protected Optional<T> selected;
 
   public ViewPanel(int width, int height, AssetManager assets) {
     super(width, height, assets);

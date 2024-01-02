@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * @param <T> The type of callback function. This should be one of Java's functional interfaces
  * such as {@link Runnable}, {@link Consumer}, {@link Supplier}, etc.
  */
-public abstract class AbstractEvent<T> implements Subscribable<T> {
+public abstract class AbstractEvent<T> {
   protected HashSet<T> callbacks;
 
   public AbstractEvent() {
@@ -35,9 +35,8 @@ public abstract class AbstractEvent<T> implements Subscribable<T> {
   /**
    * Unsubscribes callback function from the subscribers list, so it will not be called by this event in the future.
    *
-   * <p><b>NOTE:</b> To unsubscribe from an event, the callback needs to be a reference to the same function that was used when registered.
-   * Anonymous functions like {@code (int x) -> x*x} CANNOT be unsubscribed.
-   * Use {@code this::functionName} instead of {@code () -> this.functionName()}.</p>
+   * <p><b>NOTE:</b> To unsubscribe from an event, the callback needs to be a the same reference that was used when registered.
+   * Anonymous functions like {@code (int x) -> x*x} or {@code this::function} CANNOT be unsubscribed.</p>
    * 
    * @param callback The callback function to be removed from subscribers.
    */
