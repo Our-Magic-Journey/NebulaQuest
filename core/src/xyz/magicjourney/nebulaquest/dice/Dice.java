@@ -27,7 +27,7 @@ public class Dice extends Group {
     this.addActor(table);
     this.setWidth(400);
     this.setHeight(200);
-
+    this.setVisible(false);
 
   }
 
@@ -45,6 +45,7 @@ public class Dice extends Group {
       return;
     }
 
+    this.setVisible(true);
     this.table.add(animation);
     this.animation.loadAnimation("roll" + result);
     this.viabilityTimer.clear();
@@ -60,6 +61,7 @@ public class Dice extends Group {
       this.table.clear();
       this.table.pack();
       this.isRolling = false;
+      this.setVisible(false);
       callback.accept(result);
     });
   }
