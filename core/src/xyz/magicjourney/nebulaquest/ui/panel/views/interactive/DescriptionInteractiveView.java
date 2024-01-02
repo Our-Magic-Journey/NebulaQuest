@@ -23,6 +23,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
   protected Label title;
   protected Label description;
   protected Label price;
+  protected Label fee;
   protected Label owner;
   protected Label region;
 
@@ -36,6 +37,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
     this.description.setAlignment(Align.center);
     this.region = new Label("", this.skin, "small");
     this.price = new Label("", this.skin, "small");
+    this.fee = new Label("", this.skin, "small");
     this.owner = new Label("", this.skin, "small");
 
     this.spacer = this.skin.get("panel-margin10", TenPatchDrawable.class);
@@ -55,6 +57,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
 
     if (entity instanceof Buyable buyable) {
       this.price.setText("Value: " + buyable.getValue());
+      this.fee.setText("Residence fee: " + buyable.getFee());
       this.owner.setText("Owner: " + buyable.getOwner().map((p) -> p.getName()).orElse("Free"));
     }
 
@@ -105,6 +108,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
     if (entity instanceof Buyable) {
       this.addSpacer(2, 2);
       this.add(price).row();
+      this.add(fee).row();
       this.add(owner).row();
     }
   }

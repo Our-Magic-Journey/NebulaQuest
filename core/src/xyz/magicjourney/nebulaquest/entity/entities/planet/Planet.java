@@ -28,6 +28,11 @@ public class Planet extends Entity implements Buyable {
   }
 
   @Override
+  public int getFee() {
+    return 100;
+  }
+
+  @Override
   public void onEnter(Player player) {
   }
 

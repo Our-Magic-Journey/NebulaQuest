@@ -7,6 +7,7 @@ import xyz.magicjourney.nebulaquest.player.Player;
 public interface Buyable extends Describable, Interactiveable {
   Optional<Player> getOwner();
   int getValue();
+  int getFee();
 
   default boolean isOwner(Player player) {
     return this.getOwner().isPresent() && this.getOwner().get() == player;
@@ -21,7 +22,7 @@ public interface Buyable extends Describable, Interactiveable {
   default boolean canByBought() {
     return this.getOwner().isEmpty();
   }
-  
+
   @Override
   default String getInteractiveablePanelName(Player player) {
     if (this.getOwner().isPresent()) {
@@ -37,6 +38,6 @@ public interface Buyable extends Describable, Interactiveable {
   
   @Override
   default boolean isDecisionRequired(Player player) {
-    return !this.mustPayFee(player);
+    return this.mustPayFee(player) || this.canByBought();
   }
 }

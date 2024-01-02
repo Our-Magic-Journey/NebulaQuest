@@ -55,9 +55,22 @@ public class Player implements Describable {
 
   public boolean buyProperty(Buyable property) {
     if (this.getMoney() >= property.getValue() && property.canByBought()) {
-      this.money -= property.getValue();
+      this.setMoney(this.money - property.getValue());
       this.properties.add(property);
       property.setOwner(this);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  public boolean payFee(Buyable property) {
+    if (property.mustPayFee(this) && this.getMoney() >= property.getFee()) {
+      Player owner = property.getOwner().get();
+
+      this.setMoney(this.money - property.getFee());
+      owner.setMoney(owner.getMoney() + property.getFee());
 
       return true;
     }
