@@ -16,7 +16,7 @@ public class Planet extends Entity implements Buyable {
   protected Optional<Player> owner;
 
   public Planet(String name, int value, PlanetRegion region) {
-    super(name, "This is a planet field. If unclaimed, you have  the opportunity to acquire it as your property. If another explorer has already claimed the planet, be prepared to pay a fee for your stay.");
+    super(name, "This planet is owned by the Republic, and there is no entrance fee. You have the chance to acquire this planet as your own by being the first to step onto it. Beware, though, if someone else buys it, you'll need to pay a fee.");
     this.value = value;
     this.region = region;
     this.owner = Optional.empty();
@@ -47,6 +47,7 @@ public class Planet extends Entity implements Buyable {
 
   @Override
   public void setOwner(Player player) {
+    this.description = "Attention, Explorer! This planet has already been claimed by " + player.getName() + ". If you wish to visit or stay on this celestial body, a fee must be paid to " + player.getName();
     this.owner = Optional.of(player);
   }
 

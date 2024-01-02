@@ -38,7 +38,7 @@ public class AuctionInteractiveView extends DescriptionInteractiveView {
   }
 
   protected void generateDescription() {
-    String text = this.splitText(23, "This planet is owned by the Republic, but it currently needs a huge amount of money to fight the separatists. The Republic has just started selling this world, as you are the closest, you have the right of first refusal.");
+    String text = this.splitText(23, "The planet is currently under the control of the Republic, engaged in a war against separatists. The Republic, in need of resources, is willing to sell this world. As the closest explorer, you have the right of first refusal.");
 
     this.description.setText(text);
   }
