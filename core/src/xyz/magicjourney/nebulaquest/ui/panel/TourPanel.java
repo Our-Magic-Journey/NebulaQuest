@@ -1,6 +1,7 @@
 package xyz.magicjourney.nebulaquest.ui.panel;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
@@ -46,13 +47,13 @@ public class TourPanel extends Panel {
     playerDescription.add(playerImage).expand().center();
     playerDescription.add(money).expand().center();
     
-    this.players.first().onChange().subscribe(this::update);
+    this.players.first().onChange().subscribe(this.update);
 
     this.content.add(playerDescription).expand().fill();
     this.content.row();
     this.buttonCell = this.content.add(roll).fillX().height(20);
     
-    this.endTurn.onClick().subscribe(this::handleTurnEnd);
+    this.endTurn.onClick().subscribe(this.handleTurnEnd);
   }
 
   @Override
@@ -78,9 +79,9 @@ public class TourPanel extends Panel {
     this.buttonCell.setActor(endTurn);
   }
 
-  protected void update(Player player) {
-    this.money.setText(player.getMoney() + "$");
-  }
+  protected Consumer<Player> update = (Player player) -> {
+    this.money.setText(this.players.first().getMoney() + "$");
+  };
 
   public void blockTurnButton() {
     this.endTurn.setDisabled(true);
@@ -90,21 +91,21 @@ public class TourPanel extends Panel {
     this.endTurn.setDisabled(false);
   }
 
-  protected void handleTurnEnd(Runnable unblock) {
-    this.players.first().onChange().unsubscribe(this::update);
+  protected Consumer<Runnable> handleTurnEnd = (unblock) -> {
+    this.players.first().onChange().unsubscribe(this.update);
     this.players.addLast(this.players.removeFirst());
-    this.players.first().onChange().subscribe(this::update);
+    this.players.first().onChange().subscribe(this.update);
 
     this.playerImage.setDrawable(this.players.first().getShip(assets));
     this.playerTurnMsg.setText("It is the turn of " + this.players.first().getName() + "!");
     this.playerTurnMsg.show(this.getStage());
 
-    this.update(this.players.first());
+    this.update.accept(this.players.first());
 
     this.playerTurnMsg.onAccepted().subscribe(() -> {
       this.turnStartedEvent.emit(this.players.first());
       this.setRollMode();
       unblock.run();
     });
-  }
+  };
 }

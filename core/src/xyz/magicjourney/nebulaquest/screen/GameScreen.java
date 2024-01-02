@@ -1,7 +1,7 @@
 package xyz.magicjourney.nebulaquest.screen;
 
 import java.util.ArrayList;
-
+import java.util.function.Consumer;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -122,7 +122,7 @@ public class GameScreen extends AbstractScreen {
   }
 
   public void create() {
-    this.board = new Board(this.entities, this.players, this.assets, this::handleFieldEnter);
+    this.board = new Board(this.entities, this.players, this.assets, this.handleFieldEnter);
     this.dice = new Dice(assets);
 
     this.tourPanel = new TourPanel(assets, this.players);
@@ -138,14 +138,14 @@ public class GameScreen extends AbstractScreen {
     this.menuPanel.setPosition(542, 2);
 
     this.menuPanel.onMenuClick().subscribe(() -> this.screenManager.select("main-menu"));
-    this.menuPanel.onSelect().subscribe(this::handlePanelSelect);
-    this.menuPanel.onUnselect().subscribe(this::handlePanelUnselect);
+    this.menuPanel.onSelect().subscribe(this.handlePanelSelect);
+    this.menuPanel.onUnselect().subscribe(this.handlePanelUnselect);
 
-    this.board.onFieldSelect().subscribe(this::handleFieldSelect);
-    this.board.onFieldUnselect().subscribe(this::handlePanelUnselect);
+    this.board.onFieldSelect().subscribe(this.handleFieldSelect);
+    this.board.onFieldUnselect().subscribe(this.handlePanelUnselect);
     
-    this.tourPanel.onRoll().subscribe(this::handleDiceRoll);
-    this.tourPanel.onTurnStarted().subscribe(this::handleTurnStarted);
+    this.tourPanel.onRoll().subscribe(this.handleDiceRoll);
+    this.tourPanel.onTurnStarted().subscribe(this.handleTurnStarted);
 
     this.dice.setPosition(0, 0);
     this.stage.addActor(board);
@@ -156,7 +156,7 @@ public class GameScreen extends AbstractScreen {
     this.stage.addActor(dice);
   }
 
-  protected void handleTurnStarted(Player player) {
+  protected Consumer<Player> handleTurnStarted = (player) -> {
     this.activePlayer = player;
 
     // We first set activeEntity to null ensure that handleFieldSelect method
@@ -166,22 +166,22 @@ public class GameScreen extends AbstractScreen {
     this.board.selectFieldUnderPlayer(player);
     // now we can safely change the active entity.
     this.activeEntity = this.board.getFieldUnderPlayer(player);
-  }
+  };
 
-  protected void handlePanelSelect(TextButton button) {
+  protected Consumer<TextButton>handlePanelSelect = (button) -> {
     String panelName = button.getText().toString();
 
     this.board.unselectField();
     this.optionsPanel.select(panelName);
     this.interactivePanel.select(panelName, this.activePlayer, this.activeEntity);
-  }
+  };
   
-  protected void handlePanelUnselect() {
+  protected Runnable handlePanelUnselect = () -> {
     this.optionsPanel.unselect();
     this.interactivePanel.unselect();
-  }
+  };
 
-  protected void handleDiceRoll(Runnable unlock) {
+  protected Consumer<Runnable> handleDiceRoll = (unlock) -> {
     dice.roll((roll) -> {
       if (roll != 12) {
         this.board.movePlayer(activePlayer, roll, true);
@@ -193,9 +193,9 @@ public class GameScreen extends AbstractScreen {
 
       unlock.run();
     });
-  }
+  };
 
-  protected void handleFieldSelect(Field field) {
+  protected Consumer<Field> handleFieldSelect = (field) -> {
     this.menuPanel.unselect();
 
     if (field.getEntity() == this.activeEntity) {
@@ -204,9 +204,9 @@ public class GameScreen extends AbstractScreen {
     else {
       this.interactivePanel.selectDescription(field.getEntity());
     }
-  }
+  };
 
-  protected void handleFieldEnter(Entity entity) {
+  protected Consumer<Entity> handleFieldEnter = (entity) -> {
     this.activeEntity = entity;
     
     if (entity instanceof Interactiveable interactive) {
@@ -216,7 +216,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     this.displayEntityInInteractivePanel(entity);
-  }
+  };
 
   protected void displayEntityInInteractivePanel(Entity entity) {
     if (entity instanceof Interactiveable interactive) {
