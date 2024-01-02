@@ -13,11 +13,13 @@ import xyz.magicjourney.nebulaquest.player.Player;
 public class Planet extends Entity implements Buyable {
   protected int value;
   protected PlanetRegion region;
+  protected Optional<Player> owner;
 
   public Planet(String name, int value, PlanetRegion region) {
     super(name, "This is a planet field. If unclaimed, you have  the opportunity to acquire it as your property. If another explorer has already claimed the planet, be prepared to pay a fee for your stay.");
     this.value = value;
     this.region = region;
+    this.owner = Optional.empty();
   }
   
   @Override
@@ -35,12 +37,7 @@ public class Planet extends Entity implements Buyable {
 
   @Override
   public Optional<Player> getOwner() {
-    return Optional.empty();
-  }
-
-  @Override
-  public boolean canBeBought() {
-    return true;
+    return this.owner;
   }
 
   public PlanetRegion getRegion() {

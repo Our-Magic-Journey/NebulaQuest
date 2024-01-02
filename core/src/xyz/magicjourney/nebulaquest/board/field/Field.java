@@ -47,12 +47,6 @@ public class Field extends Button {
     return this.entity;
   }
 
-  public Field clone(AssetManager assets) {
-    Field field = new Field(entity, assets);
-    
-    return field;
-  }
-
   public void makeStatic() {
     this.style.over = null;
     this.style.down = null;

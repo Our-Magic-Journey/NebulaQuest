@@ -60,11 +60,4 @@ public class PlanetField extends Field {
   public void setColor(Color color) {
     this.color.setColor(color);
   }
-
-  @Override
-  public PlanetField clone(AssetManager assets) {
-    PlanetField field = new PlanetField(entity, assets);
-    
-    return field;
-  }
 }

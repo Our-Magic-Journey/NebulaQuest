@@ -11,11 +11,13 @@ import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Teleport extends Entity implements Buyable {
   protected int value;
+  protected Optional<Player> owner;
 
   public Teleport() {
     super("Teleport", "This is a well-known hyperspace path. It allows you to traverse to the opposite edge of the galaxy. You can fornicate the start and finish fields, then jumping players need to pay you a fee. Jump doesn't count as passing the starting field.");
 
     this.value = 350;
+    this.owner = Optional.empty();
   }
 
   @Override
@@ -25,14 +27,9 @@ public class Teleport extends Entity implements Buyable {
 
   @Override
   public Optional<Player> getOwner() {
-    return Optional.empty();
+    return this.owner;
   }
-
-  @Override
-  public boolean canBeBought() {
-    return false;
-  }
-
+  
   @Override
   public void onEnter(Player player) {
   }

@@ -1,6 +1,7 @@
 package xyz.magicjourney.nebulaquest.ui.panel.views.interactive;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -8,14 +9,17 @@ import com.ray3k.tenpatch.TenPatchDrawable;
 
 import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.entity.Buyable;
+import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
-import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractView;
+import xyz.magicjourney.nebulaquest.player.Player;
+import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
+import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
+import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractInteractiveView;
 
-public class CardView extends AbstractView {
+public class DescriptionInteractiveView extends AbstractInteractiveView {
   protected AssetManager assets;
-  protected Entity entity;
-  protected Field field;
+  protected Actor icon;
   protected Label title;
   protected Label description;
   protected Label price;
@@ -24,8 +28,8 @@ public class CardView extends AbstractView {
 
   protected TenPatchDrawable spacer;
 
-  public CardView(AssetManager assets) {
-    super(assets);
+  public DescriptionInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+    super(assets, parent, tourPanel);
     this.assets = assets;
     this.title = new Label("", this.skin);
     this.description = new Label("", this.skin, "small");
@@ -37,9 +41,13 @@ public class CardView extends AbstractView {
     this.spacer = this.skin.get("panel-margin10", TenPatchDrawable.class);
   }
 
-  public void setField(Field field) {
-    this.field = field.clone(this.assets);
-    this.entity = field.getEntity();
+  @Override
+  public void select(Player player, Entity field) {
+    this.display(field);
+  }
+  
+  public void display(Describable entity) {
+    this.icon = entity.getIcon(assets); 
 
     if (entity instanceof Planet planet) {
       this.region.setText("Region: " + planet.getRegion().getName());
@@ -50,11 +58,15 @@ public class CardView extends AbstractView {
       this.owner.setText("Owner: " + buyable.getOwner().map((p) -> p.getName()).orElse("Free"));
     }
 
-    this.title.setText(this.entity.getName());
-    this.description.setText(this.splitText(23, this.entity.getDescription()));
+    if (this.icon instanceof Field field) {
+      field.makeStatic();
+    }
+
+    this.title.setText(entity.getName());
+    this.description.setText(this.splitText(23, entity.getDescription()));
+    
     this.clear();
-    this.field.makeStatic();
-    this.createLayout();
+    this.createLayout(entity, true);
   }
 
   protected String splitText(int lineWidth, String text) {
@@ -77,24 +89,35 @@ public class CardView extends AbstractView {
     return result;
   }
 
-  protected void createLayout() {
+  protected void createLayout(Describable entity, boolean displayDescription) {
     this.add(this.title).expandX().top().row();
-    this.add(this.field).row();
+    this.add(this.icon).row();
     
-    if (this.entity instanceof Planet) {
+    if (entity instanceof Planet) {
       this.add(region).row();
-      this.add(new Image(this.spacer)).fillX().height(4).space(0, 0, 2, 0).row();
-    }
-    else {
-      this.add(new Image(this.spacer)).fillX().height(4).space(10, 0, 2, 0).row();
     }
 
-    this.add(this.description).row();
+    if (displayDescription) {
+      this.addSpacer(entity instanceof Planet ? 2 : 10, 2);
+      this.add(this.description).row();
+    }
 
-    if (this.entity instanceof Buyable) {
-      this.add(new Image(this.spacer)).fillX().height(4).space(2, 0, 2, 0).row();
+    if (entity instanceof Buyable) {
+      this.addSpacer(2, 2);
       this.add(price).row();
       this.add(owner).row();
     }
+  }
+
+  protected void addSpacer() {
+    this.addSpacer(0, 0, 2, 0);
+  }
+
+  protected void addSpacer(int spaceTop, int spaceBottom) {
+    this.addSpacer(spaceTop, 0, spaceBottom, 0);
+  }
+
+  protected void addSpacer(int spaceTop, int spaceLeft, int spaceBottom, int spaceRight) {
+    this.add(new Image(this.spacer)).fillX().height(4).space(spaceTop, spaceLeft, spaceBottom, spaceRight).row();
   }
 }

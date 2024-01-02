@@ -1,6 +1,7 @@
 package xyz.magicjourney.nebulaquest.entity;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.event.Event;
@@ -21,6 +22,11 @@ public abstract class Entity implements Describable {
   public abstract void onEnter(Player player);
   public abstract void onPass(Player player);
   public abstract Field toField(AssetManager assets);
+
+  @Override
+  public Actor getIcon(AssetManager assets) {
+    return this.toField(assets);
+  }
 
   public EventGetter onChange() {
     return changeEvent;

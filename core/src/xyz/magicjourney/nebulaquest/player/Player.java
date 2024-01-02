@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import xyz.magicjourney.nebulaquest.entity.Buyable;
@@ -27,6 +29,7 @@ public class Player implements Describable {
     this.id = generateId();
     this.money = 1000;
     this.changedEvent = new ParameterizedEvent<>();
+    this.properties = new ArrayList<>();
   }
 
   private int generateId() {
@@ -52,6 +55,11 @@ public class Player implements Describable {
 
   public TextureRegionDrawable getShip(AssetManager assets) {
     return new TextureRegionDrawable(new TextureRegion(assets.get("images/player" + id + ".png", Texture.class)));
+  }
+
+  @Override
+  public Actor getIcon(AssetManager assets) {
+    return new Image(this.getShip(assets));
   }
 
   public ParameterizedEventGetter<Player> onChange() {

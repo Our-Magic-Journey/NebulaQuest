@@ -10,11 +10,4 @@ public class BigField extends Field {
 
     this.setTexture("images/big-field", assets);
   }
-
-  @Override
-  public BigField clone(AssetManager assets) {
-    BigField field = new BigField(entity, assets);
-    
-    return field;
-  }
 }
