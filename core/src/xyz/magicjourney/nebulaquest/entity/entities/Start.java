@@ -11,7 +11,7 @@ public class Start extends Entity {
   private static final int MONEY_ON_PASS_START = 200;
 
   public Start() {
-    super("Start", "This is where your space adventure has begun. After passing through this field, you will receive 200 credits each time.");
+    super("Start", "This is where your space adventure has begun. After passing through this field, you will receive " +  MONEY_ON_PASS_START + " credits each time.");
   }
 
   @Override
