@@ -78,9 +78,9 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
   protected void createLayout(Describable entity, boolean displayDescription) {
     super.createLayout(entity, displayDescription);
 
-    this.addSpacer();
-    this.add(this.increase).height(20).pad(2, 4, 0, 4).fillX().row();
-    this.add(this.decrease).height(20).pad(4, 4, 0, 4).fillX().row();
+    this.addSpacer(0, 0, 4, 0);
+    this.add(this.increase).height(20).pad(0, 4, 4, 4).fillX().row();
+    this.add(this.decrease).height(20).pad(0, 4, 4, 4).fillX().row();
     this.addSpacer();
     this.add(this.bet).expandX().top().row();
     this.addSpacer();
@@ -101,9 +101,9 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
 
   protected void rollCasinoDice(Player player, boolean even) {
     parent.getDice().roll((result) -> {
-      boolean isResultEven = result % 2 == 0;
+      boolean rolledEven = result % 2 == 0;
       
-      if(even == isResultEven) {
+      if(even == rolledEven) {
         this.player.giveMoney((int) (betValue * 1.5));
         this.bet.setText("You won: " + ((int) (betValue * 1.5)));
       }
@@ -121,8 +121,6 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
   }
   
   protected Consumer<Runnable> handleIncreaseButtonClick = (unblock) -> {
-    System.out.println("Called!");
-
     if(this.player.pay(100)) {
       this.betValue += 100;
       this.bet.setText("Your bet: " + this.betValue);
