@@ -2,6 +2,7 @@ package xyz.magicjourney.nebulaquest.ui.panel;
 
 import com.badlogic.gdx.assets.AssetManager;
 
+import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
@@ -18,8 +19,8 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
   protected Player player;
   protected Entity field;
 
-  public InteractivePanel(AssetManager assets, TourPanel tourPanel, Player player, Entity field) {
-    super(207, 466, assets);
+  public InteractivePanel(AssetManager assets, Dice dice, TourPanel tourPanel, Player player, Entity field) {
+    super(207, 466, dice, assets);
 
     this.player = player;
     this.field = field;

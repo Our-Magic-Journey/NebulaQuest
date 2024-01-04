@@ -91,31 +91,33 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
 
   protected Consumer<Runnable> handleOddButtonClick = (unblock) -> {
     this.evenButton.setDisabled(true);
-    rollCasinoDice(this.player, true);
+    this.rollCasinoDice(this.player, false);
   };
 
   protected Consumer<Runnable> handleEvenButtonClick = (unblock) -> {
     this.oddButton.setDisabled(true);
-    rollCasinoDice(this.player, false);
+    this.rollCasinoDice(this.player, true);
   };
 
-  protected void rollCasinoDice(Player player, boolean i) {
-    boolean randBool = this.random.nextBoolean();
+  protected void rollCasinoDice(Player player, boolean even) {
+    parent.getDice().roll((result) -> {
+      boolean isResultEven = result % 2 == 0;
+      
+      if(even == isResultEven) {
+        this.player.giveMoney((int) (betValue * 1.5));
+        this.bet.setText("You won: " + ((int) (betValue * 1.5)));
+      }
+      else {
+        this.bet.setText("You lost: " + this.betValue);
+      }
 
-    if(i == randBool) {
-      this.player.giveMoney((int) (betValue * 1.5));
-      this.bet.setText("You won: " + ((int) (betValue * 1.5)));
-    }
-    else {
-      this.bet.setText("You lost: " + this.betValue);
-    }
+      this.increase.setDisabled(true);
+      this.decrease.setDisabled(true);
+      this.oddButton.setDisabled(true);
+      this.evenButton.setDisabled(true);
 
-    this.increase.setDisabled(true);
-    this.decrease.setDisabled(true);
-    this.oddButton.setDisabled(true);
-    this.evenButton.setDisabled(true);
-
-    this.tourPanel.unblockTurnButton();
+      this.tourPanel.unblockTurnButton();
+    });
   }
   
   protected Consumer<Runnable> handleIncreaseButtonClick = (unblock) -> {

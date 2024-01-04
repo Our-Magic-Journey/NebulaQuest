@@ -129,10 +129,10 @@ public class GameScreen extends AbstractScreen {
     this.tourPanel = new TourPanel(assets, this.players);
     this.tourPanel.setPosition(751, 72);
 
-    this.interactivePanel = new InteractivePanel(assets, this.tourPanel, this.activePlayer, this.entities.get(0));
+    this.interactivePanel = new InteractivePanel(assets, this.dice, this.tourPanel, this.activePlayer, this.entities.get(0));
     this.interactivePanel.setPosition(542, 72);
 
-    this.optionsPanel = new OptionPanel(assets);
+    this.optionsPanel = new OptionPanel(this.dice, assets);
     this.optionsPanel.setPosition(751, 189);
 
     this.menuPanel = new MenuPanel(assets);
