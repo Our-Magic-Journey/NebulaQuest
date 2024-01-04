@@ -2,12 +2,14 @@ package xyz.magicjourney.nebulaquest.ui.panel;
 
 import com.badlogic.gdx.assets.AssetManager;
 
+import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.AuctionInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.BankInteractiveView;
+import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.CasinoInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.DescriptionInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PayFeeInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PlayerInteractiveView;
@@ -17,8 +19,8 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
   protected Player player;
   protected Entity field;
 
-  public InteractivePanel(AssetManager assets, TourPanel tourPanel, Player player, Entity field) {
-    super(207, 466, assets);
+  public InteractivePanel(AssetManager assets, Dice dice, TourPanel tourPanel, Player player, Entity field) {
+    super(207, 466, dice, assets);
 
     this.player = player;
     this.field = field;
@@ -29,7 +31,8 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
     this.views.put("Description", new DescriptionInteractiveView(assets, this, tourPanel));
     this.views.put("Auction", new AuctionInteractiveView(assets, this, tourPanel));
     this.views.put("PayFee", new PayFeeInteractiveView(assets, this, tourPanel));
-
+    this.views.put("Casino", new CasinoInteractiveView(assets, this, tourPanel));
+    
     this.content.pad(4, 4, 4, 4);
     this.select("Bank");
   }

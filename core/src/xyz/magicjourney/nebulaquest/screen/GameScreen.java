@@ -12,6 +12,7 @@ import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.Interactiveable;
+import xyz.magicjourney.nebulaquest.entity.entities.Casino;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
@@ -38,7 +39,7 @@ public class GameScreen extends AbstractScreen {
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
-    
+
     this.players = new ArrayList<>();
     this.regions = new ArrayList<>();
     this.entities = new ArrayList<>();
@@ -75,10 +76,10 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("paradise", 200, regions.get(0)));
     this.entities.add(new Teleport());
     this.entities.add(new Planet("nabu", 150, regions.get(1)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Casino());
     this.entities.add(new Planet("tatuine", 300, regions.get(1)));
     this.entities.add(new Planet("centre", 350, regions.get(1)));
-    
+
     this.entities.add(new Start());
     this.entities.add(new Planet("ne59", 100, regions.get(2)));
     this.entities.add(new Planet("pluto", 150, regions.get(2)));
@@ -86,7 +87,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("paradise", 200, regions.get(2)));
     this.entities.add(new Teleport());
     this.entities.add(new Planet("nabu", 150, regions.get(3)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Casino());
     this.entities.add(new Planet("tatuine", 300, regions.get(3)));
     this.entities.add(new Planet("centre", 350, regions.get(3)));
 
@@ -97,7 +98,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("paradise", 200, regions.get(4)));
     this.entities.add(new Teleport());
     this.entities.add(new Planet("nabu", 150, regions.get(5)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Casino());
     this.entities.add(new Planet("tatuine", 300, regions.get(5)));
     this.entities.add(new Planet("centre", 350, regions.get(5)));
 
@@ -108,7 +109,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("pluto", 200, regions.get(6)));
     this.entities.add(new Teleport());
     this.entities.add(new Teleport());
-    this.entities.add(new Teleport());
+    this.entities.add(new Casino());
     this.entities.add(new Planet("paradise", 300, regions.get(7)));
     this.entities.add(new Planet("paradise", 350, regions.get(7)));
   }
@@ -118,7 +119,7 @@ public class GameScreen extends AbstractScreen {
     create();
     musicManager.playGameMusic();
 
-    super.show();    
+    super.show();
   }
 
   public void create() {
@@ -128,10 +129,10 @@ public class GameScreen extends AbstractScreen {
     this.tourPanel = new TourPanel(assets, this.players);
     this.tourPanel.setPosition(751, 72);
 
-    this.interactivePanel = new InteractivePanel(assets, this.tourPanel, this.activePlayer, this.entities.get(0));
+    this.interactivePanel = new InteractivePanel(assets, this.dice, this.tourPanel, this.activePlayer, this.entities.get(0));
     this.interactivePanel.setPosition(542, 72);
 
-    this.optionsPanel = new OptionPanel(assets);
+    this.optionsPanel = new OptionPanel(this.dice, assets);
     this.optionsPanel.setPosition(751, 189);
 
     this.menuPanel = new MenuPanel(assets);
@@ -143,7 +144,7 @@ public class GameScreen extends AbstractScreen {
 
     this.board.onFieldSelect().subscribe(this.handleFieldSelect);
     this.board.onFieldUnselect().subscribe(this.handlePanelUnselect);
-    
+
     this.tourPanel.onRoll().subscribe(this.handleDiceRoll);
     this.tourPanel.onTurnStarted().subscribe(this.handleTurnStarted);
 
@@ -175,7 +176,7 @@ public class GameScreen extends AbstractScreen {
     this.optionsPanel.select(panelName);
     this.interactivePanel.select(panelName, this.activePlayer, this.activeEntity);
   };
-  
+
   protected Runnable handlePanelUnselect = () -> {
     this.optionsPanel.unselect();
     this.interactivePanel.unselect();
@@ -208,7 +209,7 @@ public class GameScreen extends AbstractScreen {
 
   protected Consumer<Entity> handleFieldEnter = (entity) -> {
     this.activeEntity = entity;
-    
+
     if (entity instanceof Interactiveable interactive) {
       if (interactive.isDecisionRequired(this.activePlayer)) {
         this.tourPanel.blockTurnButton();
@@ -224,6 +225,6 @@ public class GameScreen extends AbstractScreen {
     }
     else {
       this.interactivePanel.select("Description", this.activePlayer, entity);
-    } 
+    }
   }
 }

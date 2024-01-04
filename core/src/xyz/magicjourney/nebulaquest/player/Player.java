@@ -16,9 +16,9 @@ import xyz.magicjourney.nebulaquest.event.ParameterizedEventGetter;
 
 public class Player implements Describable {
   private static int nextID = 0;
-  
+
   protected ParameterizedEvent<Player> changedEvent;
-  
+
   protected int id;
   protected String name;
   protected int money;
@@ -54,8 +54,7 @@ public class Player implements Describable {
   }
 
   public boolean buyProperty(Buyable property) {
-    if (this.getMoney() >= property.getValue() && property.canByBought()) {
-      this.setMoney(this.money - property.getValue());
+    if (property.canByBought() && this.pay(property.getValue())) {
       this.properties.add(property);
       property.setOwner(this);
 
@@ -66,16 +65,29 @@ public class Player implements Describable {
   }
 
   public boolean payFee(Buyable property) {
-    if (property.mustPayFee(this) && this.getMoney() >= property.getFee()) {
+    if (property.mustPayFee(this) && this.pay(property.getValue())) {
       Player owner = property.getOwner().get();
 
-      this.setMoney(this.money - property.getFee());
       owner.setMoney(owner.getMoney() + property.getFee());
 
       return true;
     }
 
     return false;
+  }
+
+  public boolean pay(int value) {
+    if (this.getMoney() >= value) {
+      this.setMoney(this.money - value);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  public void giveMoney(int value) {
+    this.setMoney(this.getMoney() + value);
   }
 
   public TextureRegionDrawable getShip(AssetManager assets) {
