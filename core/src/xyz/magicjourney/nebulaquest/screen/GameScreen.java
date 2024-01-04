@@ -41,6 +41,7 @@ public class GameScreen extends AbstractScreen {
   protected TourPanel tourPanel;
   protected MenuPanel menuPanel;
   protected Dice dice;
+  protected boolean playerMoved;
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
@@ -54,6 +55,7 @@ public class GameScreen extends AbstractScreen {
 
     this.activePlayer = this.players.get(0);
     this.activeEntity = this.entities.get(0);
+    this.playerMoved = false;
   }
 
   public void populatePlayers() {
@@ -79,7 +81,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("pluto", 150, regions.get(0)));
     this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("paradise", 200, regions.get(0)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(25));
     this.entities.add(new Planet("nabu", 150, regions.get(1)));
     this.entities.add(new Casino());
     this.entities.add(new Planet("tatuine", 300, regions.get(1)));
@@ -90,7 +92,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("pluto", 150, regions.get(2)));
     this.entities.add(new Mine());
     this.entities.add(new Planet("paradise", 200, regions.get(2)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(35));
     this.entities.add(new Planet("nabu", 150, regions.get(3)));
     this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("tatuine", 300, regions.get(3)));
@@ -101,7 +103,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("pluto", 150, regions.get(4)));
     this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("paradise", 200, regions.get(4)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(5));
     this.entities.add(new Planet("nabu", 150, regions.get(5)));
     this.entities.add(new Mine());
     this.entities.add(new Planet("tatuine", 300, regions.get(5)));
@@ -112,7 +114,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("ne59", 150, regions.get(6)));
     this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("pluto", 200, regions.get(6)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(15));
     this.entities.add(new Mine());
     this.entities.add(new Casino());
     this.entities.add(new Planet("paradise", 300, regions.get(7)));
@@ -134,7 +136,7 @@ public class GameScreen extends AbstractScreen {
     this.tourPanel = new TourPanel(assets, this.players);
     this.tourPanel.setPosition(751, 72);
 
-    this.interactivePanel = new InteractivePanel(assets, this.dice, this.tourPanel, this.activePlayer, this.entities.get(0));
+    this.interactivePanel = new InteractivePanel(assets, this.dice, this.tourPanel, this.activePlayer, this.board, this.entities.get(0));
     this.interactivePanel.setPosition(542, 72);
 
     this.optionsPanel = new OptionPanel(this.dice, assets);
@@ -164,6 +166,8 @@ public class GameScreen extends AbstractScreen {
 
   protected Consumer<Player> handleTurnStarted = (player) -> {
     this.activePlayer = player;
+    this.interactivePanel.reset();
+    this.playerMoved = false;
 
     // We first set activeEntity to null ensure that handleFieldSelect method
     // will display entity, regardless of entity being Interactiveable or not.
@@ -190,6 +194,7 @@ public class GameScreen extends AbstractScreen {
   protected Consumer<Runnable> handleDiceRoll = (unlock) -> {
     dice.roll((roll) -> {
       if (roll != 12) {
+        this.playerMoved = true;
         this.board.movePlayer(activePlayer, roll, true);
         this.tourPanel.setTurnEndMode();
       }
@@ -225,7 +230,7 @@ public class GameScreen extends AbstractScreen {
   };
 
   protected void displayEntityInInteractivePanel(Entity entity) {
-    if (entity instanceof Interactiveable interactive) {
+    if (entity instanceof Interactiveable interactive && this.playerMoved) {
       this.interactivePanel.select(interactive.getInteractiveablePanelName(this.activePlayer), this.activePlayer, entity);
     }
     else {
