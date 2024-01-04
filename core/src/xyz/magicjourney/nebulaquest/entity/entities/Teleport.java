@@ -50,6 +50,6 @@ public class Teleport extends Entity implements Buyable {
 
   @Override
   public Field toField(AssetManager assets) {
-    return new Field(this, assets);
+    return new Field(this, "images/teleport", assets);
   }
 }

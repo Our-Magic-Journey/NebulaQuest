@@ -23,7 +23,7 @@ public class Casino extends Entity implements Interactiveable {
 
   @Override
   public Field toField(AssetManager assets) {
-    return new Field(this, assets);
+    return new Field(this, "images/casino", assets);
   }
 
   @Override

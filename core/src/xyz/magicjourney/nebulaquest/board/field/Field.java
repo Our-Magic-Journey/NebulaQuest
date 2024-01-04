@@ -14,10 +14,14 @@ public class Field extends Button {
   protected int correctPawnRotation;
 
   public Field(Entity entity, AssetManager assets) {
-    this(entity, assets, 32, 64);
+    this(entity, "images/small-field", assets);
   }
 
-  public Field(Entity entity, AssetManager assets, int width, int height) {
+  public Field(Entity entity, String texture, AssetManager assets) {
+    this(entity, texture, assets, 32, 64);
+  }
+
+  public Field(Entity entity, String texture, AssetManager assets, int width, int height) {
     this.style = new ButtonStyle();
     this.entity = entity;
     this.correctPawnRotation = 0;
@@ -25,7 +29,7 @@ public class Field extends Button {
     this.setWidth(width);
     this.setHeight(height);
     this.setStyle(this.style);
-    this.setTexture("images/small-field", assets);
+    this.setTexture(texture, assets);
     
     // Rotate children with parent
     this.setTransform(true);
