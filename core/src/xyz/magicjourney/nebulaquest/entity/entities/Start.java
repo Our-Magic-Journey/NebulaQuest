@@ -20,6 +20,7 @@ public class Start extends Entity {
 
   @Override
   public void onPass(Player player) {
+    System.out.println("Give money!");
     player.setMoney(player.getMoney() + MONEY_ON_PASS_START);
   }
 

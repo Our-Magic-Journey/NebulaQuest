@@ -16,5 +16,6 @@ public abstract class AbstractInteractiveView extends AbstractView {
     this.tourPanel = tourPanel;
   }
 
+  public void prepareForNextTurn() {};
   public void select(Player player, Entity field) {}
 }

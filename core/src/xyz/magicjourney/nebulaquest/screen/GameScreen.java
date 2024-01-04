@@ -195,8 +195,8 @@ public class GameScreen extends AbstractScreen {
     dice.roll((roll) -> {
       if (roll != 12) {
         this.playerMoved = true;
-        this.board.movePlayer(activePlayer, roll, true);
         this.tourPanel.setTurnEndMode();
+        this.board.movePlayer(activePlayer, roll, true);
       }
       else {
         this.board.movePlayer(activePlayer, roll, false);
@@ -220,10 +220,8 @@ public class GameScreen extends AbstractScreen {
   protected Consumer<Entity> handleFieldEnter = (entity) -> {
     this.activeEntity = entity;
 
-    if (entity instanceof Interactiveable interactive) {
-      if (interactive.isDecisionRequired(this.activePlayer)) {
-        this.tourPanel.blockTurnButton();
-      }
+    if (!(entity instanceof Interactiveable interactive) || !interactive.isDecisionRequired(this.activePlayer)) {
+      this.tourPanel.unblockTurnButton();
     }
 
     this.displayEntityInInteractivePanel(entity);
