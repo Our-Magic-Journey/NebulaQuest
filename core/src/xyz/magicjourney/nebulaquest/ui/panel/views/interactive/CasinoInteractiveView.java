@@ -61,7 +61,7 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
       this.player = player;
       this.resetCasino();  
     }
-    this.description.setText(this.splitText(23, "You docked to a suspicious-looking space station, only to discover it's a cosmic casino run by local gangsters. The catch is, you can only leave the station if you engage in a game with them. it's company policy. So what is your bet?"));
+    this.description.setText(this.splitText(23, "You docked to a suspicious-looking space station, only to discover it's a cosmic casino run by local gangsters. The catch is, you can only leave the station if you engage in a game with them. Sorry it's company policy. So what's your bet?"));
   }
 
   protected void resetCasino() {
