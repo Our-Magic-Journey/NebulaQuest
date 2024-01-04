@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEvent;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEventGetter;
 import xyz.magicjourney.nebulaquest.listener.Listener;
+import xyz.magicjourney.nebulaquest.timer.Timer;
 
 public class ActionButton extends Group {
   protected TextButton button;
@@ -16,6 +17,7 @@ public class ActionButton extends Group {
   protected Skin skin;
   protected Boolean isDisabled;
   protected Listener clickListener;
+  protected Timer unblockTimer;
 
   public ActionButton(String text, AssetManager assets) {
     this(text, false, assets);
@@ -27,8 +29,17 @@ public class ActionButton extends Group {
     this.disabled = new TextButton(text, skin, "disabled");
     this.clickEvent = new ParameterizedEvent<>();
     this.clickListener = new Listener(this::clickHandler);
-    
+    this.unblockTimer = new Timer(0.1f);
+    this.unblockTimer.onTimeout().subscribe(() -> setDisabled(false));
+
     this.setDisabled(disabled);
+  }
+
+  @Override
+  public void act(float delta) {
+    super.act(delta);
+
+    this.unblockTimer.act(delta);
   }
 
   @Override
@@ -63,6 +74,6 @@ public class ActionButton extends Group {
 
   protected void clickHandler() {
     setDisabled(true);
-    this.clickEvent.emit(() -> this.setDisabled(false));
+    this.clickEvent.emit(() -> this.unblockTimer.reset());
   }
 }
