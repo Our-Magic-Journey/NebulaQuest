@@ -61,7 +61,7 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
       this.player = player;
       this.resetCasino();  
     }
-    this.description.setText(this.splitText(23, "Hello " + player.getName() + " Welcome in to the Casino"));
+    this.description.setText(this.splitText(23, "You docked to a suspicious-looking space station, only to discover it's a cosmic casino run by local gangsters. The catch is, you can only leave the station if you engage in a game with them. it's company policy. So what is your bet?"));
   }
 
   protected void resetCasino() {
@@ -83,10 +83,10 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
     this.add(this.decrease).height(20).pad(0, 4, 4, 4).fillX().row();
     this.addSpacer();
     this.add(this.bet).expandX().top().row();
-    this.addSpacer();
-    this.add(this.evenButton).height(20).pad(2, 4, 0, 4).fillX().row();
-    this.add(this.oddButton).height(20).pad(4, 4, 0, 4).fillX().row();
-    this.add(this.bankruptButton).height(20).pad(4, 4, 0, 4).fillX().row();
+    this.addSpacer(0, 0, 1, 0);
+    this.add(this.evenButton).height(20).pad(1, 4, 0, 4).fillX().row();
+    this.add(this.oddButton).height(20).pad(1, 4, 0, 4).fillX().row();
+    this.add(this.bankruptButton).height(20).pad(1, 4, 0, 4).fillX().row();
   }
 
   protected Consumer<Runnable> handleOddButtonClick = (unblock) -> {

@@ -32,7 +32,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
   public DescriptionInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
     this.assets = assets;
-    this.title = new Label("", this.skin);
+    this.title = new Label("", this.skin, "small-title");
     this.description = new Label("", this.skin, "small");
     this.description.setAlignment(Align.center);
     this.region = new Label("", this.skin, "small");
@@ -65,6 +65,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
       field.makeStatic();
     }
 
+    this.title.setAlignment(Align.center);
     this.title.setText(entity.getName());
     this.description.setText(this.splitText(23, entity.getDescription()));
     
