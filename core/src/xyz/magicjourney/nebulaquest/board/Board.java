@@ -142,7 +142,16 @@ public class Board extends Group {
 
   public void movePlayer(Player player, int moveBy, boolean isFinalMove) {
     Pawn pawn = players.get(player);
-    int finalPos = (pawn.getField() + moveBy) % this.fields.length();
+    int finalPos = pawn.getField() + moveBy;
+
+    if (finalPos >= this.fields.length()) {
+      for (int i = pawn.getField() + 1; i < this.fields.length(); i++) {
+        this.fields.get(i).getEntity().onPass(player);
+      }
+      
+      pawn.setField(-1);
+      finalPos -= this.fields.length();
+    }
 
     for (int i = pawn.getField() + 1; i <= finalPos; i++) {
       this.fields.get(i).getEntity().onPass(player);
