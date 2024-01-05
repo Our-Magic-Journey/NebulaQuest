@@ -1,6 +1,5 @@
 package xyz.magicjourney.nebulaquest.ui.panel.views.interactive;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.badlogic.gdx.assets.AssetManager;
@@ -21,7 +20,6 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
 
   protected Buyable property;
   protected Player player;
-  protected Optional<Player> reactedBy;
 
   public PayFeeInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
@@ -31,11 +29,10 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
     this.bankruptConfirmation = new MessageBox("Unimplemented :(", assets);
     this.payButton.onClick().subscribe(this.handlePayClick);
     this.bankruptButton.onClick().subscribe(this.handleBankruptClick);
-    this.reactedBy = Optional.empty();
   }
 
   protected void generateDescription() {
-    String text = this.splitText(23, "This planet is owned by " + this.player.getName() + "! You must pay it " + this.property.getFee() + " credits as a residence fee.");
+    String text = this.splitText(23, "This planet is owned by " + this.property.getOwner().get().getName() + "! You must pay it " + this.property.getFee() + " credits as a residence fee.");
 
     this.description.setText(text);
   }
@@ -50,14 +47,21 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
   }
 
   @Override
-  public void select(Player player, Entity field) {
-    this.display(field);
-
+  public void prepareForNextTurn() {
     if (this.player != null) {
       this.player.onChange().unsubscribe(this.update);
     }
 
-    if (reactedBy.isPresent() && reactedBy.get() == player) {
+    this.player = null;
+    this.payButton.setDisabled(true);
+    this.bankruptButton.setDisabled(true);
+  }
+
+  @Override
+  public void select(Player player, Entity field) {
+    this.display(field);
+
+    if (this.player != null) {
       this.parent.select("Description");
       return;
     }
@@ -80,7 +84,7 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
     this.showDescriptionInstead();
   }
 
-  public void showDescriptionInstead() {
+  protected void showDescriptionInstead() {
     this.parent.select("Description");
     this.tourPanel.unblockTurnButton();
   }
@@ -103,13 +107,11 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
     this.bankruptButton.setDisabled(true);
     this.player.payFee(this.property);
 
-    this.reactedBy = Optional.of(this.player);
     this.showDescriptionInstead();
   };
 
   protected Consumer<Runnable> handleBankruptClick = (unblock) -> {
     this.bankruptConfirmation.show(this.getStage());
-    this.reactedBy = Optional.of(this.player);
     this.payButton.setDisabled(true);
     this.showDescriptionInstead();
   };

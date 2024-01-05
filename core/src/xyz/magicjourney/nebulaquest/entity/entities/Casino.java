@@ -10,7 +10,7 @@ import xyz.magicjourney.nebulaquest.player.Player;
 public class Casino extends Entity implements Interactiveable {
   
   public Casino() {
-    super("Casino", "Nice casino");
+    super("Suspicious\nSpace Station", "According to the local Republic administration, this space station should be abandoned. However, it appears freshly built and teeming with life. Will you dare to investigate its mysteries?");
   }
 
   @Override
@@ -23,7 +23,7 @@ public class Casino extends Entity implements Interactiveable {
 
   @Override
   public Field toField(AssetManager assets) {
-    return new Field(this, assets);
+    return new Field(this, "images/casino", assets);
   }
 
   @Override

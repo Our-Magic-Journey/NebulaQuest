@@ -12,12 +12,18 @@ import xyz.magicjourney.nebulaquest.player.Player;
 public class Teleport extends Entity implements Buyable {
   protected int value;
   protected Optional<Player> owner;
+  protected int exitField;
 
-  public Teleport() {
+  public Teleport(int exitField) {
     super("Teleport", "This is a well-known hyperspace path. It allows you to traverse to the opposite edge of the galaxy. You can fornicate the start and finish fields, then jumping players need to pay you a fee. Jump doesn't count as passing the starting field.");
 
     this.value = 350;
     this.owner = Optional.empty();
+    this.exitField = exitField;
+  }
+
+  public int getExit() {
+    return this.exitField;
   }
 
   @Override
@@ -50,6 +56,24 @@ public class Teleport extends Entity implements Buyable {
 
   @Override
   public Field toField(AssetManager assets) {
-    return new Field(this, assets);
+    return new Field(this, "images/teleport", assets);
+  }
+
+  @Override
+  public String getInteractiveablePanelName(Player player) {
+    if (this.getOwner().isPresent() && this.getOwner().get() != player) {
+      return "TeleportPayFee"; 
+    }
+    
+    return  "Teleport";
+  }
+
+  @Override
+  public boolean isDecisionRequired(Player player) {
+    if (this.getOwner().isPresent() && this.getOwner().get() != player) {
+      return true;
+    }
+    
+    return false;
   }
 }

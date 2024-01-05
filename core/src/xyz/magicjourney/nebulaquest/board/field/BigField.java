@@ -6,8 +6,10 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 
 public class BigField extends Field {
   public BigField(Entity entity, AssetManager assets) {
-    super(entity, assets, 64, 64);
+    this(entity, "images/big-field", assets);
+  }
 
-    this.setTexture("images/big-field", assets);
+  public BigField(Entity entity, String texture, AssetManager assets) {
+    super(entity, texture, assets, 64, 64);
   }
 }

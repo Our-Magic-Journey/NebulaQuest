@@ -13,8 +13,13 @@ import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.Interactiveable;
 import xyz.magicjourney.nebulaquest.entity.entities.Casino;
+import xyz.magicjourney.nebulaquest.entity.entities.EmergencySignal;
+import xyz.magicjourney.nebulaquest.entity.entities.Mine;
+import xyz.magicjourney.nebulaquest.entity.entities.Nebula;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
+import xyz.magicjourney.nebulaquest.entity.entities.TeleportHub;
+import xyz.magicjourney.nebulaquest.entity.entities.UnknownJump;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.PlanetRegion;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
@@ -36,6 +41,7 @@ public class GameScreen extends AbstractScreen {
   protected TourPanel tourPanel;
   protected MenuPanel menuPanel;
   protected Dice dice;
+  protected boolean playerMoved;
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
@@ -49,6 +55,7 @@ public class GameScreen extends AbstractScreen {
 
     this.activePlayer = this.players.get(0);
     this.activeEntity = this.entities.get(0);
+    this.playerMoved = false;
   }
 
   public void populatePlayers() {
@@ -72,43 +79,43 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Start());
     this.entities.add(new Planet("ne59", 100, regions.get(0)));
     this.entities.add(new Planet("pluto", 150, regions.get(0)));
-    this.entities.add(new Teleport());
+    this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("paradise", 200, regions.get(0)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(25));
     this.entities.add(new Planet("nabu", 150, regions.get(1)));
     this.entities.add(new Casino());
     this.entities.add(new Planet("tatuine", 300, regions.get(1)));
     this.entities.add(new Planet("centre", 350, regions.get(1)));
 
-    this.entities.add(new Start());
+    this.entities.add(new Nebula());
     this.entities.add(new Planet("ne59", 100, regions.get(2)));
     this.entities.add(new Planet("pluto", 150, regions.get(2)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Mine());
     this.entities.add(new Planet("paradise", 200, regions.get(2)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(35));
     this.entities.add(new Planet("nabu", 150, regions.get(3)));
-    this.entities.add(new Casino());
+    this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("tatuine", 300, regions.get(3)));
     this.entities.add(new Planet("centre", 350, regions.get(3)));
 
-    this.entities.add(new Start());
+    this.entities.add(new TeleportHub());
     this.entities.add(new Planet("ne59", 100, regions.get(4)));
     this.entities.add(new Planet("pluto", 150, regions.get(4)));
-    this.entities.add(new Teleport());
+    this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("paradise", 200, regions.get(4)));
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(5));
     this.entities.add(new Planet("nabu", 150, regions.get(5)));
-    this.entities.add(new Casino());
+    this.entities.add(new Mine());
     this.entities.add(new Planet("tatuine", 300, regions.get(5)));
     this.entities.add(new Planet("centre", 350, regions.get(5)));
 
-    this.entities.add(new Start());
+    this.entities.add(new UnknownJump());
     this.entities.add(new Planet("pluto", 100, regions.get(6)));
     this.entities.add(new Planet("ne59", 150, regions.get(6)));
-    this.entities.add(new Teleport());
+    this.entities.add(new EmergencySignal());
     this.entities.add(new Planet("pluto", 200, regions.get(6)));
-    this.entities.add(new Teleport());
-    this.entities.add(new Teleport());
+    this.entities.add(new Teleport(15));
+    this.entities.add(new Mine());
     this.entities.add(new Casino());
     this.entities.add(new Planet("paradise", 300, regions.get(7)));
     this.entities.add(new Planet("paradise", 350, regions.get(7)));
@@ -129,7 +136,7 @@ public class GameScreen extends AbstractScreen {
     this.tourPanel = new TourPanel(assets, this.players);
     this.tourPanel.setPosition(751, 72);
 
-    this.interactivePanel = new InteractivePanel(assets, this.dice, this.tourPanel, this.activePlayer, this.entities.get(0));
+    this.interactivePanel = new InteractivePanel(assets, this.dice, this.tourPanel, this.activePlayer, this.board, this.entities.get(0));
     this.interactivePanel.setPosition(542, 72);
 
     this.optionsPanel = new OptionPanel(this.dice, assets);
@@ -159,6 +166,8 @@ public class GameScreen extends AbstractScreen {
 
   protected Consumer<Player> handleTurnStarted = (player) -> {
     this.activePlayer = player;
+    this.interactivePanel.reset();
+    this.playerMoved = false;
 
     // We first set activeEntity to null ensure that handleFieldSelect method
     // will display entity, regardless of entity being Interactiveable or not.
@@ -185,8 +194,9 @@ public class GameScreen extends AbstractScreen {
   protected Consumer<Runnable> handleDiceRoll = (unlock) -> {
     dice.roll((roll) -> {
       if (roll != 12) {
-        this.board.movePlayer(activePlayer, roll, true);
+        this.playerMoved = true;
         this.tourPanel.setTurnEndMode();
+        this.board.movePlayer(activePlayer, roll, true);
       }
       else {
         this.board.movePlayer(activePlayer, roll, false);
@@ -210,17 +220,15 @@ public class GameScreen extends AbstractScreen {
   protected Consumer<Entity> handleFieldEnter = (entity) -> {
     this.activeEntity = entity;
 
-    if (entity instanceof Interactiveable interactive) {
-      if (interactive.isDecisionRequired(this.activePlayer)) {
-        this.tourPanel.blockTurnButton();
-      }
+    if (!(entity instanceof Interactiveable interactive) || !interactive.isDecisionRequired(this.activePlayer)) {
+      this.tourPanel.unblockTurnButton();
     }
 
     this.displayEntityInInteractivePanel(entity);
   };
 
   protected void displayEntityInInteractivePanel(Entity entity) {
-    if (entity instanceof Interactiveable interactive) {
+    if (entity instanceof Interactiveable interactive && this.playerMoved) {
       this.interactivePanel.select(interactive.getInteractiveablePanelName(this.activePlayer), this.activePlayer, entity);
     }
     else {

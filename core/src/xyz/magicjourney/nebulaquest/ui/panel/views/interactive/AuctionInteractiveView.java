@@ -44,15 +44,25 @@ public class AuctionInteractiveView extends DescriptionInteractiveView {
   }
 
   @Override
-  public void select(Player player, Entity field) {
-    this.display(field);
-
+  public void prepareForNextTurn() {
     if (this.player != null) {
       this.player.onChange().unsubscribe(this.update);
     }
-    
-    this.player = player;
-    this.player.onChange().subscribe(this.update);
+
+    this.player = null;
+    this.property = null;
+    this.buyButton.setDisabled(true);
+    this.skipButton.setDisabled(true);
+  }
+  
+  @Override
+  public void select(Player player, Entity field) {
+    this.display(field);
+
+    if (this.player == null) {
+      this.player = player;
+      this.player.onChange().subscribe(this.update);
+    }
 
     if (field instanceof Buyable property) {
       this.property = property;

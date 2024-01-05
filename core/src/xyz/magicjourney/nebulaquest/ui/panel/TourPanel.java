@@ -75,6 +75,7 @@ public class TourPanel extends Panel {
   }
 
   public void setTurnEndMode() {
+    this.endTurn.setDisabled(true);
     this.buttonCell.clearActor();
     this.buttonCell.setActor(endTurn);
   }
@@ -103,9 +104,8 @@ public class TourPanel extends Panel {
     this.update.accept(this.players.first());
 
     this.playerTurnMsg.onAccepted().subscribe(() -> {
-      this.turnStartedEvent.emit(this.players.first());
       this.setRollMode();
-      unblock.run();
+      this.turnStartedEvent.emit(this.players.first());
     });
   };
 }

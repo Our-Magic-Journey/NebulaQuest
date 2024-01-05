@@ -16,7 +16,7 @@ public interface Buyable extends Describable, Interactiveable {
   void setOwner(Player player);
 
   default boolean mustPayFee(Player player) {
-    return this.getOwner().isPresent() && !this.isOwner(player);
+    return this.getOwner().isPresent() && this.getOwner().get() != player;
   }
 
   default boolean canByBought() {
