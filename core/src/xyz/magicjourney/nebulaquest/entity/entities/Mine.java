@@ -41,8 +41,13 @@ public class Mine extends Entity implements Buyable {
   }
 
   @Override
+  public boolean canByBought() {
+    return true;
+  }
+
+  @Override
   public Optional<Player> getOwner() {
-    return this.getOwner();
+    return this.owner;
   }
 
   @Override

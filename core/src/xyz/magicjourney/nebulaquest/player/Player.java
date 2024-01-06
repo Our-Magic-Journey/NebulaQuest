@@ -89,6 +89,8 @@ public class Player implements Describable {
   }
 
   public void giveMoney(int value) {
+    System.out.println(this.getName() + " gets " + value + " credits");
+
     this.setMoney(this.getMoney() + value);
   }
 
