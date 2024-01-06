@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import xyz.magicjourney.nebulaquest.board.field.Field;
 import xyz.magicjourney.nebulaquest.entity.Entity;
+import xyz.magicjourney.nebulaquest.entity.entities.Nebula;
 import xyz.magicjourney.nebulaquest.event.EventGetter;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEventGetter;
 import xyz.magicjourney.nebulaquest.player.Player;
@@ -173,5 +174,12 @@ public class Board extends Group {
   public void selectFieldUnderPlayer(Player player) {
     this.unselectField();
     this.getFieldInstanceUnderPlayer(player).setChecked(true);
+  }
+
+  public void movePlayerToNebula(Player player, int field) {
+    if (this.fields.get(field).getEntity() instanceof Nebula nebula) {
+      nebula.addLostPlayer(player);
+      this.setPlayerPosition(player, field, true);
+    }
   }
 }
