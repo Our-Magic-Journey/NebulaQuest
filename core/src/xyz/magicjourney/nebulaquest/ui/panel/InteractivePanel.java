@@ -18,6 +18,7 @@ import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PlayerInteractive
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PlayersInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.TeleportInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.TeleportPayFeeInteractiveView;
+import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.UnknownJumpInteractiveView;
 
 public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
   protected Player player;
@@ -41,6 +42,7 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
     this.views.put("Teleport", new TeleportInteractiveView(assets, this, tourPanel, board));
     this.views.put("TeleportPayFee", new TeleportPayFeeInteractiveView(assets, this, tourPanel));
     this.views.put("Mine", new MineInteractiveView(assets, this, tourPanel));
+    this.views.put("UnknownJump", new UnknownJumpInteractiveView(assets, this, tourPanel, board));
 
     this.content.pad(4, 4, 4, 4);
     this.select("Bank");

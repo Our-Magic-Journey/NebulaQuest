@@ -11,6 +11,9 @@ import xyz.magicjourney.nebulaquest.animation.AnimatedImage;
 import xyz.magicjourney.nebulaquest.timer.Timer;
 
 public class Dice extends Group {
+  protected int rollNumber;
+  protected int[] debugRolls;
+
   protected Random random;
   protected AnimatedImage animation;
   protected Table table;
@@ -28,7 +31,14 @@ public class Dice extends Group {
     this.setWidth(400);
     this.setHeight(200);
     this.setVisible(false);
+    this.rollNumber = 0;
 
+    this.debugRolls = new int[] {
+      5, 5, 5,
+      5, 2, 
+      5, 6,
+      5, 12
+    };
   }
 
   @Override
@@ -38,8 +48,13 @@ public class Dice extends Group {
     this.viabilityTimer.act(delta);
   }
 
+  protected int debugRoll() {
+    return debugRolls[Math.max(0, Math.min(this.debugRolls.length - 1, this.rollNumber++))];
+  }
+
   public void roll(Consumer<Integer> callback) {
-    int result = this.random.nextInt(11) + 1;
+    int result = this.random.nextInt(11) + 1; 
+    // int result = this.debugRoll(); 
 
     if (this.isRolling) {
       return;

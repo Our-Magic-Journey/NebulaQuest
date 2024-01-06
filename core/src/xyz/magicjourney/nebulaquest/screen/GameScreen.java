@@ -109,7 +109,7 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Planet("tatuine", 300, regions.get(5)));
     this.entities.add(new Planet("centre", 350, regions.get(5)));
 
-    this.entities.add(new UnknownJump());
+    this.entities.add(new UnknownJump(5, 15, 25, 35, 0, 10));
     this.entities.add(new Planet("pluto", 100, regions.get(6)));
     this.entities.add(new Planet("ne59", 150, regions.get(6)));
     this.entities.add(new EmergencySignal());
