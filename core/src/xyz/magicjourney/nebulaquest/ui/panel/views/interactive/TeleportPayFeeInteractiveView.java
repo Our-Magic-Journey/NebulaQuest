@@ -1,5 +1,7 @@
 package xyz.magicjourney.nebulaquest.ui.panel.views.interactive;
 
+import java.util.function.Consumer;
+
 import com.badlogic.gdx.assets.AssetManager;
 
 import xyz.magicjourney.nebulaquest.entity.Buyable;
@@ -11,6 +13,8 @@ import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
 public class TeleportPayFeeInteractiveView extends PayFeeInteractiveView {
   public TeleportPayFeeInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
+
+    this.payButton.onClick().subscribe(this.handlePayClick);
   }
 
   @Override
@@ -56,4 +60,12 @@ public class TeleportPayFeeInteractiveView extends PayFeeInteractiveView {
     this.parent.select("Teleport");
     this.tourPanel.unblockTurnButton();
   }
+
+  protected Consumer<Runnable> handlePayClick = (unblock) -> {
+    this.bankruptButton.setDisabled(true);
+    this.player.payFee(this.property);
+
+    this.showDescriptionInstead();
+  };
+
 }
