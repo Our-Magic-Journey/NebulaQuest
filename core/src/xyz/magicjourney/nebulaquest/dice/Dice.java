@@ -56,8 +56,8 @@ public class Dice extends Group {
   }
 
   public void roll(Consumer<Integer> callback) {
-    //int result = this.random.nextInt(11) + 1; 
-    int result = this.debugRoll(); 
+    int result = this.random.nextInt(11) + 1; 
+    //int result = this.debugRoll(); 
 
     if (this.isRolling) {
       return;
