@@ -5,11 +5,12 @@ import com.badlogic.gdx.assets.AssetManager;
 import xyz.magicjourney.nebulaquest.entity.Buyable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
+
 
 public class TeleportPayFeeInteractiveView extends PayFeeInteractiveView {
-  public TeleportPayFeeInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+  public TeleportPayFeeInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
   }
 

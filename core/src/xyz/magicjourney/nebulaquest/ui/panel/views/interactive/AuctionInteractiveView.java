@@ -9,8 +9,8 @@ import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
 
 public class AuctionInteractiveView extends DescriptionInteractiveView {
   protected ActionButton buyButton;
@@ -19,7 +19,7 @@ public class AuctionInteractiveView extends DescriptionInteractiveView {
   protected Buyable property;
   protected Player player;
 
-  public AuctionInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+  public AuctionInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
 
     this.buyButton = new ActionButton("Buy", true, assets);

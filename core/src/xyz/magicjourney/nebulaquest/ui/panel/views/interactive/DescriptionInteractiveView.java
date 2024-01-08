@@ -13,8 +13,8 @@ import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 import xyz.magicjourney.nebulaquest.player.Player;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
 import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractInteractiveView;
 
 public class DescriptionInteractiveView extends AbstractInteractiveView {
@@ -29,7 +29,7 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
 
   protected TenPatchDrawable spacer;
 
-  public DescriptionInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+  public DescriptionInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
     this.assets = assets;
     this.title = new Label("", this.skin, "small-title");

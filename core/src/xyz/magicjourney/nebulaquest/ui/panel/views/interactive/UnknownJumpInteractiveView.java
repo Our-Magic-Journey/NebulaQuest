@@ -10,8 +10,8 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.UnknownJump;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
 
 public class UnknownJumpInteractiveView extends DescriptionInteractiveView  {
   protected ActionButton jump;
@@ -19,7 +19,7 @@ public class UnknownJumpInteractiveView extends DescriptionInteractiveView  {
   protected UnknownJump entity;
   protected Board board;
 
-  public UnknownJumpInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel, Board board) {
+  public UnknownJumpInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel, Board board) {
     super(assets, parent, tourPanel);
     
     this.board = board;
