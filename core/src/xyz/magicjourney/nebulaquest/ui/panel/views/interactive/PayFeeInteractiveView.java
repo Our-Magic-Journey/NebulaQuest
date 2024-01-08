@@ -10,8 +10,9 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
 import xyz.magicjourney.nebulaquest.ui.dialog.MessageBox;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
+
 
 public class PayFeeInteractiveView extends DescriptionInteractiveView {
   protected ActionButton payButton;
@@ -21,7 +22,7 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
   protected Buyable property;
   protected Player player;
 
-  public PayFeeInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+  public PayFeeInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
 
     this.payButton = new ActionButton("Pay fee", true, assets);

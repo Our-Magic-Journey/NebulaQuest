@@ -10,8 +10,8 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.Teleport;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
 
 public class TeleportInteractiveView extends DescriptionInteractiveView  {
   protected ActionButton militarize;
@@ -20,7 +20,7 @@ public class TeleportInteractiveView extends DescriptionInteractiveView  {
   protected Teleport entity;
   protected Board board;
 
-  public TeleportInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel, Board board) {
+  public TeleportInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel, Board board) {
     super(assets, parent, tourPanel);
     
     this.board = board;

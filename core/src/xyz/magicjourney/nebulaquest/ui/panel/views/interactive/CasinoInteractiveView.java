@@ -11,8 +11,8 @@ import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
 import xyz.magicjourney.nebulaquest.ui.dialog.MessageBox;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
 
 public class CasinoInteractiveView extends DescriptionInteractiveView {
   protected Random random;
@@ -26,7 +26,7 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
   protected int betValue;
   protected Player player;
 
-  public CasinoInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+  public CasinoInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
     
     this.random = new Random();
