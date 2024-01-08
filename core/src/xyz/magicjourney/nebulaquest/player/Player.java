@@ -27,7 +27,7 @@ public class Player implements Describable {
   public Player(String name) {
     this.name = name;
     this.id = generateId();
-    this.money = 1000;
+    this.money = 800;
     this.changedEvent = new ParameterizedEvent<>();
     this.properties = new ArrayList<>();
   }
@@ -69,9 +69,10 @@ public class Player implements Describable {
   public boolean payFee(Buyable property) {
     if (property.mustPayFee(this) && this.pay(property.getFee())) {
       Player owner = property.getOwner().get();
-
       owner.setMoney(owner.getMoney() + property.getFee());
-
+      
+      System.out.println(this.getName() + " pays " + owner.getName() + " " + property.getFee() + " credits for " + property.getName());
+    
       return true;
     }
 
@@ -89,6 +90,8 @@ public class Player implements Describable {
   }
 
   public void giveMoney(int value) {
+    System.out.println(this.getName() + " gets " + value + " credits");
+
     this.setMoney(this.getMoney() + value);
   }
 

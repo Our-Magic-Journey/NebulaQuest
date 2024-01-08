@@ -154,6 +154,11 @@ public class Board extends Group {
       finalPos -= this.fields.length();
     }
 
+    // Start field
+    if (pawn.getField() == 0 && finalPos != 0) {
+      this.fields.get(0).getEntity().onPass(player);
+    }
+
     for (int i = pawn.getField() + 1; i <= finalPos; i++) {
       this.fields.get(i).getEntity().onPass(player);
     }

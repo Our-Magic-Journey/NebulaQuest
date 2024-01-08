@@ -34,10 +34,13 @@ public class Dice extends Group {
     this.rollNumber = 0;
 
     this.debugRolls = new int[] {
-      5, 5, 5,
-      5, 2, 
-      5, 6,
-      5, 12
+      12, 1,
+      12, 1,
+      12, 2,
+      2, 2, 1,
+      12, 11,
+      12, 11,
+      12, 11
     };
   }
 
@@ -54,7 +57,7 @@ public class Dice extends Group {
 
   public void roll(Consumer<Integer> callback) {
     int result = this.random.nextInt(11) + 1; 
-    // int result = this.debugRoll(); 
+    //int result = this.debugRoll(); 
 
     if (this.isRolling) {
       return;
