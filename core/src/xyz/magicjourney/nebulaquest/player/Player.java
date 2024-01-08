@@ -67,8 +67,7 @@ public class Player implements Describable {
   }
 
   public boolean payFee(Buyable property) {
-    if (property.mustPayFee(this) && this.pay(property.getValue())) {
-      
+    if (property.mustPayFee(this) && this.pay(property.getFee())) {
       Player owner = property.getOwner().get();
       owner.setMoney(owner.getMoney() + property.getFee());
       
