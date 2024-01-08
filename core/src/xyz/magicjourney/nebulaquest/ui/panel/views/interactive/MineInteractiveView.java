@@ -10,7 +10,7 @@ import xyz.magicjourney.nebulaquest.entity.entities.Mine;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
-import xyz.magicjourney.nebulaquest.ui.panel.ViewPanel;
+import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 
 public class MineInteractiveView extends DescriptionInteractiveView {
   protected ActionButton buyButton;
@@ -18,7 +18,7 @@ public class MineInteractiveView extends DescriptionInteractiveView {
   protected Mine property;
   protected Player player;
 
-  public MineInteractiveView(AssetManager assets, ViewPanel<?> parent, TourPanel tourPanel) {
+  public MineInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
 
     this.buyButton = new ActionButton("Buy", true, assets);
