@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import xyz.magicjourney.nebulaquest.animation.AnimatedImage;
 import xyz.magicjourney.nebulaquest.entity.Buyable;
 import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEvent;
@@ -95,13 +96,13 @@ public class Player implements Describable {
     this.setMoney(this.getMoney() + value);
   }
 
-  public TextureRegionDrawable getShip(AssetManager assets) {
-    return new TextureRegionDrawable(new TextureRegion(assets.get("images/player" + id + ".png", Texture.class)));
+  public AnimatedImage getShip(AssetManager assets) {    
+    return new AnimatedImage("animations/ship/ship_" + id + ".atlas", "move", 0.1f, true, assets);
   }
 
   @Override
   public Actor getIcon(AssetManager assets) {
-    return new Image(this.getShip(assets));
+    return this.getShip(assets);
   }
 
   public ParameterizedEventGetter<Player> onChange() {

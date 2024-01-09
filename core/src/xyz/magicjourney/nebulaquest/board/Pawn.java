@@ -2,18 +2,18 @@ package xyz.magicjourney.nebulaquest.board;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import xyz.magicjourney.nebulaquest.animation.AnimatedImage;
 import xyz.magicjourney.nebulaquest.player.Player;
 
 public class Pawn extends Group {
   protected Player player;
-  protected Image image;
+  protected AnimatedImage image;
   protected int field;
 
   public Pawn(Player player, AssetManager assets) {
     this.player = player;
-    this.image = new Image(player.getShip(assets));
+    this.image = player.getShip(assets);
     this.field = 0;
     this.setSize(40, 40);
     
