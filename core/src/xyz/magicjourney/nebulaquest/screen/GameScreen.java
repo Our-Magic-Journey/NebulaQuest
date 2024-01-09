@@ -123,7 +123,10 @@ public class GameScreen extends AbstractScreen {
 
   @Override
   public void show() {
-    create();
+    if(this.board == null) {
+      this.create();
+    }
+
     musicManager.playGameMusic();
 
     super.show();
