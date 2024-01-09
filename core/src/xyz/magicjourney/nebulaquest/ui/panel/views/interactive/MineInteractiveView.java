@@ -34,7 +34,7 @@ public class MineInteractiveView extends DescriptionInteractiveView {
   }
 
   protected void generateDescription() {
-    String text = this.splitText(23, "The planet is currently under the control of the Republic, engaged in a war against separatists. The Republic, in need of resources, is willing to sell this world. As the closest explorer, you have the right of first refusal.");
+    String text = this.splitText(23, "There is a mine working for the Republic on this planet. Its manager is willing to share with you some 'excess' ore below market price. However, you must first prove to them that you are a trustworthy person.");
 
     this.description.setText(text);
   }

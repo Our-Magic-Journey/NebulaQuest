@@ -17,7 +17,7 @@ public class Mine extends Entity implements Buyable {
   protected Random random;
 
   public Mine() {
-    super("Asteroid Mine", "");
+    super("Asteroid Mine", "On this planet operates a Republic-owned mine, and since it's poorly paid, surely you can strike a good deal with the local manager");
 
     this.value = 500;
     this.owner = Optional.empty();
