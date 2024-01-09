@@ -71,5 +71,12 @@ animations/planet/mon cala.atlas
 animations/planet/teth.atlas
 animations/planet/antar.atlas
 animations/planet/prakith.atlas
+animations/planet/lego.atlas
+animations/planet/vortex.atlas
+animations/planet/nemtox.atlas
+animations/planet/moraband.atlas
+animations/planet/belsavis.atlas
+animations/planet/castilon.atlas
+animations/planet/lola sayu.atlas
 animations/planet/moon antar.atlas
 animations/dice/dice.atlas

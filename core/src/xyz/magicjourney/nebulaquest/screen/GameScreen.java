@@ -105,19 +105,19 @@ public class GameScreen extends AbstractScreen {
     this.entities.add(new Teleport(5));
     this.entities.add(new Planet("prakith", 700, regions.get(5)));
     this.entities.add(new Mine());
-    this.entities.add(new Planet("mustafar", 700, regions.get(5)));
-    this.entities.add(new Planet("mustafar", 750, regions.get(5)));
+    this.entities.add(new Planet("nemtox", 700, regions.get(5)));
+    this.entities.add(new Planet("moraband", 750, regions.get(5)));
 
     this.entities.add(new UnknownJump(5, 15, 25, 35, 0, 10));
-    this.entities.add(new Planet("mustafar", 850, regions.get(6)));
-    this.entities.add(new Planet("mustafar", 850, regions.get(6)));
-    this.entities.add(new Planet("mustafar", 850, regions.get(6)));
-    this.entities.add(new Planet("mustafar", 850, regions.get(6)));
+    this.entities.add(new Planet("belsavis", 850, regions.get(6)));
+    this.entities.add(new Planet("lola sayu", 850, regions.get(6)));
+    this.entities.add(new Planet("castilon", 850, regions.get(6)));
+    this.entities.add(new Planet("vortex", 950, regions.get(6)));
     this.entities.add(new Teleport(15));
     this.entities.add(new Mine());
     this.entities.add(new Casino());
-    this.entities.add(new Planet("mustafar", 1200, regions.get(7)));
-    this.entities.add(new Planet("mustafar", 1200, regions.get(7)));
+    this.entities.add(new Planet("lego", 1200, regions.get(7)));
+    this.entities.add(new Planet("mustafar", 1500, regions.get(7)));
   }
 
   @Override
