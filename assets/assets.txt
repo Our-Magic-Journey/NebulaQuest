@@ -51,10 +51,25 @@ images/board-background.png
 images/player0.png
 images/player1.png
 images/player2.png
-animations/planet/tatuine.atlas
-animations/planet/centre.atlas
-animations/planet/pluto.atlas
-animations/planet/nabu.atlas
-animations/planet/ne59.atlas
+animations/planet/mustafar.atlas
 animations/planet/paradise.atlas
+animations/planet/anch-to.atlas
+animations/planet/alderaan.atlas
+animations/planet/dathomir.atlas
+animations/planet/bespin.atlas
+animations/planet/rodia.atlas
+animations/planet/kamino.atlas
+animations/planet/fondor.atlas
+animations/planet/hoth.atlas
+animations/planet/utapau.atlas
+animations/planet/naboo.atlas
+animations/planet/exegol.atlas
+animations/planet/mandalore.atlas
+animations/planet/coruscant.atlas
+animations/planet/tatooine.atlas
+animations/planet/mon cala.atlas
+animations/planet/teth.atlas
+animations/planet/antar.atlas
+animations/planet/prakith.atlas
+animations/planet/moon antar.atlas
 animations/dice/dice.atlas
