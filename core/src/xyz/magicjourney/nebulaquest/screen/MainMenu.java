@@ -28,16 +28,18 @@ public class MainMenu extends AbstractScreen {
     super(batch, assets, screenManager, musicManager);
     options = new LinkedHashMap<>();
   }
-  
+
   @Override
   public void show() {
     super.show();
     options.clear();
     musicManager.playMenuMusic();
 
-    layout();
+    if(title == null) {
+      layout();
+    }
   }
-  
+
   protected void layout() {
     skin = assets.get("skin/ui.skin.json");
     layout = new Table(skin);
@@ -45,11 +47,9 @@ public class MainMenu extends AbstractScreen {
 
     title = new Label("Nebula Quest", skin, "title");
     options.put("New", new TextButton("New", skin, "text"));
-    options.put("Continue", new TextButton("Continue", skin, "text"));
-    options.put("Options", new TextButton("Options", skin, "text"));
     options.put("Credits", new TextButton("Credits", skin, "text"));
     options.put("Exit", new TextButton("Exit", skin, "text"));
-    
+
     layout.setBackground(new TextureRegionDrawable(assets.get("images/background.png", Texture.class)));
     layout.setFillParent(true);
 
@@ -59,10 +59,12 @@ public class MainMenu extends AbstractScreen {
     layout.add(buttons).expand().fill().bottom();
     options.forEach((key, button) -> buttons.add(button).row());
 
-    options.get("New").addListener(new Listener((event, actor) -> screenManager.select("game")));
-    options.get("Continue").addListener(new Listener((event, actor) -> screenManager.select("game")));
     options.get("Credits").addListener(new Listener((event, actor) -> screenManager.select("credits")));
     options.get("Exit").addListener(new Listener((event, actor) -> Gdx.app.exit()));
+    options.get("New").addListener(new Listener((event, actor) -> {
+      ((TextButton) actor).setText("Continue");
+      screenManager.select("game");
+    }));
 
     stage.addActor(layout);
   }

@@ -27,7 +27,7 @@ public class Player implements Describable {
   public Player(String name) {
     this.name = name;
     this.id = generateId();
-    this.money = 800;
+    this.money = 10000;
     this.changedEvent = new ParameterizedEvent<>();
     this.properties = new ArrayList<>();
   }

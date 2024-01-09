@@ -13,7 +13,6 @@ import xyz.magicjourney.nebulaquest.dice.Dice;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.Interactiveable;
 import xyz.magicjourney.nebulaquest.entity.entities.Casino;
-import xyz.magicjourney.nebulaquest.entity.entities.EmergencySignal;
 import xyz.magicjourney.nebulaquest.entity.entities.Mine;
 import xyz.magicjourney.nebulaquest.entity.entities.Nebula;
 import xyz.magicjourney.nebulaquest.entity.entities.Start;
@@ -77,53 +76,56 @@ public class GameScreen extends AbstractScreen {
 
   protected void populateBoard() {
     this.entities.add(new Start());
-    this.entities.add(new Planet("ne59", 100, regions.get(0)));
-    this.entities.add(new Planet("pluto", 150, regions.get(0)));
-    this.entities.add(new EmergencySignal());
-    this.entities.add(new Planet("paradise", 200, regions.get(0)));
+    this.entities.add(new Planet("anch-to", 100, regions.get(0)));
+    this.entities.add(new Planet("alderaan", 100, regions.get(0)));
+    this.entities.add(new Planet("bespin", 100, regions.get(0)));
+    this.entities.add(new Planet("kamino", 100, regions.get(0)));
     this.entities.add(new Teleport(25));
-    this.entities.add(new Planet("nabu", 150, regions.get(1)));
+    this.entities.add(new Planet("rodia", 200, regions.get(1)));
     this.entities.add(new Casino());
-    this.entities.add(new Planet("tatuine", 300, regions.get(1)));
-    this.entities.add(new Planet("centre", 350, regions.get(1)));
+    this.entities.add(new Planet("hoth", 200, regions.get(1)));
+    this.entities.add(new Planet("fondor", 250, regions.get(1)));
 
     this.entities.add(new Nebula());
-    this.entities.add(new Planet("ne59", 100, regions.get(2)));
-    this.entities.add(new Planet("pluto", 150, regions.get(2)));
+    this.entities.add(new Planet("dathomir", 350, regions.get(2)));
+    this.entities.add(new Planet("paradise", 350, regions.get(2)));
     this.entities.add(new Mine());
-    this.entities.add(new Planet("paradise", 200, regions.get(2)));
+    this.entities.add(new Planet("utapau", 400, regions.get(2)));
     this.entities.add(new Teleport(35));
-    this.entities.add(new Planet("nabu", 150, regions.get(3)));
-    this.entities.add(new EmergencySignal());
-    this.entities.add(new Planet("tatuine", 300, regions.get(3)));
-    this.entities.add(new Planet("centre", 350, regions.get(3)));
+    this.entities.add(new Planet("naboo", 500, regions.get(3)));
+    this.entities.add(new Planet("exegol", 500, regions.get(3)));
+    this.entities.add(new Planet("coruscant", 500, regions.get(3)));
+    this.entities.add(new Planet("teth", 500, regions.get(3)));
 
     this.entities.add(new TeleportHub());
-    this.entities.add(new Planet("ne59", 100, regions.get(4)));
-    this.entities.add(new Planet("pluto", 150, regions.get(4)));
-    this.entities.add(new EmergencySignal());
-    this.entities.add(new Planet("paradise", 200, regions.get(4)));
+    this.entities.add(new Planet("mon cala", 600, regions.get(4)));
+    this.entities.add(new Planet("tatooine", 600, regions.get(4)));
+    this.entities.add(new Planet("moon antar", 600, regions.get(4)));
+    this.entities.add(new Planet("antar", 600, regions.get(4)));
     this.entities.add(new Teleport(5));
-    this.entities.add(new Planet("nabu", 150, regions.get(5)));
+    this.entities.add(new Planet("prakith", 700, regions.get(5)));
     this.entities.add(new Mine());
-    this.entities.add(new Planet("tatuine", 300, regions.get(5)));
-    this.entities.add(new Planet("centre", 350, regions.get(5)));
+    this.entities.add(new Planet("nemtox", 700, regions.get(5)));
+    this.entities.add(new Planet("moraband", 750, regions.get(5)));
 
     this.entities.add(new UnknownJump(5, 15, 25, 35, 0, 10));
-    this.entities.add(new Planet("pluto", 100, regions.get(6)));
-    this.entities.add(new Planet("ne59", 150, regions.get(6)));
-    this.entities.add(new EmergencySignal());
-    this.entities.add(new Planet("pluto", 200, regions.get(6)));
+    this.entities.add(new Planet("belsavis", 850, regions.get(6)));
+    this.entities.add(new Planet("lola sayu", 850, regions.get(6)));
+    this.entities.add(new Planet("castilon", 850, regions.get(6)));
+    this.entities.add(new Planet("vortex", 950, regions.get(6)));
     this.entities.add(new Teleport(15));
     this.entities.add(new Mine());
     this.entities.add(new Casino());
-    this.entities.add(new Planet("paradise", 300, regions.get(7)));
-    this.entities.add(new Planet("paradise", 350, regions.get(7)));
+    this.entities.add(new Planet("lego", 1200, regions.get(7)));
+    this.entities.add(new Planet("mustafar", 1500, regions.get(7)));
   }
 
   @Override
   public void show() {
-    create();
+    if(this.board == null) {
+      this.create();
+    }
+
     musicManager.playGameMusic();
 
     super.show();
