@@ -20,8 +20,9 @@ public class Planet extends Entity implements Buyable {
     this.value = value;
     this.region = region;
     this.owner = Optional.empty();
+    this.region.registerPlanet(this);
   }
-  
+
   @Override
   public int getValue() {
     return this.value;
@@ -29,7 +30,13 @@ public class Planet extends Entity implements Buyable {
 
   @Override
   public int getFee() {
-    return 100;
+    int fee = (int) (this.getValue() * 0.2f);
+
+    if (this.getOwner().isPresent() && this.region.ownAll(this.getOwner().get())) {
+      return 2 * fee;
+    }
+
+    return fee;
   }
 
   @Override
