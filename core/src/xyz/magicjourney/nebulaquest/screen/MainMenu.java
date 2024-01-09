@@ -45,8 +45,6 @@ public class MainMenu extends AbstractScreen {
 
     title = new Label("Nebula Quest", skin, "title");
     options.put("New", new TextButton("New", skin, "text"));
-    options.put("Continue", new TextButton("Continue", skin, "text"));
-    options.put("Options", new TextButton("Options", skin, "text"));
     options.put("Credits", new TextButton("Credits", skin, "text"));
     options.put("Exit", new TextButton("Exit", skin, "text"));
     
@@ -60,7 +58,6 @@ public class MainMenu extends AbstractScreen {
     options.forEach((key, button) -> buttons.add(button).row());
 
     options.get("New").addListener(new Listener((event, actor) -> screenManager.select("game")));
-    options.get("Continue").addListener(new Listener((event, actor) -> screenManager.select("game")));
     options.get("Credits").addListener(new Listener((event, actor) -> screenManager.select("credits")));
     options.get("Exit").addListener(new Listener((event, actor) -> Gdx.app.exit()));
 
