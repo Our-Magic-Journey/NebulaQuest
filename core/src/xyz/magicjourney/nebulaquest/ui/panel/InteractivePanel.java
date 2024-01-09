@@ -13,6 +13,7 @@ import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.BankInteractiveVi
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.CasinoInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.DescriptionInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.HubInteractiveView;
+import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.MineInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PayFeeInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PlayerInteractiveView;
 import xyz.magicjourney.nebulaquest.ui.panel.views.interactive.PlayersInteractiveView;
@@ -42,6 +43,7 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
     this.views.put("Hub", new HubInteractiveView(assets, this, tourPanel, board));
     this.views.put("Teleport", new TeleportInteractiveView(assets, this, tourPanel, board));
     this.views.put("TeleportPayFee", new TeleportPayFeeInteractiveView(assets, this, tourPanel));
+    this.views.put("Mine", new MineInteractiveView(assets, this, tourPanel));
     this.views.put("UnknownJump", new UnknownJumpInteractiveView(assets, this, tourPanel, board));
 
     this.content.pad(4, 4, 4, 4);
