@@ -11,11 +11,11 @@ import xyz.magicjourney.nebulaquest.animation.AnimatedImage;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 
 public class PlanetField extends Field {
-  Planet entity;
-  AnimatedImage planet;
-  Image color;
-  Label price;
-  Label name;
+  protected Planet entity;
+  protected AnimatedImage planet;
+  protected Image color;
+  protected Label price;
+  protected Label name;
   
   public PlanetField(Planet entity, AssetManager assets) {
     super(entity, assets);

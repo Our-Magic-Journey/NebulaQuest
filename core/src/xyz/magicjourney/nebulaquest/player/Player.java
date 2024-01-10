@@ -3,12 +3,9 @@ package xyz.magicjourney.nebulaquest.player;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import xyz.magicjourney.nebulaquest.animation.AnimatedImage;
 import xyz.magicjourney.nebulaquest.entity.Buyable;
 import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.event.ParameterizedEvent;
@@ -18,6 +15,7 @@ public class Player implements Describable {
   private static int nextID = 0;
 
   protected ParameterizedEvent<Player> changedEvent;
+  protected ParameterizedEvent<Player> bankruptEvent;
 
   protected int id;
   protected String name;
@@ -28,8 +26,9 @@ public class Player implements Describable {
     this.name = name;
     this.id = generateId();
     this.money = 10000;
-    this.changedEvent = new ParameterizedEvent<>();
     this.properties = new ArrayList<>();
+    this.changedEvent = new ParameterizedEvent<>();
+    this.bankruptEvent = new ParameterizedEvent<>();
   }
 
   private int generateId() {
@@ -95,16 +94,29 @@ public class Player implements Describable {
     this.setMoney(this.getMoney() + value);
   }
 
-  public TextureRegionDrawable getShip(AssetManager assets) {
-    return new TextureRegionDrawable(new TextureRegion(assets.get("images/player" + id + ".png", Texture.class)));
+  public AnimatedImage getShip(AssetManager assets) {    
+    return new AnimatedImage("animations/ship/ship_" + id + ".atlas", "move", 0.1f, true, assets);
   }
 
   @Override
   public Actor getIcon(AssetManager assets) {
-    return new Image(this.getShip(assets));
+    return this.getShip(assets);
   }
 
   public ParameterizedEventGetter<Player> onChange() {
     return this.changedEvent;
+  }
+
+  public void bankrupt() {
+    for (Buyable property : properties) {
+      property.setOwner(null);
+    }
+
+    properties.clear();
+    this.bankruptEvent.emit(this);
+  }
+
+  public ParameterizedEventGetter<Player> onBankrupt() {
+    return this.bankruptEvent;
   }
 }

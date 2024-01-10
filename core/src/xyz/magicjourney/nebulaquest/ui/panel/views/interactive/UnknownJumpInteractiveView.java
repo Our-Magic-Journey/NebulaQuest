@@ -30,6 +30,8 @@ public class UnknownJumpInteractiveView extends DescriptionInteractiveView  {
 
   @Override
   public void prepareForNextTurn() {    
+    super.prepareForNextTurn();
+
     this.player = null;
     this.entity = null;
     this.jump.setDisabled(false);

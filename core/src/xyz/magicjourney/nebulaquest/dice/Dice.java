@@ -34,13 +34,9 @@ public class Dice extends Group {
     this.rollNumber = 0;
 
     this.debugRolls = new int[] {
-      12, 1,
-      12, 1,
-      12, 2,
-      2, 2, 1,
-      12, 11,
-      12, 11,
-      12, 11
+      12, 12, 6, 3,
+      12, 12, 6, 6,
+      12, 12, 6, 10,
     };
   }
 

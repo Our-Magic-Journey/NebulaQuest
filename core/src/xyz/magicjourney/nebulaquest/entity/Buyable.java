@@ -40,4 +40,11 @@ public interface Buyable extends Describable, Interactiveable {
   default boolean isDecisionRequired(Player player) {
     return this.mustPayFee(player) || this.canByBought();
   }
+
+  default void sell() {
+    if (this.getOwner().isPresent()) {
+      this.getOwner().get().giveMoney(this.getValue());
+      this.setOwner(null);
+    }
+  }
 }

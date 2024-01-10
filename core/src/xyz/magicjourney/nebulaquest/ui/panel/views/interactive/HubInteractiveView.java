@@ -77,6 +77,8 @@ public class HubInteractiveView extends DescriptionInteractiveView {
 
   @Override
   public void prepareForNextTurn() {
+    super.prepareForNextTurn();
+
     for (var button : this.teleportButtons) {
       button.setDisabled(false);
     }

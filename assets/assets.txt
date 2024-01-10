@@ -22,6 +22,7 @@ images/planet-field.png
 images/planet-field-over.png
 images/planet-field-down.png
 images/planet-field-color.png
+images/planet-field-color2.png
 images/casino.png
 images/casino-over.png
 images/casino-down.png
@@ -48,9 +49,9 @@ images/event-over.png
 images/event-down.png
 images/map-done.png
 images/board-background.png
-images/player0.png
-images/player1.png
-images/player2.png
+animations/ship/ship_0.atlas
+animations/ship/ship_1.atlas
+animations/ship/ship_2.atlas
 animations/planet/mustafar.atlas
 animations/planet/paradise.atlas
 animations/planet/anch-to.atlas
