@@ -4,7 +4,6 @@ import com.badlogic.gdx.assets.AssetManager;
 
 import xyz.magicjourney.nebulaquest.board.Board;
 import xyz.magicjourney.nebulaquest.dice.Dice;
-import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractInteractiveView;

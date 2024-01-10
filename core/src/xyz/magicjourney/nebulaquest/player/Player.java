@@ -15,6 +15,7 @@ public class Player implements Describable {
   private static int nextID = 0;
 
   protected ParameterizedEvent<Player> changedEvent;
+  protected ParameterizedEvent<Player> bankruptEvent;
 
   protected int id;
   protected String name;
@@ -25,8 +26,9 @@ public class Player implements Describable {
     this.name = name;
     this.id = generateId();
     this.money = 10000;
-    this.changedEvent = new ParameterizedEvent<>();
     this.properties = new ArrayList<>();
+    this.changedEvent = new ParameterizedEvent<>();
+    this.bankruptEvent = new ParameterizedEvent<>();
   }
 
   private int generateId() {
@@ -103,5 +105,18 @@ public class Player implements Describable {
 
   public ParameterizedEventGetter<Player> onChange() {
     return this.changedEvent;
+  }
+
+  public void bankrupt() {
+    for (Buyable property : properties) {
+      property.setOwner(null);
+    }
+
+    properties.clear();
+    this.bankruptEvent.emit(this);
+  }
+
+  public ParameterizedEventGetter<Player> onBankrupt() {
+    return this.bankruptEvent;
   }
 }

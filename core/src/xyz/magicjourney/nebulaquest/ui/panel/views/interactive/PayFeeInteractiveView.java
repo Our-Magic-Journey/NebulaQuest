@@ -9,7 +9,6 @@ import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
-import xyz.magicjourney.nebulaquest.ui.dialog.MessageBox;
 import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 
@@ -17,7 +16,6 @@ import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 public class PayFeeInteractiveView extends DescriptionInteractiveView {
   protected ActionButton payButton;
   protected ActionButton bankruptButton;
-  protected MessageBox bankruptConfirmation;
 
   protected Buyable property;
   protected Player player;
@@ -27,7 +25,6 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
 
     this.payButton = new ActionButton("Pay fee", true, assets);
     this.bankruptButton = new ActionButton("Bankrupt", true, assets);
-    this.bankruptConfirmation = new MessageBox("Unimplemented :(", assets);
     this.payButton.onClick().subscribe(this.handlePayClick);
     this.bankruptButton.onClick().subscribe(this.handleBankruptClick);
   }
@@ -114,8 +111,8 @@ public class PayFeeInteractiveView extends DescriptionInteractiveView {
   };
 
   protected Consumer<Runnable> handleBankruptClick = (unblock) -> {
-    this.bankruptConfirmation.show(this.getStage());
     this.payButton.setDisabled(true);
-    this.showDescriptionInstead();
+    this.property.getOwner().get().giveMoney(property.getFee());
+    this.player.bankrupt();
   };
 }

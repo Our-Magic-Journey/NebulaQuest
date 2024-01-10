@@ -113,4 +113,23 @@ public class TourPanel extends Panel {
       this.turnStartedEvent.emit(this.players.first());
     });
   };
+
+  public void removePlayer(Player player) {
+    player.onChange().unsubscribe(this.update);
+    this.players.removeValue(player, true);
+
+    this.playerImage = this.players.first().getShip(assets);
+    this.playerCell.clearActor();
+    this.playerCell.setActor(this.playerImage);
+    this.playerCell.getTable().pack();
+    this.playerTurnMsg.setText("It is the turn of " + this.players.first().getName() + "!");
+    this.playerTurnMsg.show(this.getStage());
+
+    this.update.accept(this.players.first());
+
+    this.playerTurnMsg.onAccepted().subscribe(() -> {
+      this.setRollMode();
+      this.turnStartedEvent.emit(this.players.first());
+    });
+  }
 }

@@ -23,6 +23,7 @@ import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.PlanetRegion;
 import xyz.magicjourney.nebulaquest.music.MusicManager;
 import xyz.magicjourney.nebulaquest.player.Player;
+import xyz.magicjourney.nebulaquest.ui.dialog.MessageBox;
 import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.MenuPanel;
 import xyz.magicjourney.nebulaquest.ui.panel.OptionPanel;
@@ -41,6 +42,7 @@ public class GameScreen extends AbstractScreen {
   protected MenuPanel menuPanel;
   protected Dice dice;
   protected boolean playerMoved;
+  protected MessageBox winMessageBox;
 
   public GameScreen(SpriteBatch batch, AssetManager assets, ScreenManager screenManager, MusicManager musicManager) {
     super(batch, assets, screenManager, musicManager);
@@ -51,6 +53,8 @@ public class GameScreen extends AbstractScreen {
     this.populatePlayers();
     this.populateRegions();
     this.populateBoard();
+
+    this.players.forEach((player) -> player.onBankrupt().subscribe(handlePlayerBankrupt));
 
     this.activePlayer = this.players.get(0);
     this.activeEntity = this.entities.get(0);
@@ -134,6 +138,9 @@ public class GameScreen extends AbstractScreen {
   public void create() {
     this.board = new Board(this.entities, this.players, this.assets, this.handleFieldEnter);
     this.dice = new Dice(assets);
+
+    this.winMessageBox = new MessageBox("", assets);
+    this.winMessageBox.onAccepted().subscribe(() -> screenManager.select("main-menu"));
 
     this.tourPanel = new TourPanel(assets, this.players);
     this.tourPanel.setPosition(751, 72);
@@ -237,4 +244,16 @@ public class GameScreen extends AbstractScreen {
       this.interactivePanel.select("Description", this.activePlayer, entity);
     }
   }
+
+  protected Consumer<Player> handlePlayerBankrupt = (player) -> {
+    this.players.remove(player);
+    
+    if (this.players.size() == 1) {
+      this.winMessageBox.setText(this.players.get(0).getName() + " is the winner!");
+      this.winMessageBox.show(this.stage);
+    }
+    
+    this.board.removePlayer(player);
+    this.tourPanel.removePlayer(player);
+  };
 }

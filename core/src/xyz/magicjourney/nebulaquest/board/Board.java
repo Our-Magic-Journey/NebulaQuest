@@ -187,4 +187,8 @@ public class Board extends Group {
       this.setPlayerPosition(player, field, true);
     }
   }
+
+  public void removePlayer(Player player) {
+    this.players.get(player).remove();
+  }
 }
