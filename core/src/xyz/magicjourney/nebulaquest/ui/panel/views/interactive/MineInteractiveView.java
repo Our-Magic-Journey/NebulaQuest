@@ -41,6 +41,8 @@ public class MineInteractiveView extends DescriptionInteractiveView {
 
   @Override
   public void prepareForNextTurn() {
+    super.prepareForNextTurn();
+
     if (this.player != null) {
       this.player.onChange().unsubscribe(this.update);
     }

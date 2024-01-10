@@ -54,8 +54,14 @@ public class Planet extends Entity implements Buyable {
 
   @Override
   public void setOwner(Player player) {
-    this.description = "Attention, Explorer! This planet has already been claimed by " + player.getName() + ". If you wish to visit or stay on this celestial body, a fee must be paid to " + player.getName();
-    this.owner = Optional.of(player);
+    if (player != null) {
+      this.description = "Attention, Explorer! This planet has already been claimed by " + player.getName() + ". If you wish to visit or stay on this celestial body, a fee must be paid to " + player.getName();
+    }
+    else {
+      this.description = "This planet is owned by the Republic, and there is no entrance fee. You have the chance to acquire this planet as your own by being the first to step onto it. Beware, though, if someone else buys it, you'll need to pay a fee.";
+    }
+
+    this.owner = Optional.ofNullable(player);
   }
 
   public PlanetRegion getRegion() {

@@ -66,6 +66,7 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
 
   @Override
   public void prepareForNextTurn() {
+    super.prepareForNextTurn();
   }
   
   protected void resetCasino() {

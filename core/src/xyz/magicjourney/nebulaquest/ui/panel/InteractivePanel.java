@@ -45,7 +45,7 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
     this.views.put("TeleportPayFee", new TeleportPayFeeInteractiveView(assets, this, tourPanel));
     this.views.put("Mine", new MineInteractiveView(assets, this, tourPanel));
     this.views.put("UnknownJump", new UnknownJumpInteractiveView(assets, this, tourPanel, board));
-
+    
     this.content.pad(4, 4, 4, 4);
     this.select("Bank");
   }
@@ -75,10 +75,7 @@ public class InteractivePanel extends ViewPanel<AbstractInteractiveView> {
     }
   }
 
-  public void selectDescription(Describable entity) {
-    this.select("Description");
-    
-    var view = (DescriptionInteractiveView) this.views.get("Description");
-    view.display(entity);
+  public void selectDescription(Entity entity, Player player) {
+    this.select("Description", player, entity);
   }
 }

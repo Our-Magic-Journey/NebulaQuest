@@ -70,7 +70,7 @@ public class Mine extends Entity implements Buyable {
 
   @Override
   public void setOwner(Player player) {
-    this.owner = Optional.of(player);
+    this.owner = Optional.ofNullable(player);
   }
 
   @Override

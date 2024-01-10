@@ -1,5 +1,7 @@
 package xyz.magicjourney.nebulaquest.ui.panel.views.interactive;
 
+import java.util.function.Consumer;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,6 +15,7 @@ import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.entity.entities.planet.Planet;
 import xyz.magicjourney.nebulaquest.player.Player;
+import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
 import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 import xyz.magicjourney.nebulaquest.ui.panel.views.AbstractInteractiveView;
@@ -26,11 +29,17 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
   protected Label fee;
   protected Label owner;
   protected Label region;
+  
+  protected Player player;
+  protected ActionButton sellButton;
+  protected Buyable property;
+  protected Entity entity;
 
   protected TenPatchDrawable spacer;
 
   public DescriptionInteractiveView(AssetManager assets, InteractivePanel parent, TourPanel tourPanel) {
     super(assets, parent, tourPanel);
+    
     this.assets = assets;
     this.title = new Label("", this.skin, "small-title");
     this.description = new Label("", this.skin, "small");
@@ -40,11 +49,30 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
     this.fee = new Label("", this.skin, "small");
     this.owner = new Label("", this.skin, "small");
 
+    this.sellButton = new ActionButton("Sell", true, assets);
+    this.sellButton.onClick().subscribe(handleSellClick);
+
     this.spacer = this.skin.get("panel-margin10", TenPatchDrawable.class);
   }
 
   @Override
+  public void prepareForNextTurn() {
+    super.prepareForNextTurn();
+
+    this.player = null;
+    this.sellButton.setDisabled(true);
+  }
+
+  @Override
   public void select(Player player, Entity field) {
+    if (field instanceof Buyable property) {
+      this.property = property;
+      this.sellButton.setDisabled(!property.isOwner(player));
+    }
+
+    this.player = player;
+    this.entity = field;
+
     this.display(field);
   }
   
@@ -106,11 +134,16 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
       this.add(this.description).row();
     }
 
-    if (entity instanceof Buyable) {
+    if (entity instanceof Buyable buyable) {
       this.addSpacer(2, 2);
       this.add(price).row();
       this.add(fee).row();
       this.add(owner).row();
+
+      if (buyable.isOwner(this.player)) {
+        this.addSpacer();
+        this.add(this.sellButton).height(20).pad(4, 4, 0, 4).fillX().row();
+      }
     }
   }
 
@@ -125,4 +158,9 @@ public class DescriptionInteractiveView extends AbstractInteractiveView {
   protected void addSpacer(int spaceTop, int spaceLeft, int spaceBottom, int spaceRight) {
     this.add(new Image(this.spacer)).fillX().height(4).space(spaceTop, spaceLeft, spaceBottom, spaceRight).row();
   }
+
+  protected Consumer<Runnable> handleSellClick = (unlock) -> {
+    this.property.sell();
+    this.owner.setText("Owner: Free");
+  };
 }

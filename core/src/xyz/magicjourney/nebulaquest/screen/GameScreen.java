@@ -215,7 +215,7 @@ public class GameScreen extends AbstractScreen {
       this.displayEntityInInteractivePanel(field.getEntity());
     }
     else {
-      this.interactivePanel.selectDescription(field.getEntity());
+      this.interactivePanel.selectDescription(field.getEntity(), this.activePlayer);
     }
   };
 
