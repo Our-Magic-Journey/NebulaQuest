@@ -10,7 +10,6 @@ import xyz.magicjourney.nebulaquest.entity.Describable;
 import xyz.magicjourney.nebulaquest.entity.Entity;
 import xyz.magicjourney.nebulaquest.player.Player;
 import xyz.magicjourney.nebulaquest.ui.button.ActionButton;
-import xyz.magicjourney.nebulaquest.ui.dialog.MessageBox;
 import xyz.magicjourney.nebulaquest.ui.panel.InteractivePanel;
 import xyz.magicjourney.nebulaquest.ui.panel.TourPanel;
 
@@ -21,7 +20,6 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
   protected ActionButton bankruptButton;
   protected ActionButton decrease;
   protected ActionButton increase;
-  protected MessageBox bankruptConfirmation;
   protected Label bet;
   protected int betValue;
   protected Player player;
@@ -35,7 +33,6 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
     this.oddButton = new ActionButton("Odds", true, assets);
     this.evenButton = new ActionButton("Even", true, assets);
     this.bankruptButton = new ActionButton("Bankrupt", false, assets);
-    this.bankruptConfirmation = new MessageBox("Unimplemented :(", assets);
 
     this.betValue = 0;
     this.bet = new Label("Your bet: " + this.betValue, this.skin, "small");
@@ -157,14 +154,12 @@ public class CasinoInteractiveView extends DescriptionInteractiveView {
   };
 
   protected Consumer<Runnable> handleBankruptClick = (unblock) -> {
-    this.bankruptConfirmation.show(this.getStage());
-
     this.increase.setDisabled(true);
     this.decrease.setDisabled(true);
     this.oddButton.setDisabled(true);
     this.evenButton.setDisabled(true);
 
-    this.tourPanel.unblockTurnButton();
+    this.player.bankrupt();
   };
 
   protected Consumer<Player> handlePlayerUpdate = (player) -> {
