@@ -43,8 +43,12 @@ public interface Buyable extends Describable, Interactiveable {
 
   default void sell() {
     if (this.getOwner().isPresent()) {
-      this.getOwner().get().giveMoney(this.getValue());
+      this.getOwner().get().giveMoney((int) (this.getValue() * 0.7f));
       this.setOwner(null);
     }
+  }
+
+  default int getSellValue() {
+    return (int) (this.getValue() * 0.7f);
   }
 }
