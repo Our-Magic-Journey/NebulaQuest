@@ -22,6 +22,7 @@ images/planet-field.png
 images/planet-field-over.png
 images/planet-field-down.png
 images/planet-field-color.png
+images/planet-field-color2.png
 images/casino.png
 images/casino-over.png
 images/casino-down.png
